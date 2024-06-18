@@ -90,7 +90,7 @@ const Navbar = () => {
 					</div>
 
 					{/* <!-- Right Side Menu (Logged Out) --> */}
-					<div className="hidden md:block md:ml-6">
+					{/* <div className="hidden md:block md:ml-6">
 						<div className="flex items-center">
 							<button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
 								<FaGoogle className="mr-2 text-white"></FaGoogle>
@@ -98,7 +98,7 @@ const Navbar = () => {
 								<span>Login or Register</span>
 							</button>
 						</div>
-					</div>
+					</div> */}
 
 					{/* <!-- Right Side Menu (Logged In) --> */}
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
@@ -211,10 +211,10 @@ const Navbar = () => {
 						>
 							Add Property
 						</a>
-						<button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
+						{/* <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
 							<FaGoogle className="mr-2 text-white"></FaGoogle>
 							<span>Login or Register</span>
-						</button>
+						</button> */}
 					</div>
 				</div>
 			)}
