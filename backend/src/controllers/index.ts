@@ -1,0 +1,1 @@
+export * as CompanyController from './company.controller';
