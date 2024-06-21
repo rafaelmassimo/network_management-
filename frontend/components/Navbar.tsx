@@ -1,19 +1,18 @@
 'use client';
 
-import logo from '@/assets/images/logo-white.png';
-import profileDefault from '@/assets/images/profile.png';
+import React from 'react';
+// import logo from '@/assets/images/logo-white.png';
+// import profileDefault from "@/assets/images/profile.png"
 import Image from 'next/image';
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 
 const Navbar = () => {
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const pathname = usePathname();
-
 
 	return (
 		<nav className="bg-sky-800 border-b border-sky-500">
@@ -51,7 +50,7 @@ const Navbar = () => {
 					<div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
 						{/* <!-- Logo --> */}
 						<Link className="flex flex-shrink-0 items-center" href="/">
-							<Image className="h-10 w-auto" src={logo} alt="Network Management" />
+							{/* <Image className="h-10 w-auto" src={logo} alt="Network Management" /> */}
 							<span className="hidden md:block text-white text-2xl font-bold ml-2">
 								Network Management
 							</span>
@@ -125,7 +124,7 @@ const Navbar = () => {
 								</svg>
 							</button>
 							<span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-								2{/* <!-- Replace with the actual number of notifications --> */}
+								{/* <!-- Replace with the actual number of notifications --> */}
 							</span>
 						</a>
 						{/* <!-- Profile dropdown button --> */}
@@ -141,7 +140,7 @@ const Navbar = () => {
 								>
 									<span className="absolute -inset-1.5"></span>
 									<span className="sr-only">Open user menu</span>
-									<Image className="h-8 w-8 rounded-full" src={profileDefault} alt="" />
+									{/* <Image className="h-8 w-8 rounded-full" src={profileDefault} alt="" /> */}
 								</button>
 							</div>
 

@@ -1,11 +1,13 @@
 import { Model, Schema, Types, model } from 'mongoose';
 
 export type CompanyType = {
+	owner: Types.ObjectId;
 	id: Types.ObjectId;
 	companyName: string;
 	linkedin: string[];
 	comments: string[];
 	companyLink: string;
+	image: String;
 };
 
 type timestamps = {
@@ -17,6 +19,11 @@ export type CompanyModel = Model<CompanyType & timestamps>;
 
 const CompanySchema = new Schema<CompanyType, CompanyModel>(
 	{
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: 'User',
+			required: true,
+		},
 		companyName: {
 			type: String,
 			required: true,
@@ -33,6 +40,10 @@ const CompanySchema = new Schema<CompanyType, CompanyModel>(
 			type: String,
 			required: true,
 		},
+		image: {
+			type: String,
+			required: true,
+		}
 	},
 	{ timestamps: true },
 );

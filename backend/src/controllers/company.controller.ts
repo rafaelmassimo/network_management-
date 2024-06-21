@@ -4,7 +4,7 @@ import Company from '../models/company.model';
 
 export const getCompanies = async (req: Request, res: Response) => {
 	try {
-		await connectDB();
+		await connectDB(); // This is the function from src/config/database.ts
 
 		const companies = await Company.find({});
 
@@ -19,12 +19,12 @@ export const createCompany = async (req: Request, res: Response) => {
 	try {
 		await connectDB();
 		const companyData = {
+			owner: 'a1b2c3d4e5f67890abcdef12',
 			companyName: 'test',
-
 			linkedin: ['test'],
-
 			comments: ['test'],
 			companyLink: 'test',
+			image: 'test',
 		};
 		const company = new Company(companyData);
 		await company.save();
