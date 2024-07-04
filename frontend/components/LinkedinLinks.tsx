@@ -1,7 +1,13 @@
-import { LinkedinProps } from '@/assets/types/dataType';
+import React from 'react';
 import { FaLinkedin } from 'react-icons/fa';
+import { LinkedinProps } from '../types/dataType';
 
 const LinkedinLinks: React.FC<LinkedinProps> = ({ linkedin }) => {
+
+	const extractNameFromUrl = (url: string) => {
+		const parts = url.split('/');
+		return parts[parts.length - 2] || 'LinkedIn User';
+	};
 	return (
 		<>
 			<div className="text-gray-600 mb-5">LinkedIn Links:</div>
@@ -20,7 +26,7 @@ const LinkedinLinks: React.FC<LinkedinProps> = ({ linkedin }) => {
 							target="_blank"
 						>
 							<FaLinkedin className="text-blue-500 text-xl mr-3" />
-							{`${link}`}
+							{extractNameFromUrl(link)}
 						</a>
 					))}
 				</div>

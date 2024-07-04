@@ -1,4 +1,5 @@
-import { CommentsProps } from '@/assets/types/dataType';
+
+import { CommentsProps } from '../types/dataType'
 import React from 'react';
 
 const Comments = ({ comments }: CommentsProps) => {

@@ -1,9 +1,17 @@
 import { Model, Schema, Types, model } from 'mongoose';
 
+export type UserTypeImported = {
+	_id: Types.ObjectId;
+	email: string;
+	password: string | undefined;
+	role?: string;
+};
+
 export type UserType = {
 	id: Types.ObjectId;
 	email: string;
 	username: string;
+	password: string;
 	image: string;
 	companyLink: string;
 };
@@ -22,11 +30,12 @@ const UserSchema = new Schema(
 			unique: [true, 'Email already Exists'],
 			required: [true, 'Email is required'],
 		},
+		password: { type: String, required: [true, 'Password is required'] },
 		username: {
 			type: String,
 			required: [true, 'Username is required'],
 		},
-		image: {
+		picture: {
 			type: String,
 		},
 	},

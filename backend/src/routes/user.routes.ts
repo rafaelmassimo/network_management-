@@ -1,12 +1,21 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { UserController } from '../controllers';
+import User, { UserTypeImported } from '../models/user.model';
+import bcrypt from 'bcrypt';
+import { Request, Response } from 'express';
+
 
 const userRouter = express.Router();
 
 //Get One User
 userRouter.get('/getOne', UserController.getOneUser);
 
-//Check if user exists if not create one
-userRouter.post('/checkUser', UserController.checkUser);
+//Create User
+userRouter.post('/createUser', UserController.createUser);
+
+//Authenticate User
+userRouter.post('/authenticate',UserController.authenticateUser);
+
+
 
 export default userRouter;

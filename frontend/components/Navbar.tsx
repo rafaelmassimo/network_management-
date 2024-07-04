@@ -1,18 +1,19 @@
 'use client';
-
 import React from 'react';
 // import logo from '@/assets/images/logo-white.png';
 // import profileDefault from "@/assets/images/profile.png"
-import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { FaGoogle } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 
 const Navbar = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const pathname = usePathname();
+
+	const { data: session } = useSession();
 
 	return (
 		<nav className="bg-sky-800 border-b border-sky-500">
@@ -56,7 +57,7 @@ const Navbar = () => {
 							</span>
 						</Link>
 						{/* <!-- Desktop Menu Hidden below md screens --> */}
-            <div className="hidden md:ml-6 md:block">
+						<div className="hidden md:ml-6 md:block">
 							<div className="flex space-x-2">
 								<Link
 									href="/"
@@ -75,15 +76,23 @@ const Navbar = () => {
 									Your Network
 								</Link>
 
-									<Link
-										href="/add-company"
-										className={`${
-											pathname === '/add-company' ? 'bg-black' : ''
-										} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
-									>
-										Add Company
-									</Link>
+								<Link
+									href="/add-company"
+									className={`${
+										pathname === '/add-company' ? 'bg-black' : ''
+									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+								>
+									Add Company
+								</Link>
 
+								<Link
+									href="/ClientMember"
+									className={`${
+										pathname === '/ClientMember' ? 'bg-black' : ''
+									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+								>
+									Member Profile
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -140,6 +149,7 @@ const Navbar = () => {
 								>
 									<span className="absolute -inset-1.5"></span>
 									<span className="sr-only">Open user menu</span>
+									<FaUser className="h-8 w-8 rounded-full p-1" />
 									{/* <Image className="h-8 w-8 rounded-full" src={profileDefault} alt="" /> */}
 								</button>
 							</div>
@@ -184,6 +194,16 @@ const Navbar = () => {
 								</div>
 							)}
 						</div>
+					</div>
+					<div className='ml-2 rounded-md border p-1 border-gray-900 hover:bg-slate-400 hover:border-slate-100 transition'>
+						{session ? (
+							<>
+								<p>{session?.user?.name}</p>
+								<Link href="/api/auth/signout?callbackUrl=/">Logout</Link>
+							</>
+						) : (
+							<Link href="/api/auth/signin">Login</Link>
+						)}
 					</div>
 				</div>
 			</div>

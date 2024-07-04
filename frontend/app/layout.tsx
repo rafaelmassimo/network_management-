@@ -2,7 +2,8 @@ import '@/assets/styles/globals.css';
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import React from 'react';
-import AuthProvider from '../components/AuthProvider';
+import { SessionProvider } from '../components/AuthProvider';
+
 import NavBar from '../components/Navbar';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
@@ -20,13 +21,13 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<AuthProvider>
+		<SessionProvider>
 			<html lang="en">
 				<body className={montserrat.className}>
 					<NavBar />
 					{children}
 				</body>
 			</html>
-		</AuthProvider>
+		</SessionProvider>
 	);
 }

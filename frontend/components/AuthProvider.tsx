@@ -1,13 +1,8 @@
 'use client';
-import { SessionProvider } from 'next-auth/react';
-import React, { ReactNode } from 'react';
 
-interface AuthProviderProps {
-	children: ReactNode;
-}
 
-const AuthProvider: React.FC<any> = ({ children }) => {
-	return <SessionProvider>{children}</SessionProvider>;
-};
+//Here the instructor used a different approach to import the useSession hook, he used the following import, and then when you need to import into the layout
+// you need to import as follows:
+// import { SessionProvider } from '@/components/AuthProvider'; on the layout file
 
-export default AuthProvider;
+export { SessionProvider} from 'next-auth/react';

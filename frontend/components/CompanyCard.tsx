@@ -1,7 +1,9 @@
-import { CompanyCardProps } from '@/assets/types/dataType';
+import React from 'react';
 import Comments from './Comments';
 import Link from 'next/link';
 import LinkedinLinks from './LinkedinLinks';
+import { CompanyCardProps } from '../types/dataType';
+
 
 const CompanyCard:React.FC<CompanyCardProps> = ({ id, companyName, linkedin, comments }) => {
 	return (
