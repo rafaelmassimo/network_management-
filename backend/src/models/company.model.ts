@@ -1,5 +1,11 @@
 import { Model, Schema, Types, model } from 'mongoose';
 
+enum CompanyStatus {
+	NoAnswer = 'no answer',
+	PositiveFeedback = 'positive feedback',
+	Interview = 'interview',
+}
+
 export type CompanyType = {
 	owner: Types.ObjectId;
 	id: Types.ObjectId;
@@ -8,6 +14,8 @@ export type CompanyType = {
 	comments: string[];
 	companyLink: string;
 	image: String;
+	status: CompanyStatus;
+	country: string;
 };
 
 type timestamps = {
@@ -43,7 +51,16 @@ const CompanySchema = new Schema<CompanyType, CompanyModel>(
 		image: {
 			type: String,
 			required: true,
-		}
+		},
+		status: {
+			type: String,
+			enum: Object.values(CompanyStatus),
+			default: CompanyStatus.NoAnswer, // Set the default status as no answer
+		},
+		country: {
+			type: String,
+			required: true,
+		},
 	},
 	{ timestamps: true },
 );
