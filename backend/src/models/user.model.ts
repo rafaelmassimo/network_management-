@@ -13,7 +13,7 @@ export type UserType = {
 	username: string;
 	password: string;
 	image: string;
-	companyLink: string;
+	role: string;
 };
 
 type timestamps = {
@@ -30,12 +30,15 @@ const UserSchema = new Schema(
 			unique: [true, 'Email already Exists'],
 			required: [true, 'Email is required'],
 		},
-		password: { type: String, required: [true, 'Password is required'] },
+		password: { type: String, required: false },
 		username: {
 			type: String,
 			required: [true, 'Username is required'],
 		},
 		picture: {
+			type: String,
+		},
+		role: {
 			type: String,
 		},
 	},

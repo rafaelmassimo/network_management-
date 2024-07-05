@@ -1,9 +1,6 @@
 import express from 'express';
 import { UserController } from '../controllers';
-import User, { UserTypeImported } from '../models/user.model';
-import bcrypt from 'bcrypt';
-import { Request, Response } from 'express';
-
+import { validateCreateUser } from '../../middleware/validateCreateUser';
 
 const userRouter = express.Router();
 
@@ -11,11 +8,9 @@ const userRouter = express.Router();
 userRouter.post('/getOne', UserController.getOneUser);
 
 //Create User
-userRouter.post('/createUser', UserController.createUser);
+userRouter.post('/createUser', validateCreateUser, UserController.createUser);
 
 //Authenticate User
-userRouter.post('/authenticate',UserController.authenticateUser);
-
-
+userRouter.post('/authenticate', UserController.authenticateUser);
 
 export default userRouter;

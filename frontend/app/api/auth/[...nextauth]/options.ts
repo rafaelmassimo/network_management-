@@ -1,5 +1,5 @@
 import { UserTypeImported } from '@/types/dataType';
-import { NextAuthOptions } from 'next-auth';
+import { NextAuthOptions, User } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
@@ -54,14 +54,13 @@ const options: NextAuthOptions = {
 				credentials: Record<'email' | 'password', string> | undefined,
 			): Promise<any | null> {
 				const { email, password } = credentials as { email: string; password: string };
-				
+
 				if (!email || !password) {
 					return null;
 				}
 				try {
 					// Replace direct database access with a fetch request to the backend
 					const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/authenticate`, {
-						
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
@@ -88,6 +87,17 @@ const options: NextAuthOptions = {
 	callbacks: {
 		async jwt({ token, account, user }) {
 			if (account) {
+				fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/createUser`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: user.email ?? '',
+						username: user.name || (user as any).login || '',
+						picture: (user as any).picture || (user as any).avatar_url || '',
+					}),
+				});
 				token.role = user.role;
 			}
 			return token;
@@ -103,3 +113,46 @@ const options: NextAuthOptions = {
 };
 
 export default options;
+
+// callbacks: {
+// 	async jwt({ token, account, user }) {
+// 		console.log('JWT Callback', 'token:',token,'account:', account, 'user:',user);
+
+// 		if (token.email) {
+// 			//* Check if the user exists in the database if not create a new user
+// 			try {
+// 				console.log('inside try');
+
+// 				const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/getOne`, {
+// 					method: 'POST',
+// 					headers: {
+// 						'Content-Type': 'application/json',
+// 					},
+// 					body: JSON.stringify({ email: token.email }),
+// 				});
+// 				if (!response.ok) {
+// 					const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/createUser`, {
+// 						method: 'POST',
+// 						headers: {
+// 							'Content-Type': 'application/json',
+// 						},
+// 						body: JSON.stringify({
+// 							email: token.email,
+// 							username: token.name,
+// 							picture: token.image?.toString() || '',
+// 							role: user.role,
+// 						}),
+// 					});
+// 					if (res.ok) {
+// 						const newUser = await res.json();
+// 						console.log('New user created:', newUser);
+// 					}
+// 				}
+// 			} catch (error) {
+// 				console.log('Error creating a new user:', error);
+// 			}
+
+// 			token.role = user.role;
+// 		}
+// 		return token;
+// 	},

@@ -10,14 +10,11 @@ export const createUser = async (req: Request, res: Response) => {
 	const formattedUserData = {
 		...userDataFromForm,
 		email: userDataFromForm.email.toLowerCase(),
-	}
+	};
 
 	try {
 		await connectDB(); // This is the function from src/config/database.ts
 		//Confirm data exist
-		if (!formattedUserData.email || !formattedUserData.password) {
-			return res.status(400).json({ message: 'All fields are required' });
-		}
 
 		// Check if user already exists
 		const duplicatedUser = await User.findOne({ email: formattedUserData.email }).lean().exec();
@@ -26,12 +23,16 @@ export const createUser = async (req: Request, res: Response) => {
 			return res.status(409).json({ message: 'User already exists' });
 		}
 
-		// Hash password
-		const hashedPassword = await bcrypt.hash(formattedUserData.password, 10);
-		formattedUserData.password = hashedPassword;
+		if (userDataFromForm.password) {
+			// Hash password
+			const hashedPassword = await bcrypt.hash(formattedUserData.password, 10);
+			formattedUserData.password = hashedPassword;
+		}
 
 		await User.create(formattedUserData);
-		return res.status(201).json({ message: 'User created successfully', newUser: formattedUserData });
+		return res
+			.status(201)
+			.json({ message: 'User created successfully', newUser: formattedUserData });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: 'Error creating user. Please try again later.', error });
@@ -46,7 +47,7 @@ export const getOneUser = async (req: Request, res: Response) => {
 
 		const user = await User.findOne({ email });
 
-		if(!user) return res.status(404).json({message:"User not found"})
+		if (!user) return res.status(404).json({ message: 'User not found' });
 
 		res.status(200).json(user);
 	} catch (error) {
@@ -67,8 +68,7 @@ export const authenticateUser = async (req: Request, res: Response) => {
 		const foundUser = (await User.findOne({ email: email })
 			.lean()
 			.exec()) as UserTypeImported | null;
-			console.log('Found User:', foundUser);
-			
+		console.log('Found User:', foundUser);
 
 		if (!foundUser) {
 			return res.status(401).send('Authentication failed');
