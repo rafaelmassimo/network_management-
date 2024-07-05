@@ -10,7 +10,7 @@ export type CompanyType = {
 	owner: Types.ObjectId;
 	id: Types.ObjectId;
 	companyName: string;
-	linkedin: string[];
+	linkedinProfiles: string[];
 	comments: string[];
 	companyLink: string;
 	image: String;
@@ -30,27 +30,27 @@ const CompanySchema = new Schema<CompanyType, CompanyModel>(
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',
-			required: true,
+			required: [true, 'The owner property is required'],
 		},
 		companyName: {
 			type: String,
-			required: true,
+			required: [true, 'The companyName property is required'],
 		},
-		linkedin: {
+		linkedinProfiles: {
 			type: [String],
-			required: true,
+			required: [true, 'The linkedin property is required'],
 		},
 		comments: {
 			type: [String],
-			required: true,
+			required: [true, 'The comments property is required'],
 		},
 		companyLink: {
 			type: String,
-			required: true,
+			required: [true, 'The companyLink property is required'],
 		},
 		image: {
 			type: String,
-			required: true,
+			required: [true, 'The image property is required'],
 		},
 		status: {
 			type: String,
@@ -59,7 +59,7 @@ const CompanySchema = new Schema<CompanyType, CompanyModel>(
 		},
 		country: {
 			type: String,
-			required: true,
+			required: [true, 'The country property is required'],
 		},
 	},
 	{ timestamps: true },

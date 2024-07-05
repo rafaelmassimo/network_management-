@@ -4,28 +4,34 @@ import connectDB from '../config/database';
 import User, { UserTypeImported } from '../models/user.model';
 
 export const createUser = async (req: Request, res: Response) => {
-	const userData = req.body;
+	const userDataFromForm = req.body;
+
+	//* Format the email to lowercase
+	const formattedUserData = {
+		...userDataFromForm,
+		email: userDataFromForm.email.toLowerCase(),
+	}
 
 	try {
 		await connectDB(); // This is the function from src/config/database.ts
 		//Confirm data exist
-		if (!userData.email || !userData.password) {
+		if (!formattedUserData.email || !formattedUserData.password) {
 			return res.status(400).json({ message: 'All fields are required' });
 		}
 
 		// Check if user already exists
-		const duplicatedUser = await User.findOne({ email: userData.email }).lean().exec();
+		const duplicatedUser = await User.findOne({ email: formattedUserData.email }).lean().exec();
 
 		if (duplicatedUser) {
 			return res.status(409).json({ message: 'User already exists' });
 		}
 
 		// Hash password
-		const hashedPassword = await bcrypt.hash(userData.password, 10);
-		userData.password = hashedPassword;
+		const hashedPassword = await bcrypt.hash(formattedUserData.password, 10);
+		formattedUserData.password = hashedPassword;
 
-		await User.create(userData);
-		return res.status(201).json({ message: 'User created successfully', newUser: userData });
+		await User.create(formattedUserData);
+		return res.status(201).json({ message: 'User created successfully', newUser: formattedUserData });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: 'Error creating user. Please try again later.', error });
@@ -39,6 +45,8 @@ export const getOneUser = async (req: Request, res: Response) => {
 		await connectDB(); // This is the function from src/config/database.ts
 
 		const user = await User.findOne({ email });
+
+		if(!user) return res.status(404).json({message:"User not found"})
 
 		res.status(200).json(user);
 	} catch (error) {
