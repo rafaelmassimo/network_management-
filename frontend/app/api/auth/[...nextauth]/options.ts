@@ -114,45 +114,4 @@ const options: NextAuthOptions = {
 
 export default options;
 
-// callbacks: {
-// 	async jwt({ token, account, user }) {
-// 		console.log('JWT Callback', 'token:',token,'account:', account, 'user:',user);
 
-// 		if (token.email) {
-// 			//* Check if the user exists in the database if not create a new user
-// 			try {
-// 				console.log('inside try');
-
-// 				const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/getOne`, {
-// 					method: 'POST',
-// 					headers: {
-// 						'Content-Type': 'application/json',
-// 					},
-// 					body: JSON.stringify({ email: token.email }),
-// 				});
-// 				if (!response.ok) {
-// 					const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/createUser`, {
-// 						method: 'POST',
-// 						headers: {
-// 							'Content-Type': 'application/json',
-// 						},
-// 						body: JSON.stringify({
-// 							email: token.email,
-// 							username: token.name,
-// 							picture: token.image?.toString() || '',
-// 							role: user.role,
-// 						}),
-// 					});
-// 					if (res.ok) {
-// 						const newUser = await res.json();
-// 						console.log('New user created:', newUser);
-// 					}
-// 				}
-// 			} catch (error) {
-// 				console.log('Error creating a new user:', error);
-// 			}
-
-// 			token.role = user.role;
-// 		}
-// 		return token;
-// 	},

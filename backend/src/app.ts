@@ -16,6 +16,6 @@ app.use(express.json());
 app.use(cors({ origin: '*' }));
 
 //* Routes
-app.use('/api/company', companiesRouter);
+app.use('/api/companies', companiesRouter);
 app.use('/api/user', userRouter);
 export default app;

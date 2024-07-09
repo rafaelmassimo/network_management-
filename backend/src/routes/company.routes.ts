@@ -14,7 +14,7 @@ companiesRouter.get('/', CompanyController.getCompanies);
 companiesRouter.get('/:id', CompanyController.getCompanyById);
 
 // Create a new company
-companiesRouter.post('/', CompanyController.createCompany);
+companiesRouter.post('/newCompany', CompanyController.createCompany);
 
 // Update a company status
 companiesRouter.post('/:id', CompanyController.updateCompany);

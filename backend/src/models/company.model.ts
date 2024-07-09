@@ -38,19 +38,15 @@ const CompanySchema = new Schema<CompanyType, CompanyModel>(
 		},
 		linkedinProfiles: {
 			type: [String],
-			required: [true, 'The linkedin property is required'],
 		},
 		comments: {
 			type: [String],
-			required: [true, 'The comments property is required'],
 		},
 		companyLink: {
 			type: String,
-			required: [true, 'The companyLink property is required'],
 		},
 		image: {
 			type: String,
-			required: [true, 'The image property is required'],
 		},
 		status: {
 			type: String,
