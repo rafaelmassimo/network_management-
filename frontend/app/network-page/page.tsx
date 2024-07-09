@@ -2,16 +2,17 @@
 
 import React, { useEffect, useState } from 'react';
 import CompanyCard from '../../components/CompanyCard';
-import data from '../../data.json';
 import { Company } from '../../types/dataType';
+import Spinners from '../../components/Spinner';
 
 const NetworkPage = () => {
 	const [companies, setCompanies] = useState([]);
+	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		const fetchCompanies = async () => {
 			try {
-				const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies`);
+				const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies`, {cache: "no-store"});
 				if (res.status === 200) {
 					const companiesData = await res.json();
 					setCompanies(companiesData);
@@ -20,11 +21,16 @@ const NetworkPage = () => {
 				}
 			} catch (error) {
 				console.log('Error:', error);
+			} finally {
+				setLoading(false);
 			}
 		};
 		fetchCompanies();
 	}, []);
 
+	if(loading) {
+		return <div><Spinners loading={loading}/> </div>
+	}
 	return (
 		<section className="px-4 py-6">
 			<div className="container-xl lg:container m-auto">

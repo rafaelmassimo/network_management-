@@ -1,24 +1,10 @@
 'use client';
+import { CompanyFormType, CompanyStatus } from '@/types/dataType';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-type CompanyFormType = {
-	user_id: string;
-	companyName: string;
-	linkedinProfiles: string;
-	comments: string;
-	companyLink: string;
-	image: string;
-	status: CompanyStatus;
-	country: string;
-};
 
-enum CompanyStatus {
-	NoAnswer = 'no answer',
-	PositiveFeedback = 'positive feedback',
-	Interview = 'interview',
-}
 
 const CompanyForm = () => {
 	const { data: session } = useSession();

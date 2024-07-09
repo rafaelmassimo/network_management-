@@ -1,5 +1,23 @@
 import { Types } from 'mongoose';
 
+export type CompanyFormType = {
+	user_id: string;
+	companyId?: string;
+	companyName: string;
+	linkedinProfiles: string[] | string;
+	comments: string[] | string;
+	companyLink: string;
+	image: string;
+	status: CompanyStatus;
+	country: string;
+} ;
+
+export enum CompanyStatus {
+	NoAnswer = 'no answer',
+	PositiveFeedback = 'positive feedback',
+	Interview = 'interview',
+}
+
 export interface Company {
 	owner: Types.ObjectId;
 	_id: string;
@@ -12,11 +30,6 @@ export interface Company {
 	country: string;
 }
 
-export enum CompanyStatus {
-	NoAnswer = 'no answer',
-	PositiveFeedback = 'positive feedback',
-	Interview = 'interview',
-}
 export interface CompanyCardProps {
 	id: string;
 	companyName: string;

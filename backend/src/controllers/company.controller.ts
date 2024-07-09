@@ -52,7 +52,6 @@ export const createCompany = async (req: Request, res: Response) => {
 
 		await company.save();
 
-
 		res.status(201).json({ message: 'Company created successfully', company });
 	} catch (error) {
 		console.error(error);
@@ -61,24 +60,22 @@ export const createCompany = async (req: Request, res: Response) => {
 };
 
 export const updateCompany = async (req: Request, res: Response) => {
-	const { id } = req.params;
-	// You are going to receive the newStatus in the body of the request from Front End
-	const { newStatus } = req.body;
+	const {_id, ...updatedCompanyData} = req.body; // This contains all the fields to update
 
 	try {
 		await connectDB();
-		const updatedCompany = await Company.findByIdAndUpdate(
-			id,
-			{ status: newStatus },
-			{ new: true },
+		const updatedCompanyResult = await Company.findByIdAndUpdate(
+			_id,
+			updatedCompanyData, // Pass the entire updatedCompanyData object for updating
+			{ new: true }, // With { new: true }, it returns the document after the update has been applied.
 		);
 
-		if (!updatedCompany) return res.status(404).json({ message: 'Company not found' });
+		if (!updatedCompanyResult) return res.status(404).json({ message: 'Company not found' });
 
 		// Respond with the updated company
-		res.status(200).json(updatedCompany);
+		res.status(200).json(updatedCompanyResult);
 	} catch (error) {
 		console.log('Update status error:', error);
-		res.status(500).json({ message: 'Error updating status. Please try again.' });
+		res.status(500).json({ message: 'Error updating company. Please try again.' });
 	}
 };
