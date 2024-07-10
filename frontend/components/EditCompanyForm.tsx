@@ -24,7 +24,7 @@ const EditCompanyForm = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		const getUserId = async () => {
+		const getCompanyById = async () => {
 			try {
 				const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/${id}`, {
 					cache: 'no-store',
@@ -41,7 +41,7 @@ const EditCompanyForm = () => {
             }
 		};
 		if (session?.user?.email) {
-			getUserId();
+			getCompanyById();
 		}
 	}, [session]);
 

@@ -31,6 +31,38 @@ export const getCompanyById = async (req: Request, res: Response) => {
 	}
 };
 
+export const getCompaniesByUser = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	if (!id) return res.status(400).json({ message: `Invalid or missing owner ID` });
+
+	try {
+		await connectDB();
+
+		//For Pagination
+		const page = parseInt(req.query.page as string, 10) || 1;
+		const pageSize = parseInt(req.query.pageSize as string, 10) || 5;
+
+		const skip = (page - 1) * pageSize;
+
+		const total = await Company.countDocuments({ owner: id });
+		const companies = await Company.find({ owner: id }).skip(skip).limit(pageSize);
+
+		// Pagination result
+		const result = {
+			total, 
+			companies
+		}
+
+		if (companies.length === 0)
+			return res.status(404).json({ message: 'No Companies for this user' });
+
+		res.status(200).json(result);
+	} catch (error) {
+		console.log('Get companies by user id error:', error);
+		res.status(500).json({ message: 'Error getting company by id. Please try again.' });
+	}
+};
+
 export const createCompany = async (req: Request, res: Response) => {
 	const data = req.body;
 
@@ -60,7 +92,7 @@ export const createCompany = async (req: Request, res: Response) => {
 };
 
 export const updateCompany = async (req: Request, res: Response) => {
-	const {_id, ...updatedCompanyData} = req.body; // This contains all the fields to update
+	const { _id, ...updatedCompanyData } = req.body; // This contains all the fields to update
 
 	try {
 		await connectDB();

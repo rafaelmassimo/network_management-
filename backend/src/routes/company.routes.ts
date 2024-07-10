@@ -1,14 +1,16 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 
-import { CompanyController } from '../controllers';
 import connectDB from '../config/database';
+import { CompanyController } from '../controllers';
 import Company from '../models/company.model';
-import { connect } from 'http2';
 
 const companiesRouter = express.Router();
 
 // Get all companies
 companiesRouter.get('/', CompanyController.getCompanies);
+
+//Get all companies by user id
+companiesRouter.get('/byUser/:id', CompanyController.getCompaniesByUser);
 
 // Get a company by id
 companiesRouter.get('/:id', CompanyController.getCompanyById);

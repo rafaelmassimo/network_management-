@@ -1,35 +1,66 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import CompanyCard from '../../components/CompanyCard';
-import { Company } from '../../types/dataType';
 import Spinners from '../../components/Spinner';
+import { Company } from '../../types/dataType';
 
 const NetworkPage = () => {
 	const [companies, setCompanies] = useState([]);
-	const [loading, setLoading] = useState<boolean>(true)
+	const [userId, setUserId] = useState<string>('')
+	const [loading, setLoading] = useState<boolean>(true);
+	const { data: session } = useSession();
+
+
+	useEffect(() => {
+		const getUserId = async () => {
+			try {
+				const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/getOne`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ email: session?.user?.email }),
+				});
+				if (response.status === 200) {
+					const { _id } = await response.json();
+					setUserId(_id);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		if (session?.user?.email) {
+			getUserId();
+		}
+	}, [session]);
 
 	useEffect(() => {
 		const fetchCompanies = async () => {
 			try {
-				const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies`, {cache: "no-store"});
+				const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/byUser/${userId}`, {
+					cache: 'no-store',
+				});
 				if (res.status === 200) {
 					const companiesData = await res.json();
 					setCompanies(companiesData);
 					console.log(companiesData);
-					
+					setLoading(false);
 				}
 			} catch (error) {
 				console.log('Error:', error);
-			} finally {
-				setLoading(false);
 			}
 		};
 		fetchCompanies();
-	}, []);
+	}, [userId]);
 
-	if(loading) {
-		return <div><Spinners loading={loading}/> </div>
+	if (loading) {
+		return (
+			<div>
+				<Spinners loading={loading} />{' '}
+			</div>
+		);
 	}
 	return (
 		<section className="px-4 py-6">
