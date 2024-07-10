@@ -53,8 +53,6 @@ export const getCompaniesByUser = async (req: Request, res: Response) => {
 			companies
 		}
 
-		if (companies.length === 0)
-			return res.status(404).json({ message: 'No Companies for this user' });
 
 		res.status(200).json(result);
 	} catch (error) {
