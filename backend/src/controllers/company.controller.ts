@@ -40,7 +40,7 @@ export const getCompaniesByUser = async (req: Request, res: Response) => {
 
 		//For Pagination
 		const page = parseInt(req.query.page as string, 10) || 1;
-		const pageSize = parseInt(req.query.pageSize as string, 10) || 5;
+		const pageSize = parseInt(req.query.pageSize as string, 10) || 6;
 
 		const skip = (page - 1) * pageSize;
 
