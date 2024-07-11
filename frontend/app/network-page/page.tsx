@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Pagination from '@/components/Pagination';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -83,6 +84,7 @@ const NetworkPage = () => {
 									<CompanyCard
 										id={company._id}
 										companyName={company.companyName}
+										companyLink={company.companyLink}
 										linkedin={company.linkedinProfiles}
 										comments={company.comments as string[]}
 									/>

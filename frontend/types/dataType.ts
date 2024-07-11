@@ -33,6 +33,7 @@ export interface Company {
 export interface CompanyCardProps {
 	id: string;
 	companyName: string;
+	companyLink: string;
 	linkedin: string[];
 	comments: string[];
 }

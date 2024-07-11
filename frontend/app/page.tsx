@@ -1,3 +1,4 @@
+import React from 'react';
 import { Company } from '@/assets/types/dataType';
 import CompanyCard from '../components/CompanyCard';
 import data from '../data.json';
@@ -14,6 +15,7 @@ export default function HomePage() {
 							<CompanyCard
 								id={company.id}
 								companyName={company.companyName}
+								companyLink={company.companyLink}
 								linkedin={company.linkedin}
 								comments={company.comments as string[]}
 							/>
