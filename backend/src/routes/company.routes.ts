@@ -1,8 +1,6 @@
 import express from 'express';
 
-import connectDB from '../config/database';
 import { CompanyController } from '../controllers';
-import Company from '../models/company.model';
 
 const companiesRouter = express.Router();
 
@@ -20,5 +18,8 @@ companiesRouter.post('/newCompany', CompanyController.createCompany);
 
 // Update a company status
 companiesRouter.post('/:id', CompanyController.updateCompany);
+
+// Delete a company
+companiesRouter.delete('/:id', CompanyController.deleteCompany)
 
 export default companiesRouter;

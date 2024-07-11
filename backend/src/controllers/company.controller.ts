@@ -45,14 +45,13 @@ export const getCompaniesByUser = async (req: Request, res: Response) => {
 		const skip = (page - 1) * pageSize;
 
 		const total = await Company.countDocuments({ owner: id });
-		const companies = await Company.find({ owner: id }).skip(skip).limit(pageSize);
+		const companies = await Company.find({ owner: id }).skip(skip).limit(pageSize).sort({ updatedAt: -1 });
 
 		// Pagination result
 		const result = {
-			total, 
-			companies
-		}
-
+			total,
+			companies,
+		};
 
 		res.status(200).json(result);
 	} catch (error) {
@@ -107,5 +106,35 @@ export const updateCompany = async (req: Request, res: Response) => {
 	} catch (error) {
 		console.log('Update status error:', error);
 		res.status(500).json({ message: 'Error updating company. Please try again.' });
+	}
+};
+
+export const deleteCompany = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const { user_id } = req.body;
+
+	if (!id || !user_id) return res.status(400).json({ message: `Invalid or missing company ID or User ID` });
+
+	try {
+		await connectDB();
+
+		// Check if the user is the owner of the company
+		const companyToRemove = await Company.findOne({ _id : id});
+
+		if (!companyToRemove) return res.status(404).json({ message: 'Company not found' });
+
+		const isOwner = companyToRemove.owner.toString() === user_id;
+
+		if(!isOwner) return res.status(401).json({ message: 'Unauthorized' })
+		
+		//After checking the owner, delete the company
+		const companyRemoved = await Company.findByIdAndDelete({ _id: id });
+
+		if (!companyRemoved) return res.status(404).json({ message: 'Dele Company failed' });
+
+		res.status(200).json({ message: 'Company deleted successfully', companyRemoved });
+	} catch (error) {
+		console.log('Get company by id error:', error);
+		res.status(500).json({ message: 'Error getting company by id. Please try again.' });
 	}
 };

@@ -1,4 +1,5 @@
 'use client';
+import DeleteCompanyButton from '@/components/DeleteCompanyButton';
 import Spinners from '@/components/Spinner';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
@@ -12,7 +13,7 @@ const EditCompanyForm = () => {
 
 	const [fields, setFields] = useState<CompanyFormType>({
 		user_id: '',
-        companyId: '',
+		companyId: '',
 		companyName: '',
 		linkedinProfiles: [''],
 		comments: [''],
@@ -32,13 +33,13 @@ const EditCompanyForm = () => {
 
 				if (response.status === 200) {
 					const company = await response.json();
-					setFields(company);
+					setFields({ companyId: company._id, user_id: company.owner, ...company });
 				}
 			} catch (error) {
 				console.log(error);
-			}finally{
-                setLoading(false);
-            }
+			} finally {
+				setLoading(false);
+			}
 		};
 		if (session?.user?.email) {
 			getCompanyById();
@@ -48,20 +49,23 @@ const EditCompanyForm = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/${fields.companyId}`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/${fields.companyId}`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(fields),
 				},
-				body: JSON.stringify(fields),
-			});
+			);
 			if (response.status === 200) {
 				console.log('Company updated successfully');
 				route.push('/network-page');
 			}
 		} catch (error) {
 			console.log(error);
-		} 
+		}
 	};
 
 	return (
@@ -171,9 +175,9 @@ const EditCompanyForm = () => {
 								onChange={(e) => {}}
 							/>
 
-							<div>
+							<div className="flex flex-row my-4 gap-5">
 								<button
-									className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-3"
+									className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline mt-3"
 									type="submit"
 								>
 									Update Company
@@ -181,6 +185,7 @@ const EditCompanyForm = () => {
 							</div>
 						</div>
 					</form>
+					<DeleteCompanyButton companyId={fields.companyId as string} user_id={fields.user_id} />
 				</div>
 			)}
 		</>
