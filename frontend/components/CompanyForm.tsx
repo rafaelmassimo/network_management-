@@ -1,10 +1,10 @@
 'use client';
+import LinkedinInputField from '@/components/LinkedinInputField';
+import PageName from '@/components/PageName';
 import { CompanyFormType, CompanyStatus } from '@/types/dataType';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-
-
 
 const CompanyForm = () => {
 	const { data: session } = useSession();
@@ -12,7 +12,7 @@ const CompanyForm = () => {
 	const [fields, setFields] = useState<CompanyFormType>({
 		user_id: '',
 		companyName: '',
-		linkedinProfiles: '',
+		linkedinProfiles: [''],
 		comments: '',
 		companyLink: '',
 		image: '',
@@ -59,13 +59,13 @@ const CompanyForm = () => {
 			}
 		} catch (error) {
 			console.log(error);
-		} 
+		}
 	};
 
 	return (
 		<div className="m-4">
 			<div>
-				<h1 className="text-3xl text-center font-semibold mb-6">Add a New Company</h1>
+				<PageName/>
 			</div>
 
 			<form onSubmit={handleSubmit}>
@@ -81,18 +81,14 @@ const CompanyForm = () => {
 						value={fields.companyName}
 						onChange={(e) => setFields({ ...fields, companyName: e.target.value })}
 					/>
-
-					<label htmlFor="linkedinProfiles">LinkedIn Profile:</label>
-					<input
-						type="text"
-						id="linkedinProfiles"
-						name="linkedinProfiles"
-						className="border rounded w-full py-2 px-3 mb-2"
-						placeholder="Insert LinkedIn Profile"
-						required
-						value={fields.linkedinProfiles}
-						onChange={(e) => setFields({ ...fields, linkedinProfiles: e.target.value })}
-					/>
+					<div className='flex flex-col w-full items-center'>
+						<label className='text-center' htmlFor="linkedinProfiles">LinkedIn Profile:</label>
+						<LinkedinInputField
+							linkedinProfiles={fields.linkedinProfiles as string[]}
+							setFields={setFields}
+							fields={fields}
+						/>
+					</div>
 
 					<label htmlFor="comments">Comments:</label>
 					<input

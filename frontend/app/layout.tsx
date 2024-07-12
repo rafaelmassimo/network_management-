@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<SessionProvider>
-			<html lang="en">
+			<html lang="en" className='bg-blue-50'>
 				<body className={montserrat.className}>
 					<NavBar />
 					{children}

@@ -12,7 +12,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
 	comments,
 }) => {
 	return (
-		<div className="rounded-xl shadow-md relative ">
+		<div className="rounded-xl shadow-md relative bg-white ">
 			<div className="p-4">
 				<div className="text-left md:text-center lg:text-left mb-6">
 					<div className="text-gray-600">Company Name:</div>

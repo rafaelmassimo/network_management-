@@ -4,7 +4,7 @@ export type CompanyFormType = {
 	user_id: string;
 	companyId?: string;
 	companyName: string;
-	linkedinProfiles: string[] | string;
+	linkedinProfiles: string[];
 	comments: string[] | string;
 	companyLink: string;
 	image: string;

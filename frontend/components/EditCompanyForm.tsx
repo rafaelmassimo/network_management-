@@ -1,12 +1,16 @@
 'use client';
-import DeleteCompanyButton from '@/components/DeleteCompanyButton';
-import Spinners from '@/components/Spinner';
+
+import DeleteCompanyButton from '../components/DeleteCompanyButton';
+import Spinners from '../components/Spinner';
+import PageName from '../components/PageName';
 import { useSession } from 'next-auth/react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { CompanyFormType, CompanyStatus } from '../types/dataType';
+import LinkedinInputField from './LinkedinInputField';
 
 const EditCompanyForm = () => {
+	const pathName = usePathname();
 	const { data: session } = useSession();
 	const { id } = useParams();
 	const route = useRouter();
@@ -48,6 +52,7 @@ const EditCompanyForm = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+
 		try {
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/${fields.companyId}`,
@@ -76,9 +81,8 @@ const EditCompanyForm = () => {
 				</div>
 			) : (
 				<div className="m-4">
-					<div>
-						<h1 className="text-3xl text-center font-semibold mb-6">Add a New Company</h1>
-					</div>
+					{/* This is the PageName component */}
+					<PageName /> 
 
 					<form onSubmit={handleSubmit}>
 						<div className="flex flex-col justify-center items-center mb-4">
@@ -94,17 +98,16 @@ const EditCompanyForm = () => {
 								onChange={(e) => setFields({ ...fields, companyName: e.target.value })}
 							/>
 
-							<label htmlFor="linkedinProfiles">LinkedIn Profile:</label>
-							<input
-								type="text"
-								id="linkedinProfiles"
-								name="linkedinProfiles"
-								className="border rounded w-full py-2 px-3 mb-2"
-								placeholder="Insert LinkedIn Profile"
-								required
-								value={fields.linkedinProfiles}
-								onChange={(e) => setFields({ ...fields, linkedinProfiles: e.target.value })}
-							/>
+							<div className="flex flex-col w-full">
+								<label className="text-center" htmlFor="linkedinProfiles">
+									LinkedIn Profile:
+								</label>
+								<LinkedinInputField
+									linkedinProfiles={fields.linkedinProfiles as string[]}
+									setFields={setFields}
+									fields={fields}
+								/>
+							</div>
 
 							<label htmlFor="comments">Comments:</label>
 							<input
