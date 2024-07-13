@@ -3,14 +3,36 @@ import React from 'react';
 
 const PageName = () => {
 	const pathName = usePathname();
-    const pageName = pathName.includes('/network-page/')  ? 'Edit Company' : 'Add a New Company';
-    console.log('page name:',pathName);
-    
+	console.log(pathName);
+	
+	let pageName = '';
+
+	switch (true) {
+        case pathName === '/add-company':
+            pageName = 'Add New Company';
+            break;
+
+        case pathName === '/add-job':
+            pageName = 'Add New Job Application';
+            break;
+
+        case pathName.includes('/network-page/'):
+            pageName = 'Edit Company';
+            break;
+
+        case pathName.includes('/applications-page/'):
+            pageName = 'Edit Job Application';
+            break;
+
+        default:
+            break;
+    }
+	
 	return (
-        <div>
-        <h1 className="text-3xl text-center font-semibold mb-6">{pageName}</h1>
-    </div>
-    )
+		<div>
+			<h1 className="text-3xl text-center font-semibold mb-6">{pageName}</h1>
+		</div>
+	);
 };
 
 export default PageName;

@@ -2,43 +2,43 @@
 
 import React, { useEffect, useState } from 'react';
 import { TiPlus } from 'react-icons/ti';
-import { CompanyFormType } from '../types/dataType';
+import { JobFormType } from '../types/dataType';
 import RemoveSingleCompanyButton from './RemoveSingleCompanyButton';
 
-type LinkedinInputFieldProps = {
-	linkedinProfiles: string[];
+type JobInputFieldProps = {
+	jobsLinks: string[];
 	setFields: (fields: any) => void;
-	fields: CompanyFormType;
+	fields: JobFormType;
 };
 
-const LinkedinInputField = ({
-	linkedinProfiles,
+const JobLinkField = ({
+	jobsLinks,
 	setFields,
 	fields,
-}: LinkedinInputFieldProps) => {
+}:JobInputFieldProps ) => {
 	const [arrayOfLinks, setArrayOfLinks] = useState<string[]>(['']);
 
 	useEffect(() => {
-		setArrayOfLinks(linkedinProfiles);
-	}, [linkedinProfiles]);
+		setArrayOfLinks(jobsLinks);
+	}, [jobsLinks]);
 
 	const handleAddNewInputField = () => {
 		const updatedLinks: string[] = [...arrayOfLinks, ''];
 		setArrayOfLinks(updatedLinks);
-		setFields({ ...fields, linkedinProfiles: updatedLinks });
+		setFields({ ...fields, jobsLinks: updatedLinks });
 	};
 
 	const handleInputChange = (index: number, value: string) => {
 		const updatedLinks = [...arrayOfLinks];
 		updatedLinks[index] = value;
 		setArrayOfLinks(updatedLinks);
-		setFields({ ...fields, linkedinProfiles: updatedLinks });
+		setFields({ ...fields, jobsLinks: updatedLinks });
 	};
 
-	const handleRemoveInputChange = (index: number) => {
+	const handleRemoveInput = (index: number) => {
 		const updatedLinks = [...arrayOfLinks.slice(0, index), ...arrayOfLinks.slice(index + 1)];
 		setArrayOfLinks(updatedLinks);
-		setFields({ ...fields, linkedinProfiles: updatedLinks });
+		setFields({ ...fields, jobsLinks: updatedLinks });
 	};
 
 	return (
@@ -47,8 +47,8 @@ const LinkedinInputField = ({
 				<div className="flex flex-row w-full justify-center items-center" key={i}>
 					<input
 						type="text"
-						id="linkedinProfiles"
-						name="linkedinProfiles"
+						id="jobsLinks"
+						name="jobsLinks"
 						className="border rounded w-full py-2 px-3 mb-2"
 						placeholder="Insert LinkedIn Profile"
 						value={link}
@@ -59,7 +59,7 @@ const LinkedinInputField = ({
 
 						<RemoveSingleCompanyButton
 						
-						handleRemoveInputChange={handleRemoveInputChange}
+						handleRemoveInputChange={handleRemoveInput}
 						index={i}
 						/>
 						</div>
@@ -80,4 +80,5 @@ const LinkedinInputField = ({
 	);
 };
 
-export default LinkedinInputField;
+export default JobLinkField;
+

@@ -10,7 +10,19 @@ export type CompanyFormType = {
 	image: string;
 	status: CompanyStatus;
 	country: string;
-} ;
+};
+
+export type JobFormType = {
+	user_id: string;
+	jobId?: string;
+	companyName: string;
+	jobsLinks: string[];
+	comments: string[] | string;
+	companyLink: string;
+	image: string;
+	status: CompanyStatus;
+	country: string;
+};
 
 export enum CompanyStatus {
 	NoAnswer = 'no answer',

@@ -16,7 +16,7 @@ const RemoveSingleCompanyButton: React.FC<Props> = ({ handleRemoveInputChange, i
 	return (
 		<div>
 			<button onClick={callHandleRemoveInputChange}>
-				<IoIosRemoveCircle className="h-6 w-6 text-red-600" />
+				<IoIosRemoveCircle className="h-5 w-5 text-red-500 hover:text-red-600" />
 			</button>
 		</div>
 	);

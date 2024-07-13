@@ -17,7 +17,7 @@ const Navbar = () => {
 
 	return (
 		<nav className="bg-sky-800 border-b border-sky-500">
-			<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+			<div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
 				<div className="relative flex h-20 items-center justify-between">
 					<div className="absolute inset-y-0 left-0 flex items-center md:hidden">
 						{/* <!-- Mobile menu button--> */}
@@ -52,7 +52,7 @@ const Navbar = () => {
 						{/* <!-- Logo --> */}
 						<Link className="flex flex-shrink-0 items-center" href="/">
 							{/* <Image className="h-10 w-auto" src={logo} alt="Network Management" /> */}
-							<span className="hidden md:block text-white text-2xl font-bold ml-2">
+							<span className="hidden md:block text-white text-2xl font-bold ml-1">
 								Network Management
 							</span>
 						</Link>
@@ -92,6 +92,15 @@ const Navbar = () => {
 									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
 								>
 									Member Profile
+								</Link>
+
+								<Link
+									href="/add-job"
+									className={`${
+										pathname === '/ClientMember' ? 'bg-black' : ''
+									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+								>
+									Add Job Application
 								</Link>
 							</div>
 						</div>

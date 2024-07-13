@@ -1,12 +1,12 @@
 'use client';
-import LinkedinInputField from '@/components/LinkedinInputField';
-import PageName from '@/components/PageName';
-import { CompanyFormType, CompanyStatus } from '@/types/dataType';
+import LinkedinInputField from '../components/LinkedinInputField';
+import PageName from '../components/PageName';
+import { CompanyFormType, CompanyStatus } from '../types/dataType';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-const CompanyForm = () => {
+const AddCompanyForm = () => {
 	const { data: session } = useSession();
 	const route = useRouter();
 	const [fields, setFields] = useState<CompanyFormType>({
@@ -162,7 +162,7 @@ const CompanyForm = () => {
 							className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-3"
 							type="submit"
 						>
-							Add Property
+							Add Company
 						</button>
 					</div>
 				</div>
@@ -171,4 +171,4 @@ const CompanyForm = () => {
 	);
 };
 
-export default CompanyForm;
+export default AddCompanyForm;
