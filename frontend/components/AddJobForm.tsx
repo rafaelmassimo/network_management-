@@ -1,10 +1,10 @@
 'use client';
-import JobLinkField from '../components/JobLinkField';
-import PageName from '../components/PageName';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { JobFormType, CompanyStatus } from '../types/dataType';
+import PageName from '../components/PageName';
+import { CompanyStatus, JobFormType } from '../types/dataType';
+import JobsInputFields from './JobsInputFields';
 
 const AddJobForm = () => {
 	const { data: session } = useSession();
@@ -12,14 +12,14 @@ const AddJobForm = () => {
 	const [fields, setFields] = useState<JobFormType>({
 		user_id: '',
 		companyName: '',
-		jobsLinks: [''],
+		jobsLinks: { jobLink: '', jobTitle: '' },
 		comments: '',
 		companyLink: '',
-		image: '',
 		status: CompanyStatus.NoAnswer,
 		country: '',
 	});
 
+	// Get the user id from the database and set it in the fields object
 	useEffect(() => {
 		const getUserId = async () => {
 			try {
@@ -43,6 +43,7 @@ const AddJobForm = () => {
 		}
 	}, [session]);
 
+	// Function to handle the submit of the form and send the data to the database
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
@@ -61,6 +62,7 @@ const AddJobForm = () => {
 			console.log(error);
 		}
 	};
+
 
 	return (
 		<div className="m-4">
@@ -81,16 +83,6 @@ const AddJobForm = () => {
 						value={fields.companyName}
 						onChange={(e) => setFields({ ...fields, companyName: e.target.value })}
 					/>
-					<div className="flex flex-col w-full items-center">
-						<label className="text-center" htmlFor="jobLink">
-							Job Link:
-						</label>
-						<JobLinkField
-							jobsLinks={fields.jobsLinks as string[]}
-							setFields={setFields}
-							fields={fields}
-						/>
-					</div>
 
 					<label htmlFor="companyLink">Company Link:</label>
 					<input
@@ -103,8 +95,10 @@ const AddJobForm = () => {
 						value={fields.companyLink}
 						onChange={(e) => setFields({ ...fields, companyLink: e.target.value })}
 					/>
+					{/* // Component to display all the job links */}
+					<JobsInputFields fields={fields} setFields={setFields} />
 
-					<label htmlFor="status" className="block text-gray-700 font-bold mb-2">
+					<label htmlFor="status" className="block my-2">
 						Contact Status:
 					</label>
 					<select
@@ -123,7 +117,9 @@ const AddJobForm = () => {
 						<option value={CompanyStatus.Interview}>{CompanyStatus.Interview}</option>
 					</select>
 
-					<label htmlFor="country">Country:</label>
+					<label className="mt-2" htmlFor="country">
+						Country:
+					</label>
 					<input
 						type="text"
 						id="country"
@@ -133,19 +129,6 @@ const AddJobForm = () => {
 						required
 						value={fields.country}
 						onChange={(e) => setFields({ ...fields, country: e.target.value.toLowerCase() })}
-					/>
-
-					<label htmlFor="images" className="block text-gray-700 font-bold mb-2">
-						Images (Select one Image)
-					</label>
-					<input
-						type="file"
-						id="images"
-						name="images"
-						className="border rounded w-full py-2 px-3"
-						accept="image/*"
-						multiple
-						onChange={(e) => {}}
 					/>
 
 					<label htmlFor="comments">Comments:</label>

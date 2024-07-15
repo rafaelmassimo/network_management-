@@ -16,13 +16,17 @@ export type JobFormType = {
 	user_id: string;
 	jobId?: string;
 	companyName: string;
-	jobsLinks: string[];
-	comments: string[] | string;
+	jobsLinks: JobObjectType;
+	comments: string;
 	companyLink: string;
-	image: string;
 	status: CompanyStatus;
 	country: string;
 };
+
+export type JobObjectType = {
+	jobLink: string;
+	jobTitle: string;
+}
 
 export enum CompanyStatus {
 	NoAnswer = 'no answer',
@@ -55,6 +59,10 @@ export interface CommentsProps {
 }
 
 export interface LinkedinProps {
+	linkedin: string[];
+}
+
+export interface JobProps {
 	linkedin: string[];
 }
 

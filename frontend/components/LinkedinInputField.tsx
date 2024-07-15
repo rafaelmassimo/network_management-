@@ -7,15 +7,11 @@ import RemoveSingleCompanyButton from './RemoveSingleCompanyButton';
 
 type LinkedinInputFieldProps = {
 	linkedinProfiles: string[];
-	setFields: (fields: any) => void;
+	setFields: (fields: CompanyFormType) => void;
 	fields: CompanyFormType;
 };
 
-const LinkedinInputField = ({
-	linkedinProfiles,
-	setFields,
-	fields,
-}: LinkedinInputFieldProps) => {
+const LinkedinInputField = ({ linkedinProfiles, setFields, fields, }: LinkedinInputFieldProps) => {
 	const [arrayOfLinks, setArrayOfLinks] = useState<string[]>(['']);
 
 	useEffect(() => {
