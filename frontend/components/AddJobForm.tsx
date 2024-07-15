@@ -12,7 +12,7 @@ const AddJobForm = () => {
 	const [fields, setFields] = useState<JobFormType>({
 		user_id: '',
 		companyName: '',
-		jobsLinks: { jobLink: '', jobTitle: '' },
+		jobInfo: { jobLink: '', jobTitle: '' },
 		comments: '',
 		companyLink: '',
 		status: CompanyStatus.NoAnswer,
@@ -47,20 +47,21 @@ const AddJobForm = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/newCompany`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/newJob`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(fields),
 			});
+			
 			if (response.status === 201) {
-				console.log('Company added');
+				console.log('Job added');
 				route.push('/network-page');
 			}
 		} catch (error) {
 			console.log(error);
-		}
+		} 
 	};
 
 

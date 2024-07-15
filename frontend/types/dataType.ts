@@ -16,7 +16,7 @@ export type JobFormType = {
 	user_id: string;
 	jobId?: string;
 	companyName: string;
-	jobsLinks: JobObjectType;
+	jobInfo: JobObjectType;
 	comments: string;
 	companyLink: string;
 	status: CompanyStatus;
