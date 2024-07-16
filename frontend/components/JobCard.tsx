@@ -74,7 +74,7 @@ const JobCard: React.FC<JobType> = ({
 					</div>
 				) : (
 					<>
-						<div className="flex flex-row lg:flex-row justify-start mb-4 mt-2 border rounded-md">
+						<div className="flex flex-row lg:flex-row justify-start mb-4 mt-2 ">
 							<div className="text-gray-600">Comment:</div>
 						</div>
 						<div className="bg-gray-200 rounded-md p-3">

@@ -18,4 +18,7 @@ jobRouter.get('/:id', JobController.getJobById);
 //* Update Job By ID
 jobRouter.post('/:id', JobController.updateJob);
 
+//* Delete Job By ID
+jobRouter.delete('/:id', JobController.deleteJob);
+
 export default jobRouter; // We are exporting the router object so that we can use it in the app.ts file to define the routes

@@ -84,7 +84,7 @@ export const createJob = async (req: Request, res: Response) => {
 
 		await job.save();
 
-		res.status(201).json({ message: 'Company created successfully', job });
+		res.status(201).json({ message: 'Job created successfully', job });
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: 'Something went wrong' });
@@ -92,24 +92,55 @@ export const createJob = async (req: Request, res: Response) => {
 };
 
 //*Update a job
-
 export const updateJob = async (req: Request, res: Response) => {
-	const { _id, ...updatedCompanyData } = req.body; // This contains all the fields to update
+	const { _id, ...updatedJobData } = req.body; // This contains all the fields to update
 
 	try {
 		await connectDB();
 		const updatedJobResult = await Job.findByIdAndUpdate(
 			_id,
-			updatedCompanyData, // Pass the entire updatedCompanyData object for updating
+			updatedJobData, // Pass the entire updatedJobData object for updating
 			{ new: true }, // With { new: true }, it returns the document after the update has been applied.
 		);
 
 		if (!updatedJobResult) return res.status(404).json({ message: 'Job not found' });
 
-		// Respond with the updated company
+		// Respond with the updated Job
 		res.status(200).json(updatedJobResult);
 	} catch (error) {
 		console.log('Update status error:', error);
 		res.status(500).json({ message: 'Error updating job. Please try again.' });
+	}
+};
+
+//*Delete a job
+export const deleteJob = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const { user_id } = req.body;
+
+	if (!id || !user_id)
+		return res.status(400).json({ message: `Invalid or missing Job ID or User ID` });
+
+	try {
+		await connectDB();
+
+		// Check if the user is the owner of the Job
+		const jobToRemove = await Job.findOne({ _id: id });
+
+		if (!jobToRemove) return res.status(404).json({ message: 'Job not found' });
+
+		const isOwner = jobToRemove.owner.toString() === user_id;
+
+		if (!isOwner) return res.status(401).json({ message: 'Unauthorized' });
+
+		//After checking the owner, delete the company
+		const jobRemoved = await Job.findByIdAndDelete({ _id: id });
+
+		if (!jobRemoved) return res.status(404).json({ message: 'Delete job failed' });
+
+		res.status(200).json({ message: 'Job deleted successfully', jobRemoved });
+	} catch (error) {
+		console.log('Get Job by id error:', error);
+		res.status(500).json({ message: 'Error getting Job by id. Please try again.' });
 	}
 };
