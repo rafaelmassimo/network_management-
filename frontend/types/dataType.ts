@@ -13,19 +13,21 @@ export type CompanyFormType = {
 };
 
 export type JobFormType = {
-	user_id: string;
+	user_id?: string;
 	jobId?: string;
 	companyName: string;
 	jobInfo: JobObjectType;
 	comments: string;
 	companyLink: string;
-	status: CompanyStatus;
+	status: CompanyStatus | string;
 	country: string;
+	updatedAt?: Date;
+	workSite: WorkSite | string;
 };
 
 export type JobObjectType = {
-	jobLink: string;
-	jobTitle: string;
+	link: string;
+	title: string;
 }
 
 export enum CompanyStatus {
@@ -45,6 +47,27 @@ export interface Company {
 	status: CompanyStatus;
 	country: string;
 }
+
+export enum 
+WorkSite {
+	InPerson = 'in person',
+	Hybrid = 'hybrid',
+	Remote = 'remote',
+	Other = 'other',
+}
+
+export type JobType = {
+    owner?: Types.ObjectId; // I added the question mark just to make the job card stop complaining about the owner being undefined
+    _id: string;
+    companyName: string;
+    companyLink: string;
+    jobInfo: { link: string; title: string };
+    country: string;
+    comments: string;
+    status: CompanyStatus | string;
+	updatedAt: Date;
+	workSite: WorkSite | string;
+};
 
 export interface CompanyCardProps {
 	id: string;

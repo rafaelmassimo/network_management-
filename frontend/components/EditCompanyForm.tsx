@@ -180,7 +180,7 @@ const EditCompanyForm = () => {
 
 							<div className="flex flex-row my-4 gap-5">
 								<button
-									className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline mt-3"
+									className="bg-blue-400 text-white hover:bg-blue-600 font-bold py-2 px-4 shadow-xl rounded-full w-full focus:outline-none mt-3 transition duration-100 focus:translate-y-1 focus:shadow-none"
 									type="submit"
 								>
 									Update Company

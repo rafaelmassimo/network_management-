@@ -1,10 +1,10 @@
 'use client';
-import LinkedinInputField from '../components/LinkedinInputField';
-import PageName from '../components/PageName';
-import { CompanyFormType, CompanyStatus } from '../types/dataType';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import LinkedinInputField from '../components/LinkedinInputField';
+import PageName from '../components/PageName';
+import { CompanyFormType, CompanyStatus } from '../types/dataType';
 
 const AddCompanyForm = () => {
 	const { data: session } = useSession();
@@ -65,7 +65,7 @@ const AddCompanyForm = () => {
 	return (
 		<div className="m-4">
 			<div>
-				<PageName/>
+				<PageName />
 			</div>
 
 			<form onSubmit={handleSubmit}>
@@ -81,25 +81,16 @@ const AddCompanyForm = () => {
 						value={fields.companyName}
 						onChange={(e) => setFields({ ...fields, companyName: e.target.value })}
 					/>
-					<div className='flex flex-col w-full items-center'>
-						<label className='text-center' htmlFor="linkedinProfiles">LinkedIn Profile:</label>
+					<div className="flex flex-col w-full items-center">
+						<label className="text-center" htmlFor="linkedinProfiles">
+							LinkedIn Profile:
+						</label>
 						<LinkedinInputField
 							linkedinProfiles={fields.linkedinProfiles as string[]}
 							setFields={setFields}
 							fields={fields}
 						/>
 					</div>
-
-					<label htmlFor="comments">Comments:</label>
-					<input
-						type="text"
-						id="comments"
-						name="comments"
-						className="border rounded w-full py-2 px-3 mb-2"
-						placeholder="Insert Comments here"
-						value={fields.comments}
-						onChange={(e) => setFields({ ...fields, comments: e.target.value })}
-					/>
 
 					<label htmlFor="companyLink">Company Link:</label>
 					<input
@@ -113,7 +104,7 @@ const AddCompanyForm = () => {
 						onChange={(e) => setFields({ ...fields, companyLink: e.target.value })}
 					/>
 
-					<label htmlFor="status" className="block text-gray-700 font-bold mb-2">
+					<label htmlFor="status" className="block  mb-2">
 						Contact Status:
 					</label>
 					<select
@@ -144,7 +135,18 @@ const AddCompanyForm = () => {
 						onChange={(e) => setFields({ ...fields, country: e.target.value.toLowerCase() })}
 					/>
 
-					<label htmlFor="images" className="block text-gray-700 font-bold mb-2">
+					<label htmlFor="comments">Comments:</label>
+					<input
+						type="text"
+						id="comments"
+						name="comments"
+						className="border rounded w-full py-2 px-3 mb-2"
+						placeholder="Insert Comments here"
+						value={fields.comments}
+						onChange={(e) => setFields({ ...fields, comments: e.target.value })}
+					/>
+
+					<label htmlFor="images" className="block font-bold mb-2">
 						Images (Select one Image)
 					</label>
 					<input
@@ -159,7 +161,7 @@ const AddCompanyForm = () => {
 
 					<div>
 						<button
-							className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-3"
+							className="bg-blue-400 text-white hover:bg-blue-600 font-bold py-2 px-4 shadow-xl rounded-full w-full focus:outline-none mt-3 transition duration-100 focus:translate-y-1 focus:shadow-none"
 							type="submit"
 						>
 							Add Company

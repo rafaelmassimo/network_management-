@@ -19,9 +19,9 @@ const JobsInputFields = ({ fields, setFields }: JobsInputFieldsProps) => {
 					className="border rounded w-full py-2 px-3 mb-2"
 					placeholder="Insert the Link of this opportunity"
 					required
-					value={fields.jobInfo.jobLink}
+					value={fields.jobInfo.link}
 					onChange={(e) =>
-						setFields({ ...fields, jobInfo: { ...fields.jobInfo, jobLink: e.target.value } })
+						setFields({ ...fields, jobInfo: { ...fields.jobInfo, link: e.target.value } })
 					}
 				/>
 
@@ -35,9 +35,9 @@ const JobsInputFields = ({ fields, setFields }: JobsInputFieldsProps) => {
 					className="border rounded w-full py-2 px-3 mb-2"
 					placeholder="Insert Title of this opportunity"
 					required
-					value={fields.jobInfo.jobTitle}
+					value={fields.jobInfo.title}
 					onChange={(e) =>
-						setFields({ ...fields, jobInfo: { ...fields.jobInfo, jobTitle: e.target.value } })
+						setFields({ ...fields, jobInfo: { ...fields.jobInfo, title: e.target.value } })
 					}
 				/>
 			</div>

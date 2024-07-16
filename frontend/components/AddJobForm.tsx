@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import PageName from '../components/PageName';
-import { CompanyStatus, JobFormType } from '../types/dataType';
+import { CompanyStatus, JobFormType, WorkSite } from '../types/dataType';
 import JobsInputFields from './JobsInputFields';
 
 const AddJobForm = () => {
@@ -12,11 +12,12 @@ const AddJobForm = () => {
 	const [fields, setFields] = useState<JobFormType>({
 		user_id: '',
 		companyName: '',
-		jobInfo: { jobLink: '', jobTitle: '' },
+		jobInfo: { link: '', title: '' },
 		comments: '',
 		companyLink: '',
-		status: CompanyStatus.NoAnswer,
+		status: '',
 		country: '',
+		workSite: '',
 	});
 
 	// Get the user id from the database and set it in the fields object
@@ -57,7 +58,7 @@ const AddJobForm = () => {
 			
 			if (response.status === 201) {
 				console.log('Job added');
-				route.push('/network-page');
+				route.push('/applications-page');
 			}
 		} catch (error) {
 			console.log(error);
@@ -107,15 +108,35 @@ const AddJobForm = () => {
 						name="status"
 						className="border rounded w-full py-2 px-3"
 						required
-						value={fields.status || 'empty'}
+						value={fields.status}
 						onChange={(e) => setFields({ ...fields, status: e.target.value as CompanyStatus })}
 					>
-						<option value="empty" disabled>
+						<option value="" disabled>
 							Choose an option
 						</option>
 						<option value={CompanyStatus.NoAnswer}>{CompanyStatus.NoAnswer}</option>
 						<option value={CompanyStatus.PositiveFeedback}>{CompanyStatus.PositiveFeedback}</option>
 						<option value={CompanyStatus.Interview}>{CompanyStatus.Interview}</option>
+					</select>
+
+					<label htmlFor="workSite" className="block my-2">
+						Work Site:
+					</label>
+					<select
+						id="workSite"
+						name="workSite"
+						className="border rounded w-full py-2 px-3"
+						required
+						value={fields.workSite}
+						onChange={(e) => setFields({ ...fields, workSite: e.target.value as WorkSite })}
+					>
+						<option value="" disabled>
+							Choose an option
+						</option>
+						<option value={WorkSite.InPerson}>{WorkSite.InPerson}</option>
+						<option value={WorkSite.Hybrid}>{WorkSite.Hybrid}</option>
+						<option value={WorkSite.Remote}>{WorkSite.Remote}</option>
+						<option value={WorkSite.Other}>{WorkSite.Other}</option>
 					</select>
 
 					<label className="mt-2" htmlFor="country">
@@ -145,7 +166,7 @@ const AddJobForm = () => {
 
 					<div>
 						<button
-							className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-3"
+							className="bg-blue-400 text-white hover:bg-blue-600 font-bold py-2 px-4 shadow-xl rounded-full w-full focus:outline-none mt-3 transition duration-100 focus:translate-y-1 focus:shadow-none"
 							type="submit"
 						>
 							Add Job
