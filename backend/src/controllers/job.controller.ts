@@ -3,7 +3,24 @@ import connectDB from '../config/database';
 import Job from '../models/job.model';
 import User from '../models/user.model';
 
-//*Get all jobs By User
+//*Get Job by ID
+export const getJobById = async (req: Request, res: Response) => {
+	const { id } = req.params;
+
+	try {
+		await connectDB();
+		const job = await Job.findById({ _id: id });
+
+		if (!job) return res.status(404).json({ message: 'Job not found' });
+
+		res.status(200).json(job);
+	} catch (error) {
+		console.log('Get Job by id error:', error);
+		res.status(500).json({ message: 'Error getting Job by id. Please try again.' });
+	}
+};
+
+//*Get all jobs By UserId
 export const getJobsByUserId = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	if (!id) return res.status(400).json({ message: `Invalid or missing owner ID` });
@@ -45,7 +62,6 @@ export const createJob = async (req: Request, res: Response) => {
 
 	try {
 		await connectDB();
-		console.log(data);
 
 		const user = await User.findById(data.user_id);
 		if (!user) {
@@ -72,5 +88,28 @@ export const createJob = async (req: Request, res: Response) => {
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: 'Something went wrong' });
+	}
+};
+
+//*Update a job
+
+export const updateJob = async (req: Request, res: Response) => {
+	const { _id, ...updatedCompanyData } = req.body; // This contains all the fields to update
+
+	try {
+		await connectDB();
+		const updatedJobResult = await Job.findByIdAndUpdate(
+			_id,
+			updatedCompanyData, // Pass the entire updatedCompanyData object for updating
+			{ new: true }, // With { new: true }, it returns the document after the update has been applied.
+		);
+
+		if (!updatedJobResult) return res.status(404).json({ message: 'Job not found' });
+
+		// Respond with the updated company
+		res.status(200).json(updatedJobResult);
+	} catch (error) {
+		console.log('Update status error:', error);
+		res.status(500).json({ message: 'Error updating job. Please try again.' });
 	}
 };

@@ -1,17 +1,24 @@
 import Link from 'next/link';
 import React from 'react';
 import { FaLinkedin } from 'react-icons/fa';
-import { JobType, WorkSite } from '../types/dataType';
+import { JobType } from '../types/dataType';
 
-
-const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, comments, country, status, updatedAt, workSite }) => {
-
-
+const JobCard: React.FC<JobType> = ({
+	_id,
+	companyName,
+	companyLink,
+	jobInfo,
+	comments,
+	country,
+	status,
+	updatedAt,
+	workSite,
+}) => {
 	const toUpperCase = (str: string) => {
 		const newString = str.charAt(0).toUpperCase() + str.slice(1);
 		return newString;
-	}
-	
+	};
+
 	const date = new Date(updatedAt as Date);
 
 	const options = {
@@ -27,7 +34,7 @@ const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, co
 	return (
 		<div className="rounded-xl shadow-md relative bg-white ">
 			<div className="p-4">
-				<p className='text-sm mb-3'>
+				<p className="text-sm mb-3">
 					<span className=" text-gray-600">Last Update: </span> {formattedDate}
 				</p>
 				<div className="text-left md:text-center lg:text-left mb-6">
@@ -53,12 +60,12 @@ const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, co
 
 				<div className="flex flex-row items-start border-gray-100 border rounded-md p-2 mb-4 ">
 					<div className="text-gray-600">Country:</div>
-					<p className='ml-2'>{toUpperCase(country)}</p>
+					<p className="ml-2">{toUpperCase(country)}</p>
 				</div>
 
 				<div className="flex flex-row items-start border-gray-100 border rounded-md p-2 ">
 					<div className="text-gray-600">Work Site:</div>
-					<p className='ml-2'>{toUpperCase(workSite)}</p>
+					<p className="ml-2">{toUpperCase(workSite)}</p>
 				</div>
 
 				{comments.length === 0 ? (
@@ -78,7 +85,7 @@ const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, co
 
 				<div className="flex flex-col lg:flex-row justify-end mt-4">
 					<Link
-						href={`/network-page/${_id}`}
+						href={`/applications-page/${_id}`}
 						className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
 					>
 						Details

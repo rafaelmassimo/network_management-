@@ -6,10 +6,16 @@ import { JobController } from '../controllers';
 
 const jobRouter = express.Router(); // This is the router object that we are going to use to define the routes
 
-//*Create Job
+//* Create Job
 jobRouter.post('/newJob', JobController.createJob); // JobController contains all the action that we can execute on the job model
 
-//*Get Jobs By User
+//* Get Jobs By User
 jobRouter.get('/byUser/:id', JobController.getJobsByUserId);
+
+//* Get Job By ID
+jobRouter.get('/:id', JobController.getJobById);
+
+//* Update Job By ID
+jobRouter.post('/:id', JobController.updateJob);
 
 export default jobRouter; // We are exporting the router object so that we can use it in the app.ts file to define the routes
