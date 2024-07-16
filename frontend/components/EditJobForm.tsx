@@ -7,6 +7,7 @@ import PageName from '../components/PageName';
 import Spinners from '../components/Spinner';
 import { CompanyStatus, JobFormType, WorkSite } from '../types/dataType';
 import JobsInputFields from './JobsInputFields';
+import DeleteJobButton from './DeleteJobButton';
 
 const EditJobForm = () => {
 	const { data: session } = useSession();
@@ -184,7 +185,7 @@ const EditJobForm = () => {
 							</div>
 						</div>
 					</form>
-					{/* <DeleteCompanyButton companyId={fields.companyId as string} user_id={fields.user_id} /> */}
+					<DeleteJobButton jobId={fields.jobId as string} user_id={fields.user_id as string} />
 				</div>
 			)}
 		</>

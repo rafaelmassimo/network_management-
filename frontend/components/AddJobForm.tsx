@@ -5,10 +5,12 @@ import React, { useEffect, useState } from 'react';
 import PageName from '../components/PageName';
 import { CompanyStatus, JobFormType, WorkSite } from '../types/dataType';
 import JobsInputFields from './JobsInputFields';
+import Spinner from './Spinner';
 
 const AddJobForm = () => {
 	const { data: session } = useSession();
 	const route = useRouter();
+	const [loading, setLoading] = useState<boolean>(true);
 	const [fields, setFields] = useState<JobFormType>({
 		user_id: '',
 		companyName: '',
@@ -65,6 +67,7 @@ const AddJobForm = () => {
 		} 
 	};
 
+	if(fields.user_id === '') return <Spinner loading={loading}/>
 
 	return (
 		<div className="m-4">

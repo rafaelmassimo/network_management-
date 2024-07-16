@@ -5,10 +5,12 @@ import React, { useEffect, useState } from 'react';
 import LinkedinInputField from '../components/LinkedinInputField';
 import PageName from '../components/PageName';
 import { CompanyFormType, CompanyStatus } from '../types/dataType';
+import Spinner from '../components/Spinner';
 
 const AddCompanyForm = () => {
 	const { data: session } = useSession();
 	const route = useRouter();
+	const [loading, setLoading] = useState<boolean>(true);
 	const [fields, setFields] = useState<CompanyFormType>({
 		user_id: '',
 		companyName: '',
@@ -36,6 +38,8 @@ const AddCompanyForm = () => {
 				}
 			} catch (error) {
 				console.log(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 		if (session?.user?.email) {
@@ -61,6 +65,8 @@ const AddCompanyForm = () => {
 			console.log(error);
 		}
 	};
+
+	if(fields.user_id === '') return <Spinner loading={loading}/>
 
 	return (
 		<div className="m-4">

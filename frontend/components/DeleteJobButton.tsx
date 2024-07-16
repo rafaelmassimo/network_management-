@@ -6,17 +6,15 @@ import Swal from 'sweetalert2';
 
 
 type Props = {
-    companyId: string;
+    jobId: string;
     user_id: string;
 };
 
-
-
-const DeleteCompanyButton: React.FC<Props>  = ({companyId, user_id}) => {
+const DeleteJobButton: React.FC<Props>  = ({jobId, user_id}) => {
 	const route = useRouter();
 
 
-    const handleDeleteCompany = async () => {
+    const handleDeleteJob = async () => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -30,7 +28,7 @@ const DeleteCompanyButton: React.FC<Props>  = ({companyId, user_id}) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const data = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/${companyId}`,
+                    `${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/${jobId}`,
                     {
                         method: 'DELETE',
                         headers: {
@@ -48,23 +46,23 @@ const DeleteCompanyButton: React.FC<Props>  = ({companyId, user_id}) => {
                     console.log(data.message);
                 }
     
-                Swal.fire('Deleted!', 'Your Company has been deleted.', 'success');
-                route.push('/network-page');
+                Swal.fire('Deleted!', 'Your Job has been deleted.', 'success');
+                route.push('/applications-page');
             }
         });
     };
 	return (
 		<div className="flex flex-row w-full justify-center items-center ">
 			<button
-				onClick={handleDeleteCompany}
+				onClick={handleDeleteJob}
 				className="flex flex-row justify-center items-center bg-red-300 hover:bg-red-600 text-white p-2 rounded"
 				type="button"
 			>
-				Delete Company
+				Delete Job
 				<FaTrash className=" ml-2 mt-" />
 			</button>
 		</div>
 	);
 };
 
-export default DeleteCompanyButton;
+export default DeleteJobButton;
