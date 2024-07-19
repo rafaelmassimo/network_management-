@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import { JobType } from '../types/dataType';
+import StatusRadio from './StatusRadio';
 
 const JobCard: React.FC<JobType> = ({
 	_id,
@@ -32,18 +33,23 @@ const JobCard: React.FC<JobType> = ({
 
 	const formattedDate = date.toLocaleDateString('en-US', options as any);
 	return (
-		<div className="rounded-xl shadow-md relative bg-white ">
+		<div className="rounded-xl shadow-md relative bg-white min-h-[500px]">
 			<div className="p-4">
 				<p className="text-sm mb-3">
 					<span className=" text-gray-600">Last Update: </span> {formattedDate}
 				</p>
 				<div className="text-left md:text-center lg:text-left mb-6">
-					<div className="text-gray-600">Company Name:</div>
-					<h3 className="text-xl font-bold">
-						<a href={`${companyLink}`} target="_blank">
-							{companyName}
-						</a>
-					</h3>
+					<div className="flex flex-row text-black">
+						<div>
+							<p className="mr-20">Company Name:</p>
+							<h3 className="text-xl text-black font-bold p-1">
+								<a href={`${companyLink}`} target="_blank">
+									{companyName}
+								</a>
+							</h3>
+						</div>
+						<StatusRadio status={status as string} jobId={_id} />
+					</div>
 				</div>
 
 				<div className="flex flex-col items-start border-gray-100 border rounded-md p-2 mb-4 ">
@@ -60,12 +66,12 @@ const JobCard: React.FC<JobType> = ({
 
 				<div className="flex flex-row items-start border-gray-100 border rounded-md p-2 mb-4 ">
 					<div className="text-gray-600">Country:</div>
-					<p className="ml-2">{toUpperCase(country)}</p>
+					<p className="ml-2 text-gray-900">{toUpperCase(country)}</p>
 				</div>
 
 				<div className="flex flex-row items-start border-gray-100 border rounded-md p-2 ">
 					<div className="text-gray-600">Work Site:</div>
-					<p className="ml-2">{toUpperCase(workSite)}</p>
+					<p className="ml-2 text-gray-900">{toUpperCase(workSite)}</p>
 				</div>
 
 				{comments.length === 0 ? (

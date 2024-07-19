@@ -68,7 +68,6 @@ export const authenticateUser = async (req: Request, res: Response) => {
 		const foundUser = (await User.findOne({ email: email })
 			.lean()
 			.exec()) as UserTypeImported | null;
-		console.log('Found User:', foundUser);
 
 		if (!foundUser) {
 			return res.status(401).send('Authentication failed');

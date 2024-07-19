@@ -3,6 +3,13 @@ import connectDB from '../config/database';
 import Job from '../models/job.model';
 import User from '../models/user.model';
 
+enum CompanyStatus {
+	NoAnswer = 'no answer',
+	PositiveFeedback = 'positive feedback',
+	Interview = 'interview',
+}
+
+
 //*Get Job by ID
 export const getJobById = async (req: Request, res: Response) => {
 	const { id } = req.params;
@@ -42,7 +49,6 @@ export const getJobsByUserId = async (req: Request, res: Response) => {
 			total,
 			jobs,
 		};
-		console.log(jobs);
 
 		res.status(200).json(result);
 	} catch (error) {
@@ -111,6 +117,35 @@ export const updateJob = async (req: Request, res: Response) => {
 		console.log('Update status error:', error);
 		res.status(500).json({ message: 'Error updating job. Please try again.' });
 	}
+};
+
+//*Update a job Status
+export const updateJobStatus = async (req: Request, res: Response) => {
+    try {
+        const jobId = req.params.id;
+        const { status } = req.body;
+
+        // Validate the new status against the enum
+        if (!Object.values(CompanyStatus).includes(status)) {
+            return res.status(400).json({ error: 'Invalid status value' });
+        }
+		const find = await Job.findById(jobId);
+		if (!find) return res.status(404).json({ message: 'Job not found' });
+        // Find the job by ID and update the status
+        const updatedJob = await Job.findByIdAndUpdate(
+            jobId,
+            { $set: { status: status } }, // Correctly structure the update object
+            { new: true }
+        );
+
+        if (!updatedJob) {
+            return res.status(404).json({ error: 'Job not found' });
+        }
+
+        res.json(updatedJob);
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
 };
 
 //*Delete a job

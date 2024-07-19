@@ -18,6 +18,9 @@ jobRouter.get('/:id', JobController.getJobById);
 //* Update Job By ID
 jobRouter.post('/:id', JobController.updateJob);
 
+//* Update Job Status By ID
+jobRouter.post('/status/:id', JobController.updateJobStatus);
+
 //* Delete Job By ID
 jobRouter.delete('/:id', JobController.deleteJob);
 
