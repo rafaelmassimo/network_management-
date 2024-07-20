@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import { JobType } from '../types/dataType';
-import StatusRadio from './StatusRadio';
+import StatusJobRadio from './StatusJobRadio';
 
 const JobCard: React.FC<JobType> = ({
 	_id,
@@ -48,7 +48,7 @@ const JobCard: React.FC<JobType> = ({
 								</a>
 							</h3>
 						</div>
-						<StatusRadio status={status as string} jobId={_id} />
+						<StatusJobRadio status={status as string} jobId={_id} />
 					</div>
 				</div>
 
@@ -75,18 +75,23 @@ const JobCard: React.FC<JobType> = ({
 				</div>
 
 				{comments.length === 0 ? (
-					<div className="flex flex-col justify-center items-center h-full mt-4 border rounded-md">
-						<div className="text-gray-600 text-center p-3 italic">No comments</div>
-					</div>
-				) : (
-					<>
-						<div className="flex flex-row lg:flex-row justify-start mb-4 mt-2 ">
+					<div className="max-h-auto">
+						<div className="flex flex-row lg:flex-row justify-start mb-4 mt-2">
 							<div className="text-gray-600">Comment:</div>
 						</div>
-						<div className="bg-gray-200 rounded-md p-3">
+						<div className="flex flex-row justify-center items-center bg-gray-200 rounded-md p-3 min-h-20 max-h-25">
+							<p className='text-gray-500 italic'>No comments</p>
+						</div>
+					</div>
+				) : (
+					<div className="max-h-auto">
+						<div className="flex flex-row lg:flex-row justify-start mb-4 mt-2">
+							<div className="text-gray-600">Comment:</div>
+						</div>
+						<div className="bg-gray-200 rounded-md p-3 min-h-20  max-h-25">
 							<p>{comments}</p>
 						</div>
-					</>
+					</div>
 				)}
 
 				<div className="flex flex-col lg:flex-row justify-end mt-4">

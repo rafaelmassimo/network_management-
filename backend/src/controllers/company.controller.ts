@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import connectDB from '../config/database';
 import Company from '../models/company.model';
+import { CompanyStatus } from '../models/company.model';
 
 export const getCompanies = async (req: Request, res: Response) => {
 	try {
@@ -107,6 +108,35 @@ export const updateCompany = async (req: Request, res: Response) => {
 		console.log('Update status error:', error);
 		res.status(500).json({ message: 'Error updating company. Please try again.' });
 	}
+};
+
+//*Update a company Status
+export const updateCompanyStatus = async (req: Request, res: Response) => {
+    try {
+        const companyId = req.params.id;
+        const { status } = req.body;
+
+        // Validate the new status against the enum
+        if (!Object.values(CompanyStatus).includes(status)) {
+            return res.status(400).json({ error: 'Invalid status value' });
+        }
+		const find = await Company.findById(companyId);
+		if (!find) return res.status(404).json({ message: 'Company not found' });
+        // Find the company by ID and update the status
+        const updatedCompany = await Company.findByIdAndUpdate(
+            companyId,
+            { $set: { status: status } }, // Correctly structure the update object
+            { new: true }
+        );
+
+        if (!updatedCompany) {
+            return res.status(404).json({ error: 'Company not found' });
+        }
+
+        res.json(updatedCompany);
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
 };
 
 export const deleteCompany = async (req: Request, res: Response) => {

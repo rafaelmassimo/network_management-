@@ -16,8 +16,11 @@ companiesRouter.get('/:id', CompanyController.getCompanyById);
 //* Create a new company
 companiesRouter.post('/newCompany', CompanyController.createCompany);
 
-//* Update a company status
+//* Update a company 
 companiesRouter.post('/:id', CompanyController.updateCompany);
+
+//* Update Job Status By ID
+companiesRouter.post('/status/:id', CompanyController.updateCompanyStatus);
 
 //* Delete a company
 companiesRouter.delete('/:id', CompanyController.deleteCompany)

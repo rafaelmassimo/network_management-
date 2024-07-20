@@ -97,28 +97,6 @@ const EditCompanyForm = () => {
 								onChange={(e) => setFields({ ...fields, companyName: e.target.value })}
 							/>
 
-							<div className="flex flex-col w-full">
-								<label className="text-center" htmlFor="linkedinProfiles">
-									LinkedIn Profile:
-								</label>
-								<LinkedinInputField
-									linkedinProfiles={fields.linkedinProfiles as string[]}
-									setFields={setFields}
-									fields={fields}
-								/>
-							</div>
-
-							<label htmlFor="comments">Comments:</label>
-							<input
-								type="text"
-								id="comments"
-								name="comments"
-								className="border rounded w-full py-2 px-3 mb-2"
-								placeholder="Insert Comments here"
-								value={fields.comments}
-								onChange={(e) => setFields({ ...fields, comments: e.target.value })}
-							/>
-
 							<label htmlFor="companyLink">Company Link:</label>
 							<input
 								type="text"
@@ -130,6 +108,17 @@ const EditCompanyForm = () => {
 								value={fields.companyLink}
 								onChange={(e) => setFields({ ...fields, companyLink: e.target.value })}
 							/>
+
+							<div className="flex flex-col w-full">
+								<label className="text-center" htmlFor="linkedinProfiles">
+									LinkedIn Profile:
+								</label>
+								<LinkedinInputField
+									linkedinProfiles={fields.linkedinProfiles as string[]}
+									setFields={setFields}
+									fields={fields}
+								/>
+							</div>
 
 							<label htmlFor="status" className="block text-gray-700 font-bold mb-2">
 								Contact Status:
@@ -162,6 +151,17 @@ const EditCompanyForm = () => {
 								required
 								value={fields.country}
 								onChange={(e) => setFields({ ...fields, country: e.target.value.toLowerCase() })}
+							/>
+
+							<label htmlFor="comments">Comments:</label>
+							<input
+								type="text"
+								id="comments"
+								name="comments"
+								className="border rounded w-full py-2 px-3 mb-2"
+								placeholder="Insert Comments here"
+								value={fields.comments}
+								onChange={(e) => setFields({ ...fields, comments: e.target.value })}
 							/>
 
 							<label htmlFor="images" className="block text-gray-700 font-bold mb-2">

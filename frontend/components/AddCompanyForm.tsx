@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import LinkedinInputField from '../components/LinkedinInputField';
 import PageName from '../components/PageName';
-import { CompanyFormType, CompanyStatus } from '../types/dataType';
 import Spinner from '../components/Spinner';
+import { CompanyFormType, CompanyStatus } from '../types/dataType';
 
 const AddCompanyForm = () => {
 	const { data: session } = useSession();
@@ -66,7 +66,7 @@ const AddCompanyForm = () => {
 		}
 	};
 
-	if(fields.user_id === '') return <Spinner loading={loading}/>
+	if (fields.user_id === '') return <Spinner loading={loading} />;
 
 	return (
 		<div className="m-4">
@@ -87,16 +87,6 @@ const AddCompanyForm = () => {
 						value={fields.companyName}
 						onChange={(e) => setFields({ ...fields, companyName: e.target.value })}
 					/>
-					<div className="flex flex-col w-full items-center">
-						<label className="text-center" htmlFor="linkedinProfiles">
-							LinkedIn Profile:
-						</label>
-						<LinkedinInputField
-							linkedinProfiles={fields.linkedinProfiles as string[]}
-							setFields={setFields}
-							fields={fields}
-						/>
-					</div>
 
 					<label htmlFor="companyLink">Company Link:</label>
 					<input
@@ -109,6 +99,16 @@ const AddCompanyForm = () => {
 						value={fields.companyLink}
 						onChange={(e) => setFields({ ...fields, companyLink: e.target.value })}
 					/>
+					<div className="flex flex-col w-full items-center">
+						<label className="text-center" htmlFor="linkedinProfiles">
+							LinkedIn Profile:
+						</label>
+						<LinkedinInputField
+							linkedinProfiles={fields.linkedinProfiles as string[]}
+							setFields={setFields}
+							fields={fields}
+						/>
+					</div>
 
 					<label htmlFor="status" className="block  mb-2">
 						Contact Status:

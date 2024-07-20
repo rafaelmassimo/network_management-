@@ -3,6 +3,7 @@ import React from 'react';
 import { CompanyCardProps } from '../types/dataType';
 import Comments from './Comments';
 import LinkedinLinks from './LinkedinLinks';
+import StatusCompanyRadio from './StatusCompanyRadio';
 
 const CompanyCard: React.FC<CompanyCardProps> = ({
 	id,
@@ -10,17 +11,25 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
 	companyLink,
 	linkedin,
 	comments,
+	status,
 }) => {
 	return (
 		<div className="rounded-xl shadow-md relative bg-white ">
 			<div className="p-4">
 				<div className="text-left md:text-center lg:text-left mb-6">
-					<div className="text-gray-600">Company Name:</div>
-					<h3 className="text-xl font-bold">
-						<a href={`${companyLink}`} target="_blank">
-							{companyName}
-						</a>
-					</h3>
+					<div className="grid grid-cols-2 gap-4">
+						<div className="flex flex-col items-start">
+							<p className="mr-4">Company Name:</p>
+							<h3 className="text-xl text-black font-bold p-1">
+								<a href={`${companyLink}`} target="_blank">
+									{companyName}
+								</a>
+							</h3>
+						</div>
+						<div className="flex items-center">
+							<StatusCompanyRadio status={status as string} jobId={id} />
+						</div>
+					</div>
 				</div>
 
 				{/* This is the LinkedinLinks component */}

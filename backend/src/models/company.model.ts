@@ -1,6 +1,6 @@
 import { Model, Schema, Types, model } from 'mongoose';
 
-enum CompanyStatus {
+export enum CompanyStatus {
 	NoAnswer = 'no answer',
 	PositiveFeedback = 'positive feedback',
 	Interview = 'interview',
@@ -11,7 +11,7 @@ export type CompanyType = {
 	id: Types.ObjectId;
 	companyName: string;
 	linkedinProfiles: string[];
-	comments: string[];
+	comments: string;
 	companyLink: string;
 	image: String;
 	status: CompanyStatus;
@@ -40,7 +40,7 @@ const CompanySchema = new Schema<CompanyType, CompanyModel>(
 			type: [String],
 		},
 		comments: {
-			type: [String],
+			type: String,
 		},
 		companyLink: {
 			type: String,

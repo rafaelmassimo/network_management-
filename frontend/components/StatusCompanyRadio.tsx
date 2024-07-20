@@ -1,12 +1,13 @@
 'use client';
-
 import React from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 import { CompanyStatus } from '../types/dataType';
 import { Label } from './ui/label';
 
-interface StatusRadioProps {
+interface StatusCompanyProps {
 	status: string;
 	jobId: string;
 }
@@ -16,25 +17,34 @@ interface StatusRadioFields {
 	jobId: string;
 }
 
-const StatusRadio = ({ status, jobId }: StatusRadioProps) => {
+const StatusCompanyRadio = ({ status, jobId }: StatusCompanyProps) => {
+	const name = usePathname();
+	console.log(name);
 	const [currentStatus, setCurrentStatus] = useState<StatusRadioFields>({
 		status: status,
 		jobId: '',
 	});
 
+	useEffect(() => {
+		console.log('StatusRadio useEffect');
+		
+
+	}, [currentStatus]);
+
 	const handleStatusChange = async (e: string) => {
 		setCurrentStatus((prev) => ({ ...prev, status: e }));
 
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/status/${jobId}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/status/${jobId}`, {cache: "no-store",
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ status:e}), //I'll send the new status to the server and the job id
+				body: JSON.stringify({ status: e }), //I'll send the new status to the server and the job id
 			});
 			if (response.status === 200) {
 				console.log('Job Status Updated successfully');
+				Swal.fire('Done!', 'Job Status Updated successfully.', 'success');
 			}
 		} catch (error) {
 			console.log(error);
@@ -53,7 +63,7 @@ const StatusRadio = ({ status, jobId }: StatusRadioProps) => {
 					/>
 					<Label htmlFor="option-one">No answers</Label>
 				</div>
-				<div className="flex items-center space-x-2 text-sky-900">
+				<div className="flex flex-row items-center space-x-2 text-sky-900">
 					<RadioGroupItem
 						className="text-sky-900 border-sky-300"
 						value={CompanyStatus.PositiveFeedback}
@@ -76,4 +86,4 @@ const StatusRadio = ({ status, jobId }: StatusRadioProps) => {
 	);
 };
 
-export default StatusRadio;
+export default StatusCompanyRadio;

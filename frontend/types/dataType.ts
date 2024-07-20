@@ -41,7 +41,7 @@ export interface Company {
 	_id: string;
 	companyName: string;
 	linkedinProfiles: string[];
-	comments: string[];
+	comments: string;
 	companyLink: string;
 	image: String;
 	status: CompanyStatus;
@@ -74,11 +74,12 @@ export interface CompanyCardProps {
 	companyName: string;
 	companyLink: string;
 	linkedin: string[];
-	comments: string[];
+	comments: string;
+	status: CompanyStatus;
 }
 
 export interface CommentsProps {
-	comments: string[];
+	comments: string;
 }
 
 export interface LinkedinProps {

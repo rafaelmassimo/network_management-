@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import CompanyCard from '../../components/CompanyCard';
 import Spinners from '../../components/Spinner';
 import { Company } from '../../types/dataType';
+import { CompanyStatus } from '../../types/dataType';
 
 const NetworkPage = () => {
 	const [companies, setCompanies] = useState([]);
@@ -75,7 +76,7 @@ const NetworkPage = () => {
 					You have no companies yet
 				</h3>
 			) : (
-				<section className="px-4 py-6">
+				<section className="px-4 py-6 bg-blue-50">
 					<div className="container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Recent Companies</h2>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -86,17 +87,21 @@ const NetworkPage = () => {
 										companyName={company.companyName}
 										companyLink={company.companyLink}
 										linkedin={company.linkedinProfiles}
-										comments={company.comments as string[]}
+										comments={company.comments as string}
+										status={company.status as CompanyStatus}
 									/>
 								</div>
 							))}
 						</div>
+						<div className='bg-white'>
+
 						<Pagination
 							page={page}
 							pageSize={pageSize}
 							totalItems={totalItems}
 							onPageChange={handlePageChange}
-						/>
+							/>
+							</div>
 					</div>
 				</section>
 			)}
