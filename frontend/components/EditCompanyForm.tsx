@@ -84,7 +84,7 @@ const EditCompanyForm = () => {
 					<PageName />
 
 					<form onSubmit={handleSubmit}>
-						<div className="flex flex-col justify-center items-center mb-4">
+						<div className="flex flex-col justify-center items-center mb-4 gap-2">
 							<label htmlFor="companyName">Company Name:</label>
 							<input
 								type="text"
@@ -109,7 +109,7 @@ const EditCompanyForm = () => {
 								onChange={(e) => setFields({ ...fields, companyLink: e.target.value })}
 							/>
 
-							<div className="flex flex-col w-full">
+							<div className="flex flex-col w-full gap-2">
 								<label className="text-center" htmlFor="linkedinProfiles">
 									LinkedIn Profile:
 								</label>

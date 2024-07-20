@@ -82,7 +82,7 @@ const EditJobForm = () => {
 					<PageName />
 
 					<form onSubmit={handleSubmit}>
-						<div className="flex flex-col justify-center items-center mb-4">
+						<div className="flex flex-col justify-center items-center mb-4 gap-2">
 							<label htmlFor="companyName">Company Name:</label>
 							<input
 								type="text"

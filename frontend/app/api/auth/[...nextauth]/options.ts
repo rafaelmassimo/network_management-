@@ -45,6 +45,8 @@ const options: NextAuthOptions = {
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 		}),
 		CredentialProvider({
+			//* In this case the user has to create first an account with email and password and then he can login with the same credentials
+			//* I have created with postman a user
 			name: 'Credentials',
 			credentials: {
 				email: { label: 'Email', type: 'text', placeholder: 'your email' },
@@ -102,11 +104,30 @@ const options: NextAuthOptions = {
 			}
 			return token;
 		},
-		session({ session, token }) {
+		async session({ session, token }) {
 			if (session.user) {
-				//if you do not have a role it will be a *user* as defined below
-				session.user.role = token.role || '*USER*';
+				// Store the current role or set to '*USER*' if not present
+				const currentRole = session.user.role || token.role || '*USER*';
+		
+				try {
+					const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/getOne`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ email: session.user.email }),
+					});
+		
+					const data = await response.json();
+					// Update session.user with fetched data
+					session.user = data;
+					// Reassign the role to avoid overriding it
+					session.user.role = currentRole;
+				} catch (error) {
+					console.error('Failed to fetch user data:', error);
+				}
 			}
+		
 			return session;
 		},
 	},
