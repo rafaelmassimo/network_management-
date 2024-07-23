@@ -5,7 +5,8 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import JobCard from '../../components/JobCard';
 import Spinners from '../../components/Spinner';
-import { CompanyStatus, JobType, WorkSite } from '../../types/dataType';
+import AlertMessage from '../../components/AlertMessage';
+import { CompanyStatus, JobType } from '../../types/dataType';
 
 const ApplicationsPage = () => {
 	const [jobs, setJobs] = useState([]);
@@ -70,9 +71,7 @@ const ApplicationsPage = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : jobs.length === 0 ? (
-				<h3 className="text-2xl font-bold text-orange-400 mt-6 text-center">
-					You have no jobs yet
-				</h3>
+				<AlertMessage sentence="You have not applied for any job yet." />
 			) : (
 				<section className="px-4 py-6 bg-blue-50">
 					<div className="container-xl lg:container m-auto">

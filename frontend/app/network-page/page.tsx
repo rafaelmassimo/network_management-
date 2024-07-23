@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import CompanyCard from '../../components/CompanyCard';
 import Spinners from '../../components/Spinner';
+import AlertMessage from '../../components/AlertMessage';
 import { Company } from '../../types/dataType';
 import { CompanyStatus } from '../../types/dataType';
 
@@ -72,9 +73,7 @@ const NetworkPage = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : companies.length === 0 ? (
-				<h3 className="text-2xl font-bold text-orange-400 mt-6 text-center">
-					You have no companies yet
-				</h3>
+				<AlertMessage sentence="You have no companies yet." />
 			) : (
 				<section className="px-4 py-6 bg-blue-50">
 					<div className="container-xl lg:container m-auto">
