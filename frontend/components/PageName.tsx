@@ -3,7 +3,6 @@ import React from 'react';
 
 const PageName = () => {
 	const pathName = usePathname();
-	console.log(pathName);
 	
 	let pageName = '';
 
@@ -23,6 +22,10 @@ const PageName = () => {
         case pathName.includes('/applications-page/'):
             pageName = 'Edit Job Application';
             break;
+
+            case pathName === ('/register-page'):
+                pageName = 'Register Page';
+                break;
 
         default:
             break;

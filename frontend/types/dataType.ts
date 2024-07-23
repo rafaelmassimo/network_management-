@@ -48,8 +48,7 @@ export interface Company {
 	country: string;
 }
 
-export enum 
-WorkSite {
+export enum WorkSite {
 	InPerson = 'in person',
 	Hybrid = 'hybrid',
 	Remote = 'remote',

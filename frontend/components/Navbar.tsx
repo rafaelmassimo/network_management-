@@ -18,7 +18,7 @@ const Navbar = () => {
 	console.log(session);
 
 	return (
-		<nav className="bg-sky-800 border-b border-sky-500">
+		<nav className="bg-gradient-to-r from-sky-300 to-sky-800 border-b border-sky-300">
 			<div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
 				<div className="relative flex h-20 items-center justify-between">
 					<div className="absolute inset-y-0 left-0 flex items-center md:hidden">
