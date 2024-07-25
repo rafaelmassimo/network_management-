@@ -1,11 +1,17 @@
 import { UserTypeImported } from '@/types/dataType';
-import { NextAuthOptions, User } from 'next-auth';
+import { NextAuthOptions } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+import LinkedInProvider from 'next-auth/providers/linkedin';
 
 const options: NextAuthOptions = {
 	providers: [
+		LinkedInProvider({
+			clientId: process.env.NEXT_LINKEDIN_CLIENT_ID!,
+			clientSecret: process.env.NEXT_LINKEDIN_CLIENT_SECRET!,
+		}),
+
 		GitHubProvider({
 			profile(profile) {
 				// console.log('Profile Github:', profile);
@@ -108,7 +114,7 @@ const options: NextAuthOptions = {
 			if (session.user) {
 				// Store the current role or set to '*USER*' if not present
 				const currentRole = session.user.role || token.role || '*USER*';
-		
+
 				try {
 					const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/getOne`, {
 						method: 'POST',
@@ -117,7 +123,7 @@ const options: NextAuthOptions = {
 						},
 						body: JSON.stringify({ email: session.user.email }),
 					});
-		
+
 					const data = await response.json();
 					// Update session.user with fetched data
 					session.user = data;
@@ -127,12 +133,10 @@ const options: NextAuthOptions = {
 					console.error('Failed to fetch user data:', error);
 				}
 			}
-		
+
 			return session;
 		},
 	},
 };
 
 export default options;
-
-

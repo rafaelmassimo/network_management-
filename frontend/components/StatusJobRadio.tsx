@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
@@ -10,6 +10,8 @@ import { Label } from './ui/label';
 interface StatusRadioProps {
 	status: string;
 	jobId: string;
+	updateDate: (updatedAt: Date) => void;
+
 }
 
 interface StatusRadioFields {
@@ -17,19 +19,11 @@ interface StatusRadioFields {
 	jobId: string;
 }
 
-const StatusJobRadio = ({ status, jobId }: StatusRadioProps) => {
-	const name = usePathname();
-	console.log(name);
+const StatusJobRadio = ({ status, jobId, updateDate }: StatusRadioProps) => {
 	const [currentStatus, setCurrentStatus] = useState<StatusRadioFields>({
 		status: status,
 		jobId: '',
 	});
-
-	useEffect(() => {
-		console.log('StatusRadio useEffect');
-		
-
-	}, [currentStatus]);
 
 	const handleStatusChange = async (e: string) => {
 		setCurrentStatus((prev) => ({ ...prev, status: e }));
@@ -43,6 +37,8 @@ const StatusJobRadio = ({ status, jobId }: StatusRadioProps) => {
 				body: JSON.stringify({ status: e }), //I'll send the new status to the server and the job id
 			});
 			if (response.status === 200) {
+				const data = await response.json();
+				updateDate(data.updatedAt);			
 				console.log('Job Status Updated successfully');
 				Swal.fire('Done!', 'Job Status Updated successfully.', 'success');
 			}

@@ -1,42 +1,38 @@
+'use client';
+
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import { JobType } from '../types/dataType';
 import StatusJobRadio from './StatusJobRadio';
+const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, comments, country, status, updatedAt, workSite, }) => {
+	const [newUpdatedDate, setNewUpdatedDate] = useState<string>('');
 
-const JobCard: React.FC<JobType> = ({
-	_id,
-	companyName,
-	companyLink,
-	jobInfo,
-	comments,
-	country,
-	status,
-	updatedAt,
-	workSite,
-}) => {
 	const toUpperCase = (str: string) => {
 		const newString = str.charAt(0).toUpperCase() + str.slice(1);
 		return newString;
 	};
 
-	const date = new Date(updatedAt as Date);
+	
+		const updateDate = (updatedAt:Date) => {
+			const date = new Date(updatedAt as Date);
 
-	const options = {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-		hour: 'numeric',
-		minute: 'numeric',
-		second: 'numeric',
-	};
+			const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', };
 
-	const formattedDate = date.toLocaleDateString('en-US', options as any);
+			const formattedDate = date.toLocaleDateString('en-US', options as any);
+			setNewUpdatedDate(formattedDate);
+		};
+
+	useEffect(() => {
+		updateDate(updatedAt);
+	}, []);
+	
+
 	return (
 		<div className="rounded-xl shadow-md relative bg-white min-h-[500px]">
 			<div className="p-4">
 				<p className="text-sm mb-3">
-					<span className=" text-gray-600">Last Update: </span> {formattedDate}
+					<span className=" text-gray-600">Last Update: </span> {newUpdatedDate}
 				</p>
 				<div className="text-left md:text-center lg:text-left mb-6">
 					<div className="flex flex-row text-black">
@@ -48,7 +44,7 @@ const JobCard: React.FC<JobType> = ({
 								</a>
 							</h3>
 						</div>
-						<StatusJobRadio status={status as string} jobId={_id} />
+						<StatusJobRadio status={status as string} jobId={_id} updateDate={updateDate as any}  />
 					</div>
 				</div>
 
@@ -80,7 +76,7 @@ const JobCard: React.FC<JobType> = ({
 							<div className="text-gray-600">Comment:</div>
 						</div>
 						<div className="flex flex-row justify-center items-center bg-gray-200 rounded-md p-3 min-h-20 max-h-25">
-							<p className='text-gray-500 italic'>No comments</p>
+							<p className="text-gray-500 italic">No comments</p>
 						</div>
 					</div>
 				) : (
