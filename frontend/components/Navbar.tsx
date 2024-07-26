@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import profileDefault from '@/assets/images/profile.png';
 import { useSession } from 'next-auth/react';
@@ -55,7 +54,7 @@ const Navbar = () => {
 						<Link className="flex flex-shrink-0 items-center" href="/">
 							{/* <Image className="h-10 w-auto" src={logo} alt="Network Management" /> */}
 							<span className="hidden md:block text-white text-2xl font-bold ml-1">
-								Network Management
+								CareerExplorer
 							</span>
 						</Link>
 						{/* <!-- Desktop Menu Hidden below md screens --> */}
@@ -153,7 +152,7 @@ const Navbar = () => {
 							</div>
 
 							{/* <!-- Profile dropdown --> */}
-							{isMenuOpen && (
+							{/* {isMenuOpen && (
 								<div
 									id="user-menu"
 									className=" absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -190,14 +189,15 @@ const Navbar = () => {
 										Sign Out
 									</a>
 								</div>
-							)}
+							)} */}
 						</div>
 					</div>
-					<div className="ml-2 rounded-md border p-1 border-gray-900 hover:bg-slate-400 hover:border-slate-100 transition">
+					<div className=" flex flex-row bg-gray-400 items-center justify-center ml-2 rounded-md border p-1 border-gray-900 hover:bg-slate-400 hover:border-slate-100 transition">
 						{session ? (
 							<>
-								<p>{session?.user?.username}</p>
-								<Link href="/api/auth/signout?callbackUrl=/">Logout</Link>
+								<Link className="ml-2" href="/api/auth/signout?callbackUrl=/">
+									<p>{`${session?.user?.username} Logout`}</p>
+								</Link>
 							</>
 						) : (
 							<Link href="/api/auth/signin">Login</Link>
@@ -207,7 +207,7 @@ const Navbar = () => {
 			</div>
 
 			{/* <!-- Mobile menu, show/hide based on menu state. --> */}
-			{isMobileMenuOpen && (
+			{/* {isMobileMenuOpen && (
 				<div id="mobile-menu">
 					<div className="space-y-1 px-2 pb-3 pt-2">
 						<a
@@ -227,14 +227,14 @@ const Navbar = () => {
 							className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
 						>
 							Add Property
-						</a>
-						{/* <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
+						</a> */}
+			{/* <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
 							<FaGoogle className="mr-2 text-white"></FaGoogle>
 							<span>Login or Register</span>
 						</button> */}
-					</div>
-				</div>
-			)}
+			{/* </div>
+				</div> */}
+			{/* )} */}
 		</nav>
 	);
 };
