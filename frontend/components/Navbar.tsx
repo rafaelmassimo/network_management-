@@ -1,11 +1,10 @@
 'use client';
-import React from 'react';
-import profileDefault from '../assets/images/profile.png';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import profileDefault from '../assets/images/profile.png';
 
 const Navbar = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -27,7 +26,7 @@ const Navbar = () => {
 						<button
 							type="button"
 							id="mobile-dropdown-button"
-							className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+							className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
 							aria-controls="mobile-menu"
 							aria-expanded="false"
 							onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -67,8 +66,8 @@ const Navbar = () => {
 									<Link
 										href="/"
 										className={`${
-											pathname === '/' ? 'bg-black' : ''
-										} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+											pathname === '/' ? 'bg-gradient-to-r from-teal-200 to-lime-200' : 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+										}   hover:text-black rounded-md px-3 py-2`}
 									>
 										Home
 									</Link>
@@ -76,8 +75,10 @@ const Navbar = () => {
 								<Link
 									href="/network-page"
 									className={`${
-										pathname === '/network-page' ? 'bg-black' : ''
-									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+										pathname === '/network-page'
+											? 'text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200'
+											: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+									}  hover:bg-gradient-to-r from-teal-200 to-lime-200 hover:text-black rounded-md px-3 py-2`}
 								>
 									Your Network
 								</Link>
@@ -85,8 +86,10 @@ const Navbar = () => {
 								<Link
 									href="/add-company"
 									className={`${
-										pathname === '/add-company' ? 'bg-black' : ''
-									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+										pathname === '/add-company'
+											? 'text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200'
+											: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+									}  hover:bg-gradient-to-r from-teal-200 to-lime-200 hover:text-black rounded-md px-3 py-2`}
 								>
 									Add Company
 								</Link>
@@ -94,8 +97,8 @@ const Navbar = () => {
 								{/* <Link
 									href="/ClientMember"
 									className={`${
-										pathname === '/ClientMember' ? 'bg-black' : ''
-									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+										pathname === '/ClientMember' ? 'bg-black' : 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+									} text-white  hover:bg-gray-900 hover:text-black rounded-md px-3 py-2`}
 								>
 									Member Profile
 								</Link> */}
@@ -103,16 +106,20 @@ const Navbar = () => {
 								<Link
 									href="/applications-page"
 									className={`${
-										pathname === '/applications-page' ? 'bg-black' : ''
-									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+										pathname === '/applications-page'
+											? 'bg-gradient-to-r from-teal-200 to-lime-200'
+											: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+									}   hover:text-black rounded-md px-3 py-2`}
 								>
 									Your Job Applications
 								</Link>
 								<Link
 									href="/add-job"
 									className={`${
-										pathname === '/add-job' ? 'bg-black' : ''
-									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+										pathname === '/add-job'
+											? 'bg-gradient-to-r from-teal-200 to-lime-200'
+											: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+									} hover:text-black rounded-md px-3 py-2`}
 								>
 									Add Job Application
 								</Link>
@@ -123,7 +130,7 @@ const Navbar = () => {
 					{/* <!-- Right Side Menu (Logged Out) --> */}
 					{/* <div className="hidden md:block md:ml-6">
 						<div className="flex items-center">
-							<button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
+							<button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-black rounded-md px-3 py-2">
 								<FaGoogle className="mr-2 text-white"></FaGoogle>
 
 								<span>Login or Register</span>
@@ -215,17 +222,17 @@ const Navbar = () => {
 						</a>
 						<a
 							href="/properties.html"
-							className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+							className="text-gray-300 hover:bg-gray-700 hover:text-black block rounded-md px-3 py-2 text-base font-medium"
 						>
 							Properties
 						</a>
 						<a
 							href="/add-property.html"
-							className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+							className="text-gray-300 hover:bg-gray-700 hover:text-black block rounded-md px-3 py-2 text-base font-medium"
 						>
 							Add Property
 						</a> */}
-			{/* <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
+			{/* <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-black rounded-md px-3 py-2 my-4">
 							<FaGoogle className="mr-2 text-white"></FaGoogle>
 							<span>Login or Register</span>
 						</button> */}
