@@ -59,7 +59,7 @@ const RegisterForm = () => {
 
 				Swal.fire({
 					title: 'User Created!',
-					text: 'Now you can Login!',
+					text: 'Now you can Login with your email and password!',
 					icon: 'success',
 				}).then(() => {
 					setLoading(false);
@@ -135,7 +135,7 @@ const RegisterForm = () => {
 						</div>
 					)}
 
-					<label htmlFor="images" className="block font-bold mb-2">
+					{/* <label htmlFor="images" className="block font-bold mb-2">
 						Images (Select one Image)
 					</label>
 					<input
@@ -146,7 +146,7 @@ const RegisterForm = () => {
 						accept="image/*"
 						multiple
 						onChange={(e) => setUserData({ ...userData, confirmPassword: e.target.value })}
-					/>
+					/> */}
 
 					<div className="flex flex-col justify-center items-center">
 						{loading ? (
@@ -166,7 +166,7 @@ const RegisterForm = () => {
 									cursor: !checkPassword ? 'not-allowed' : 'pointer',
 								}}
 							>
-								Add Job
+								Create User
 							</button>
 						)}
 					</div>

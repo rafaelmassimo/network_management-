@@ -16,7 +16,7 @@ const LinkedinLinks: React.FC<LinkedinProps> = ({ linkedin }) => {
 					<div className="text-orange-600 italic">No LinkedIn link</div>
 				</div>
 			) : (
-				<div className="flex flex-col items-start border-gray-100 border rounded-md p-2 ">
+				<div className="flex flex-col items-start border-gray-100 border rounded-md p-2 min-h-[120px] max-h-[120px]  overflow-y-auto">
 					{linkedin.map((link, index) => (
 						<a
 							key={index}

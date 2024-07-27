@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import profileDefault from '@/assets/images/profile.png';
+import profileDefault from '../assets/images/profile.png';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,8 +14,10 @@ const Navbar = () => {
 
 	const { data: session } = useSession();
 	const profileImage = session?.user?.picture;
-	console.log(session);
 
+	if (!session) {
+		return;
+	}
 	return (
 		<nav className="bg-gradient-to-r from-sky-300 to-sky-800 border-b border-sky-300">
 			<div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
@@ -51,23 +53,26 @@ const Navbar = () => {
 
 					<div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
 						{/* <!-- Logo --> */}
-						<Link className="flex flex-shrink-0 items-center" href="/">
-							{/* <Image className="h-10 w-auto" src={logo} alt="Network Management" /> */}
-							<span className="hidden md:block text-white text-2xl font-bold ml-1">
-								CareerExplorer
-							</span>
-						</Link>
+
+						{/* <Image className="h-10 w-auto" src={logo} alt="Network Management" /> */}
+						<span className="hidden md:block text-white text-2xl font-bold ml-1">
+							CareerExplorer
+						</span>
+
 						{/* <!-- Desktop Menu Hidden below md screens --> */}
 						<div className="hidden md:ml-6 md:block">
 							<div className="flex space-x-2">
-								<Link
-									href="/"
-									className={`${
-										pathname === '/' ? 'bg-black' : ''
-									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
-								>
-									Home
-								</Link>
+								{/* if session do not exist then show this home link  */}
+								{!session && (
+									<Link
+										href="/"
+										className={`${
+											pathname === '/' ? 'bg-black' : ''
+										} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+									>
+										Home
+									</Link>
+								)}
 								<Link
 									href="/network-page"
 									className={`${
@@ -86,14 +91,14 @@ const Navbar = () => {
 									Add Company
 								</Link>
 
-								<Link
+								{/* <Link
 									href="/ClientMember"
 									className={`${
 										pathname === '/ClientMember' ? 'bg-black' : ''
 									} text-white  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
 								>
 									Member Profile
-								</Link>
+								</Link> */}
 
 								<Link
 									href="/applications-page"
@@ -130,26 +135,13 @@ const Navbar = () => {
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
 						{/* <!-- Profile dropdown button --> */}
 						<div className="relative ml-3">
-							<div>
-								<button
-									type="button"
-									className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-									id="user-menu-button"
-									aria-expanded="false"
-									aria-haspopup="true"
-									onClick={() => setIsMenuOpen((prev) => !prev)}
-								>
-									<span className="absolute -inset-1.5"></span>
-									<span className="sr-only">Open user menu</span>
-									<Image
-										className="h-8 w-8 rounded-full"
-										src={profileImage || profileDefault}
-										alt=""
-										width={40}
-										height={40}
-									/>
-								</button>
-							</div>
+							<Image
+								className="h-8 w-8 rounded-full mr-3 mb-2"
+								src={profileImage || profileDefault}
+								alt=""
+								width={40}
+								height={40}
+							/>
 
 							{/* <!-- Profile dropdown --> */}
 							{/* {isMenuOpen && (
@@ -192,12 +184,17 @@ const Navbar = () => {
 							)} */}
 						</div>
 					</div>
-					<div className=" flex flex-row bg-gray-400 items-center justify-center ml-2 rounded-md border p-1 border-gray-900 hover:bg-slate-400 hover:border-slate-100 transition">
+					<div className=" flex flex-row justify-center items-center">
 						{session ? (
 							<>
-								<Link className="ml-2" href="/api/auth/signout?callbackUrl=/">
-									<p>{`${session?.user?.username} Logout`}</p>
-								</Link>
+								<button
+									type="button"
+									className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+								>
+									<Link href="/api/auth/signout?callbackUrl=/login-page">
+										<p>{`${session?.user?.username} Logout`}</p>
+									</Link>
+								</button>
 							</>
 						) : (
 							<Link href="/api/auth/signin">Login</Link>
