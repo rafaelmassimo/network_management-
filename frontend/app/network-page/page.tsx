@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import CompanyCard from '../../components/CompanyCard';
 import Spinners from '../../components/Spinner';
+import PositionCounter from '../../components/PositionCounter';
 import SearchCompanyForm from '../../components/SearchCompanyForm';
 import AlertMessage from '../../components/AlertMessage';
 import { Company } from '../../types/dataType';
@@ -76,9 +77,10 @@ const NetworkPage = () => {
 			) : companies.length === 0 ? (
 				<AlertMessage sentence="You have no companies yet." />
 			) : (
-				<section className="px-4 py-6 bg-blue-50">
+				<section className="px-4 py-6 bg-blue-50 min-h-screen overflow-hidden">
 					<div className="container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Recent Companies</h2>
+						<PositionCounter totalItems={totalItems} text='Total Companies:' />
 						<SearchCompanyForm/>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							{companies.map((company: Company) => (

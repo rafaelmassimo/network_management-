@@ -8,6 +8,7 @@ import JobCard from '../../components/JobCard';
 import Spinners from '../../components/Spinner';
 import SearchJobsForm from '../../components/SearchJobsForm';
 import AlertMessage from '../../components/AlertMessage';
+import PositionCounter from '../../components/PositionCounter';
 import { CompanyStatus, JobType } from '../../types/dataType';
 
 const ApplicationsPage = () => {
@@ -78,6 +79,7 @@ const ApplicationsPage = () => {
 				<section className="px-4 py-6 bg-blue-50">
 					<div className="container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Recent Jobs</h2>
+						<PositionCounter totalItems={totalItems} text='Total Positions Applied:' />
 						<SearchJobsForm />
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							{jobs.map((job: JobType) => (

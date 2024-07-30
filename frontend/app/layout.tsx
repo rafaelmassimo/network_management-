@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import React from 'react';
 import { SessionProvider } from '../components/AuthProvider';
+import Footer from '../components/Footer';
 
 import NavBar from '../components/Navbar';
 
@@ -26,6 +27,7 @@ export default function RootLayout({
 				<body className={montserrat.className}>
 					<NavBar />
 					{children}
+				<Footer />
 				</body>
 			</html>
 		</SessionProvider>

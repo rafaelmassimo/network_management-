@@ -8,6 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import JobCard from '../../../components/JobCard';
 import Spinners from '../../../components/Spinner';
 import SearchJobsForm from '../../../components/SearchJobsForm';
+import PositionCounter from '../../../components/PositionCounter';
 import AlertMessage from '../../../components/AlertMessage';
 import { CompanyStatus, JobType } from '../../../types/dataType';
 import Link from 'next/link';
@@ -91,7 +92,7 @@ const ApplicationsPage = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : jobs.length === 0 ? (
-				<div className='flex flex-col w-full items-center'>
+				<div className="flex flex-col w-full items-center">
 					<Link href="/applications-page" className="text-blue-500 underline mt-2 items-center">
 						Return
 					</Link>
@@ -99,8 +100,9 @@ const ApplicationsPage = () => {
 				</div>
 			) : (
 				<section className="px-4 py-6 bg-blue-50">
-					<div className="flex flex-col container-xl lg:container m-auto">
+					<div className="container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Result Jobs</h2>
+						<PositionCounter totalItems={totalItems} text='Total Result:' />
 						<SearchJobsForm />
 						<Link href="/applications-page" className="text-blue-500 underline mb-2">
 							Return
