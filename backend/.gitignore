@@ -42,7 +42,6 @@ next-env.d.ts
 **/node_modules/
 
 # Ignore package-lock.json at any level
-**/package-lock.json
+
 
 # Ignore package.json at any level (unusual to ignore this, as it's important for defining project dependencies)
-**/package.json
