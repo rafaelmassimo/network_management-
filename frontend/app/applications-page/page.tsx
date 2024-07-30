@@ -96,6 +96,9 @@ const ApplicationsPage = () => {
 								</div>
 							))}
 						</div>
+						
+					</div>
+					<div className='flex justify-center items-center my-10'>
 						<Pagination
 							page={page}
 							pageSize={pageSize}

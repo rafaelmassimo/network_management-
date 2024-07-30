@@ -59,7 +59,7 @@ export const getJobsByUserId = async (req: Request, res: Response) => {
 //*Search Jobs by Query
 // Just a function to normalize strings to make sure the search is case-insensitive and whitespace-insensitive
 function normalizeString(str: string): string {
-	return str.replace(/\s+/g, '').toLowerCase();
+	return str.replace(/\s+/g, '')
 }
 
 export const searchJobs = async (req: Request, res: Response) => {
@@ -84,16 +84,13 @@ export const searchJobs = async (req: Request, res: Response) => {
 		// Normalize search parameters
 		const normalizedCompanyName = normalizeString(companyName);
 		const normalizedJobTitle = normalizeString(jobTitle);
-		const normalizedCountry = normalizeString(country);
-		const normalizedStatus = normalizeString(status);
-		const normalizedWorkSite = normalizeString(workSite);
 
 		// Create regex patterns from normalized search parameters
 		const companyNamePattern = new RegExp(normalizedCompanyName, 'i');
 		const jobTitlePattern = new RegExp(normalizedJobTitle, 'i');
-		const countryPattern = new RegExp(normalizedCountry, 'i');
-		const statusPattern = new RegExp(normalizedStatus, 'i');
-		const workSitePattern = new RegExp(normalizedWorkSite, 'i');
+		const countryPattern = new RegExp(country, 'i');
+		const statusPattern = new RegExp(status, 'i');
+		const workSitePattern = new RegExp(workSite, 'i');
 
 		let query = {
 			owner: id,
@@ -113,7 +110,6 @@ export const searchJobs = async (req: Request, res: Response) => {
 			total,
 			jobResults,
 		};
-		console.log(result);
 
 		return res.status(200).json({ result, message: 'Jobs found successfully' });
 	} catch (error) {

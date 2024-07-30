@@ -1,25 +1,32 @@
 'use client';
 
 import React from 'react';
-import Pagination from '@/components/Pagination';
+import Pagination from "../../../components/Pagination";
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import CompanyCard from '../../components/CompanyCard';
-import Spinners from '../../components/Spinner';
-import SearchCompanyForm from '../../components/SearchCompanyForm';
-import AlertMessage from '../../components/AlertMessage';
-import { Company } from '../../types/dataType';
-import { CompanyStatus } from '../../types/dataType';
+import CompanyCard from '../../../components/CompanyCard';
+import Spinners from '../../../components/Spinner';
+import AlertMessage from '../../../components/AlertMessage';
+import { Company } from '../../../types/dataType';
+import { CompanyStatus } from '../../../types/dataType';
+import SearchCompanyForm from '../../../components/SearchCompanyForm';
+import { useSearchParams } from 'next/navigation';
+import { set } from 'mongoose';
+import Link from 'next/link';
 
 const NetworkPage = () => {
+	const { data: session } = useSession();
+    const searchParams = useSearchParams();
+	const companyName = searchParams.get('companyName') || '';
+	const status = searchParams.get('jobStatus') || '';
 	const [companies, setCompanies] = useState([]);
 	const [userId, setUserId] = useState<string>('');
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(6); //Here you can change the number of properties to be showed per page (3, 6, 9, 12, etc.)
 	const [totalItems, setTotalItems] = useState(0);
 	const [loading, setLoading] = useState<boolean>(true);
-	const { data: session } = useSession();
 
+    //>> Function to get the user ID
 	useEffect(() => {
 		const getUserId = async () => {
 			try {
@@ -43,11 +50,13 @@ const NetworkPage = () => {
 		}
 	}, [session]);
 
+    //>> Function to get the companies by query
 	useEffect(() => {
 		const fetchCompanies = async () => {
+			setLoading(true);
 			try {
 				const res = await fetch(
-					`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/byUser/${userId}?page=${page}&pageSize=${pageSize}`,
+					`${process.env.NEXT_PUBLIC_API_DOMAIN}/companies/search-companies/${userId}?page=${page}&pageSize=${pageSize}&companyName=${companyName}&jobStatus=${status}`,
 					{
 						cache: 'no-store',
 					},
@@ -56,14 +65,15 @@ const NetworkPage = () => {
 					const { companies, total } = await res.json();
 					setCompanies(companies);
 					setTotalItems(total);
-					setLoading(false);
 				}
 			} catch (error) {
 				console.log('Error:', error);
-			} 
+			} finally {
+                setLoading(false);
+            }
 		};
 		fetchCompanies();
-	}, [userId, page, pageSize]);
+	}, [userId, page, pageSize, companyName, status]);
 
 	const handlePageChange = (newPage: number) => {
 		setPage(newPage);
@@ -74,12 +84,17 @@ const NetworkPage = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : companies.length === 0 ? (
-				<AlertMessage sentence="You have no companies yet." />
+				<div className='flex flex-col w-full items-center'>
+					<Link href="/network-page" className="text-blue-500 underline mt-2 items-center">
+						Return
+					</Link>
+					<AlertMessage sentence="You have no result" />
+				</div>
 			) : (
 				<section className="px-4 py-6 bg-blue-50">
 					<div className="container-xl lg:container m-auto">
-						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Recent Companies</h2>
-						<SearchCompanyForm/>
+						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Search Companies</h2>
+                        <SearchCompanyForm/>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							{companies.map((company: Company) => (
 								<div key={company._id}>

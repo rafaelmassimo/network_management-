@@ -77,7 +77,7 @@ const Navbar = () => {
 								<Link
 									href="/network-page"
 									className={`${
-										pathname === '/network-page'
+										pathname.includes('/network-page')
 											? 'text-gray-900 bg-gradient-to-r from-purple-200 to-lime-200'
 											: 'hover:bg-gradient-to-r from-purple-300 to-lime-100'
 									}  hover:bg-gradient-to-r from-teal-200 to-lime-200 hover:text-black rounded-md px-3 py-2`}

@@ -10,16 +10,9 @@ import Spinners from '../../../components/Spinner';
 import SearchJobsForm from '../../../components/SearchJobsForm';
 import AlertMessage from '../../../components/AlertMessage';
 import { CompanyStatus, JobType } from '../../../types/dataType';
-
-
+import Link from 'next/link';
 
 const ApplicationsPage = () => {
-	const [jobs, setJobs] = useState<JobType[]>([]);
-	const [userId, setUserId] = useState<string>('');
-	const [page, setPage] = useState(1);
-	const [pageSize, setPageSize] = useState(6); //Here you can change the number of properties to be showed per page (3, 6, 9, 12, etc.)
-	const [totalItems, setTotalItems] = useState(0);
-	const [loading, setLoading] = useState<boolean>(true);
 	const { data: session } = useSession();
 	const searchParams = useSearchParams();
 	const companyName = searchParams.get('companyName') || '';
@@ -27,6 +20,12 @@ const ApplicationsPage = () => {
 	const country = searchParams.get('country') || '';
 	const workSite = searchParams.get('workSite') || '';
 	const jobStatus = searchParams.get('jobStatus') || '';
+	const [jobs, setJobs] = useState<JobType[]>([]);
+	const [userId, setUserId] = useState<string>('');
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(6); //Here you can change the number of properties to be showed per page (3, 6, 9, 12, etc.)
+	const [totalItems, setTotalItems] = useState(0);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	//>> UseEffect to get the userId
 	useEffect(() => {
@@ -55,8 +54,7 @@ const ApplicationsPage = () => {
 	//>> UseEffect to get the jobs searched
 	useEffect(() => {
 		const fetchJobs = async () => {
-
-            setLoading(true);
+			setLoading(true);
 			try {
 				const res = await fetch(
 					`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/search-jobs/${userId}
@@ -69,7 +67,9 @@ const ApplicationsPage = () => {
 				);
 				if (res.status === 200) {
 					//*My back end is retuning a 'result' object which contains the 'jobResults' and the 'total' object number of items
-					const { result: { jobResults, total } } = await res.json();
+					const {
+						result: { jobResults, total },
+					} = await res.json();
 					setJobs(jobResults);
 					setTotalItems(total);
 				}
@@ -80,7 +80,7 @@ const ApplicationsPage = () => {
 			}
 		};
 		fetchJobs();
-	}, [userId, page, pageSize,companyName, jobTitle, country, workSite, jobStatus]);
+	}, [userId, page, pageSize, companyName, jobTitle, country, workSite, jobStatus]);
 
 	const handlePageChange = (newPage: number) => {
 		setPage(newPage);
@@ -91,12 +91,20 @@ const ApplicationsPage = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : jobs.length === 0 ? (
-				<AlertMessage sentence="You have no result" />
+				<div className='flex flex-col w-full items-center'>
+					<Link href="/applications-page" className="text-blue-500 underline mt-2 items-center">
+						Return
+					</Link>
+					<AlertMessage sentence="You have no result" />
+				</div>
 			) : (
 				<section className="px-4 py-6 bg-blue-50">
-					<div className="container-xl lg:container m-auto">
-						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Recent Jobs</h2>
+					<div className="flex flex-col container-xl lg:container m-auto">
+						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Result Jobs</h2>
 						<SearchJobsForm />
+						<Link href="/applications-page" className="text-blue-500 underline mb-2">
+							Return
+						</Link>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							{jobs.map((job: JobType) => (
 								<div key={job._id}>
@@ -114,12 +122,14 @@ const ApplicationsPage = () => {
 								</div>
 							))}
 						</div>
-						<Pagination
-							page={page}
-							pageSize={pageSize}
-							totalItems={totalItems}
-							onPageChange={handlePageChange}
-						/>
+						<div className="flex justify-center items-center my-10">
+							<Pagination
+								page={page}
+								pageSize={pageSize}
+								totalItems={totalItems}
+								onPageChange={handlePageChange}
+							/>
+						</div>
 					</div>
 				</section>
 			)}
