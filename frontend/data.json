@@ -3,14 +3,14 @@
     {
       "id": 1,
       "companyName": "Cisco Systems Canada Co",
-      "linkedin": ["https://www.linkedin.com/feed/", "https://www.linkedin.com/feed/"],
+      "linkedin": ["https://www.linkedin.com/in/ilearner/", "https://www.linkedin.com/feed/"],
       "comments":[ "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio et nisl posuere, euismod nisl nec, tincidunt nisl", "Nulla nec odio et nisl posuere, euismod ni"]
     },
     {
       "id": 2,
       "companyName": "Admiral",
       "linkedin": [
-        "https://www.linkedin.com/feed/"
+        "https://www.linkedin.com/feed/","https://www.linkedin.com/in/francescocarpineti/"
       ],
       "comments": ""
     },

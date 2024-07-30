@@ -1,7 +1,11 @@
+import '@/assets/styles/globals.css';
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
-import '@/assets/styles/globals.css'
-import NavBar from '@/components/Navbar'
+import React from 'react';
+import { SessionProvider } from '../components/AuthProvider';
+import Footer from '../components/Footer';
+
+import NavBar from '../components/Navbar';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -18,11 +22,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={montserrat.className}>
-				<NavBar/>
-				{children}
+		<SessionProvider>
+			<html lang="en" className='bg-blue-50'>
+				<body className={montserrat.className}>
+					<NavBar />
+					{children}
+				<Footer />
 				</body>
-		</html>
+			</html>
+		</SessionProvider>
 	);
 }
