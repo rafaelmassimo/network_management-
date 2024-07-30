@@ -66,7 +66,9 @@ const Navbar = () => {
 									<Link
 										href="/"
 										className={`${
-											pathname === '/' ? 'bg-gradient-to-r from-teal-200 to-lime-200' : 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+											pathname === '/'
+												? 'bg-gradient-to-r from-teal-200 to-lime-200'
+												: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
 										}   hover:text-black rounded-md px-3 py-2`}
 									>
 										Home
@@ -76,8 +78,8 @@ const Navbar = () => {
 									href="/network-page"
 									className={`${
 										pathname === '/network-page'
-											? 'text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200'
-											: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+											? 'text-gray-900 bg-gradient-to-r from-purple-200 to-lime-200'
+											: 'hover:bg-gradient-to-r from-purple-300 to-lime-100'
 									}  hover:bg-gradient-to-r from-teal-200 to-lime-200 hover:text-black rounded-md px-3 py-2`}
 								>
 									Your Network
@@ -87,8 +89,8 @@ const Navbar = () => {
 									href="/add-company"
 									className={`${
 										pathname === '/add-company'
-											? 'text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200'
-											: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
+											? 'text-gray-900 bg-gradient-to-r from-purple-200 to-lime-200'
+											: 'hover:bg-gradient-to-r from-purple-300 to-lime-100'
 									}  hover:bg-gradient-to-r from-teal-200 to-lime-200 hover:text-black rounded-md px-3 py-2`}
 								>
 									Add Company
@@ -106,10 +108,10 @@ const Navbar = () => {
 								<Link
 									href="/applications-page"
 									className={`${
-										pathname === '/applications-page'
+										pathname.includes('/applications-page')
 											? 'bg-gradient-to-r from-teal-200 to-lime-200'
 											: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
-									}   hover:text-black rounded-md px-3 py-2`}
+									} hover:text-black rounded-md px-3 py-2`}
 								>
 									Your Job Applications
 								</Link>

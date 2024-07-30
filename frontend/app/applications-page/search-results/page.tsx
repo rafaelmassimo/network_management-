@@ -1,24 +1,34 @@
 'use client';
 
 import React from 'react';
-import Pagination from '../../components/Pagination';
+import Pagination from '../../../components/Pagination';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import JobCard from '../../components/JobCard';
-import Spinners from '../../components/Spinner';
-import SearchJobsForm from '../../components/SearchJobsForm';
-import AlertMessage from '../../components/AlertMessage';
-import { CompanyStatus, JobType } from '../../types/dataType';
+import { useSearchParams } from 'next/navigation';
+import JobCard from '../../../components/JobCard';
+import Spinners from '../../../components/Spinner';
+import SearchJobsForm from '../../../components/SearchJobsForm';
+import AlertMessage from '../../../components/AlertMessage';
+import { CompanyStatus, JobType } from '../../../types/dataType';
+
+
 
 const ApplicationsPage = () => {
-	const [jobs, setJobs] = useState([]);
+	const [jobs, setJobs] = useState<JobType[]>([]);
 	const [userId, setUserId] = useState<string>('');
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(6); //Here you can change the number of properties to be showed per page (3, 6, 9, 12, etc.)
 	const [totalItems, setTotalItems] = useState(0);
 	const [loading, setLoading] = useState<boolean>(true);
 	const { data: session } = useSession();
+	const searchParams = useSearchParams();
+	const companyName = searchParams.get('companyName') || '';
+	const jobTitle = searchParams.get('jobTitle') || '';
+	const country = searchParams.get('country') || '';
+	const workSite = searchParams.get('workSite') || '';
+	const jobStatus = searchParams.get('jobStatus') || '';
 
+	//>> UseEffect to get the userId
 	useEffect(() => {
 		const getUserId = async () => {
 			try {
@@ -42,27 +52,35 @@ const ApplicationsPage = () => {
 		}
 	}, [session]);
 
+	//>> UseEffect to get the jobs searched
 	useEffect(() => {
 		const fetchJobs = async () => {
+
+            setLoading(true);
 			try {
 				const res = await fetch(
-					`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/byUser/${userId}?page=${page}&pageSize=${pageSize}`,
+					`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/search-jobs/${userId}
+					?page=${page}&pageSize=${pageSize}&companyName=${companyName}
+					&jobTitle=${jobTitle}&country=${country}&workSite=${workSite}
+					&jobStatus=${jobStatus}`,
 					{
 						cache: 'no-store',
 					},
 				);
 				if (res.status === 200) {
-					const { jobs, total } = await res.json();
-					setJobs(jobs);
+					//*My back end is retuning a 'result' object which contains the 'jobResults' and the 'total' object number of items
+					const { result: { jobResults, total } } = await res.json();
+					setJobs(jobResults);
 					setTotalItems(total);
-					setLoading(false);
 				}
 			} catch (error) {
 				console.log('Error:', error);
+			} finally {
+				setLoading(false);
 			}
 		};
 		fetchJobs();
-	}, [userId, page, pageSize]);
+	}, [userId, page, pageSize,companyName, jobTitle, country, workSite, jobStatus]);
 
 	const handlePageChange = (newPage: number) => {
 		setPage(newPage);
@@ -73,7 +91,7 @@ const ApplicationsPage = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : jobs.length === 0 ? (
-				<AlertMessage sentence="You have not applied for any job yet." />
+				<AlertMessage sentence="You have no result" />
 			) : (
 				<section className="px-4 py-6 bg-blue-50">
 					<div className="container-xl lg:container m-auto">

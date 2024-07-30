@@ -15,6 +15,9 @@ jobRouter.get('/byUser/:id', JobController.getJobsByUserId);
 //* Get Job By ID
 jobRouter.get('/:id', JobController.getJobById);
 
+//* Search Jobs
+jobRouter.get('/search-jobs/:id', JobController.searchJobs);
+
 //* Update Job By ID
 jobRouter.post('/:id', JobController.updateJob);
 

@@ -9,7 +9,6 @@ enum CompanyStatus {
 	Interview = 'interview',
 }
 
-
 //*Get Job by ID
 export const getJobById = async (req: Request, res: Response) => {
 	const { id } = req.params;
@@ -54,6 +53,72 @@ export const getJobsByUserId = async (req: Request, res: Response) => {
 	} catch (error) {
 		console.log('Get jobs by user id error:', error);
 		res.status(500).json({ message: 'Error getting Job by id. Please try again.' });
+	}
+};
+
+//*Search Jobs by Query
+// Just a function to normalize strings to make sure the search is case-insensitive and whitespace-insensitive
+function normalizeString(str: string): string {
+	return str.replace(/\s+/g, '').toLowerCase();
+}
+
+export const searchJobs = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	if (!id) return res.status(400).json({ message: 'Invalid or missing owner ID' });
+
+	try {
+		await connectDB();
+		const { searchParams } = new URL(req.url, `http://${req.headers.host}`);
+		const companyName = searchParams.get('companyName') || '';
+		const jobTitle = searchParams.get('jobTitle') || '';
+		const country = searchParams.get('country') || '';
+		const workSite = searchParams.get('workSite') || '';
+		const status = searchParams.get('jobStatus') || '';
+
+		// For Pagination
+		const page = parseInt(req.query.page as string, 10) || 1;
+		const pageSize = parseInt(req.query.pageSize as string, 10) || 6;
+		// Skipper
+		const skip = (page - 1) * pageSize;
+
+		// Normalize search parameters
+		const normalizedCompanyName = normalizeString(companyName);
+		const normalizedJobTitle = normalizeString(jobTitle);
+		const normalizedCountry = normalizeString(country);
+		const normalizedStatus = normalizeString(status);
+		const normalizedWorkSite = normalizeString(workSite);
+
+		// Create regex patterns from normalized search parameters
+		const companyNamePattern = new RegExp(normalizedCompanyName, 'i');
+		const jobTitlePattern = new RegExp(normalizedJobTitle, 'i');
+		const countryPattern = new RegExp(normalizedCountry, 'i');
+		const statusPattern = new RegExp(normalizedStatus, 'i');
+		const workSitePattern = new RegExp(normalizedWorkSite, 'i');
+
+		let query = {
+			owner: id,
+			$and: [
+				companyName ? { companyName: companyNamePattern } : {},
+				jobTitle ? { 'jobInfo.title': jobTitlePattern } : {},
+				country ? { country: countryPattern } : {},
+				status ? { status: statusPattern } : {},
+				workSite ? { workSite: workSitePattern } : {},
+			],
+		};
+
+		const total = await Job.countDocuments(query);
+		const jobResults = await Job.find(query).skip(skip).limit(pageSize).sort({ updatedAt: -1 });
+
+		const result = {
+			total,
+			jobResults,
+		};
+		console.log(result);
+
+		return res.status(200).json({ result, message: 'Jobs found successfully' });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: 'Something went wrong' });
 	}
 };
 
@@ -121,31 +186,31 @@ export const updateJob = async (req: Request, res: Response) => {
 
 //*Update a job Status
 export const updateJobStatus = async (req: Request, res: Response) => {
-    try {
-        const jobId = req.params.id;
-        const { status } = req.body;
+	try {
+		const jobId = req.params.id;
+		const { status } = req.body;
 
-        // Validate the new status against the enum
-        if (!Object.values(CompanyStatus).includes(status)) {
-            return res.status(400).json({ error: 'Invalid status value' });
-        }
+		// Validate the new status against the enum
+		if (!Object.values(CompanyStatus).includes(status)) {
+			return res.status(400).json({ error: 'Invalid status value' });
+		}
 		const find = await Job.findById(jobId);
 		if (!find) return res.status(404).json({ message: 'Job not found' });
-        // Find the job by ID and update the status
-        const updatedJob = await Job.findByIdAndUpdate(
-            jobId,
-            { $set: { status: status } }, // Correctly structure the update object
-            { new: true }
-        );
+		// Find the job by ID and update the status
+		const updatedJob = await Job.findByIdAndUpdate(
+			jobId,
+			{ $set: { status: status } }, // Correctly structure the update object
+			{ new: true },
+		);
 
-        if (!updatedJob) {
-            return res.status(404).json({ error: 'Job not found' });
-        }
+		if (!updatedJob) {
+			return res.status(404).json({ error: 'Job not found' });
+		}
 
-        res.json(updatedJob);
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
+		res.json(updatedJob);
+	} catch (error) {
+		res.status(500).json({ error: 'Server error' });
+	}
 };
 
 //*Delete a job
