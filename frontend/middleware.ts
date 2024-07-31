@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/react';
 import { NextResponse } from 'next/server';
 
 // This line of code if I want to keep all routes protected
-// export { default } from 'next-auth/middleware';
+export { default } from 'next-auth/middleware';
 
 // export default withAuth(async function middleware(req) {
 // 	const session = await getSession({ req: req as any });
