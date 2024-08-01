@@ -13,7 +13,7 @@ const nextConfig = {
 		return [
 			{
 				source: '/',
-				destination: '/network-page', // or '/login-page' based on your requirement
+				destination: '/login-page', // or '/login-page' based on your requirement
 				permanent: true,
 			},
 		];
