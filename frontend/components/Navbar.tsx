@@ -1,18 +1,23 @@
 'use client';
-import { useSession } from 'next-auth/react';
+
+import React from 'react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import profileDefault from '../assets/images/profile.png';
+
 
 const Navbar = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const pathname = usePathname();
+	const router = useRouter();
 
 	const { data: session } = useSession();
 	const profileImage = session?.user?.picture;
+
 
 	if (!session) {
 		return;
@@ -199,6 +204,17 @@ const Navbar = () => {
 								<button
 									type="button"
 									className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+									onClick={async () => {
+										try {
+											//>> Sign out without triggering NextAuth's default redirection
+											await signOut({ redirect: false });
+
+											// Manually redirect to the desired login page
+											router.push('/login-page');
+										} catch (error) {
+											console.error('Error signing out:', error);
+										}
+									}}
 								>
 									<Link href="/api/auth/signout?callbackUrl=/login-page">
 										<p>{`${session?.user?.username} Logout`}</p>

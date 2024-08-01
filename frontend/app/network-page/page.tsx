@@ -11,6 +11,7 @@ import SearchCompanyForm from '../../components/SearchCompanyForm';
 import AlertMessage from '../../components/AlertMessage';
 import { Company } from '../../types/dataType';
 import { CompanyStatus } from '../../types/dataType';
+import { useRouter } from 'next/navigation';
 
 const NetworkPage = () => {
 	const [companies, setCompanies] = useState([]);
@@ -20,6 +21,7 @@ const NetworkPage = () => {
 	const [totalItems, setTotalItems] = useState(0);
 	const [loading, setLoading] = useState<boolean>(true);
 	const { data: session } = useSession();
+	const router = useRouter();
 
 	useEffect(() => {
 		const getUserId = async () => {
@@ -41,6 +43,8 @@ const NetworkPage = () => {
 		};
 		if (session?.user?.email) {
 			getUserId();
+		} else {
+			router.push('/login-page');
 		}
 	}, [session]);
 
