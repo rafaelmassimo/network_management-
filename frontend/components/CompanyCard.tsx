@@ -4,15 +4,12 @@ import { CompanyCardProps } from '../types/dataType';
 import Comments from './Comments';
 import LinkedinLinks from './LinkedinLinks';
 import StatusCompanyRadio from './StatusCompanyRadio';
+import { limitLengthString } from '@/lib/functions';
 
-const CompanyCard: React.FC<CompanyCardProps> = ({
-	id,
-	companyName,
-	companyLink,
-	linkedin,
-	comments,
-	status,
-}) => {
+
+const CompanyCard: React.FC<CompanyCardProps> = ({ id, companyName, companyLink, linkedin, comments, status, }) => {
+	
+	
 	return (
 		<div className="rounded-xl shadow-md relative bg-white max-h-[470px] min-h-[400px]">
 			<div className="p-4">
@@ -22,7 +19,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
 							<p className="mr-4">Company Name:</p>
 							<h3 className="text-xl text-black font-bold p-1">
 								<a href={`${companyLink}`} target="_blank">
-									{companyName}
+									{limitLengthString(`${companyName}`)}
 								</a>
 							</h3>
 						</div>

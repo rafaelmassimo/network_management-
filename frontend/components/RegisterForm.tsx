@@ -54,7 +54,7 @@ const RegisterForm = () => {
 			});
 
 			if (response.status === 201) {
-				console.log('Job added');
+				console.log('User created added');
 				setLoading(false);
 
 				Swal.fire({
@@ -66,8 +66,20 @@ const RegisterForm = () => {
 					route.push('/api/auth/signin');
 				});
 			}
+
+			if (response.status === 409) {
+				console.log('User already exists');
+				setLoading(false);
+
+				Swal.fire({
+					title: 'Error!',
+					text: 'User already exists',
+					icon: 'error',
+				});
+			}
 		} catch (error) {
 			console.log(error);
+			setLoading(false);
 		}
 	};
 

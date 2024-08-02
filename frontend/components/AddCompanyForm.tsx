@@ -138,7 +138,7 @@ const AddCompanyForm = () => {
 						placeholder="Insert Country"
 						required
 						value={fields.country}
-						onChange={(e) => setFields({ ...fields, country: e.target.value.toLowerCase() })}
+						onChange={(e) => setFields({ ...fields, country: e.target.value })}
 					/>
 
 					<label htmlFor="comments">Comments:</label>
@@ -152,7 +152,7 @@ const AddCompanyForm = () => {
 						onChange={(e) => setFields({ ...fields, comments: e.target.value })}
 					/>
 
-					<label htmlFor="images" className="block font-bold mb-2">
+					{/* <label htmlFor="images" className="block font-bold mb-2">
 						Images (Select one Image)
 					</label>
 					<input
@@ -163,7 +163,7 @@ const AddCompanyForm = () => {
 						accept="image/*"
 						multiple
 						onChange={(e) => {}}
-					/>
+					/> */}
 
 					<div>
 						<button

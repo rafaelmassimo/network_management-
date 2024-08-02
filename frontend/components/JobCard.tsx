@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import { JobType } from '../types/dataType';
 import StatusJobRadio from './StatusJobRadio';
+import { limitLengthString } from '@/lib/functions';
 const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, comments, country, status, updatedAt, workSite, }) => {
 	const [newUpdatedDate, setNewUpdatedDate] = useState<string>('');
 
@@ -40,7 +41,7 @@ const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, co
 							<p className="mr-20">Company Name:</p>
 							<h3 className="text-xl text-black font-bold p-1">
 								<a href={`${companyLink}`} target="_blank">
-									{companyName}
+									{limitLengthString(`${companyName}`)}
 								</a>
 							</h3>
 						</div>

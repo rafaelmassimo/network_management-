@@ -10,6 +10,7 @@ import SearchJobsForm from '../../components/SearchJobsForm';
 import AlertMessage from '../../components/AlertMessage';
 import PositionCounter from '../../components/PositionCounter';
 import { CompanyStatus, JobType } from '../../types/dataType';
+import AddElementButton from '@/components/AddElementButton';
 
 const ApplicationsPage = () => {
 	const [jobs, setJobs] = useState([]);
@@ -74,13 +75,24 @@ const ApplicationsPage = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : jobs.length === 0 ? (
+				<div className='flex flex-col justify-start items-center h-screen'>
+
 				<AlertMessage sentence="You have not applied for any job yet." />
+				<AddElementButton text='Add a first job' path='/add-job' />
+				</div>
 			) : (
 				<section className="px-4 py-6 bg-blue-50">
 					<div className="container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Recent Jobs</h2>
 						<PositionCounter totalItems={totalItems} text='Total Positions Applied:' />
-						<SearchJobsForm />
+						<div className="flex flex-row items-center grid-cols-2 w-full">
+							<div className="">
+								<SearchJobsForm />
+							</div>
+							<div className='ml-7'>
+								<AddElementButton text="New Job" path="/add-job" />
+							</div>
+						</div>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							{jobs.map((job: JobType) => (
 								<div key={job._id}>

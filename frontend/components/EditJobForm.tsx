@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import PageName from '../components/PageName';
 import Spinners from '../components/Spinner';
 import { CompanyStatus, JobFormType, WorkSite } from '../types/dataType';
+import Swal from 'sweetalert2';
 import JobsInputFields from './JobsInputFields';
 import DeleteJobButton from './DeleteJobButton';
 
@@ -63,6 +64,7 @@ const EditJobForm = () => {
 			});
 			if (response.status === 200) {
 				console.log('Job updated successfully');
+				Swal.fire('Done!', 'Job Updated successfully.', 'success');
 				route.push('/applications-page');
 			}
 		} catch (error) {
@@ -161,7 +163,7 @@ const EditJobForm = () => {
 								placeholder="Insert Country"
 								required
 								value={fields.country}
-								onChange={(e) => setFields({ ...fields, country: e.target.value.toLowerCase() })}
+								onChange={(e) => setFields({ ...fields, country: e.target.value })}
 							/>
 
 							<label htmlFor="comments">Comments:</label>

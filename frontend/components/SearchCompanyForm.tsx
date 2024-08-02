@@ -26,7 +26,7 @@ const SearchCompanyForm = () => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="mt-3 mx-auto  w-4/5 flex flex-col md:flex-row items-center mb-4"
+			className="mt-3 mx-auto w-full flex flex-col md:flex-row items-center mb-4"
 		>
 			<div className="w-full md:w-3/4 md:pr-2 mb-4 md:mb-0">
 				<label htmlFor="companyName" className="sr-only">

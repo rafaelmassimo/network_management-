@@ -8,6 +8,7 @@ import CompanyCard from '../../components/CompanyCard';
 import Spinners from '../../components/Spinner';
 import PositionCounter from '../../components/PositionCounter';
 import SearchCompanyForm from '../../components/SearchCompanyForm';
+import AddElementButton from '../../components/AddElementButton';
 import AlertMessage from '../../components/AlertMessage';
 import { Company } from '../../types/dataType';
 import { CompanyStatus } from '../../types/dataType';
@@ -65,7 +66,7 @@ const NetworkPage = () => {
 				}
 			} catch (error) {
 				console.log('Error:', error);
-			} 
+			}
 		};
 		fetchCompanies();
 	}, [userId, page, pageSize]);
@@ -79,13 +80,23 @@ const NetworkPage = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : companies.length === 0 ? (
-				<AlertMessage sentence="You have no companies yet." />
+				<div className='flex flex-col justify-start items-center h-screen'>
+					<AlertMessage sentence="You have no companies yet." />
+					<AddElementButton text="Add your first Company" path="/add-company" />
+				</div>
 			) : (
 				<section className="px-4 py-6 bg-blue-50 min-h-screen overflow-hidden">
-					<div className="container-xl lg:container m-auto">
+					<div className=" container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Recent Companies</h2>
-						<PositionCounter totalItems={totalItems} text='Total Companies:' />
-						<SearchCompanyForm/>
+						<PositionCounter totalItems={totalItems} text="Total Companies:" />
+						<div className="flex flex-row items-center justify-between grid-cols-2 w-full">
+							<div className="w-10/12">
+								<SearchCompanyForm />
+							</div>
+							<div>
+								<AddElementButton text="New Company" path="/add-company" />
+							</div>
+						</div>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							{companies.map((company: Company) => (
 								<div key={company._id}>
@@ -100,15 +111,14 @@ const NetworkPage = () => {
 								</div>
 							))}
 						</div>
-						<div className='bg-white'>
-
-						<Pagination
-							page={page}
-							pageSize={pageSize}
-							totalItems={totalItems}
-							onPageChange={handlePageChange}
+						<div className="bg-white">
+							<Pagination
+								page={page}
+								pageSize={pageSize}
+								totalItems={totalItems}
+								onPageChange={handlePageChange}
 							/>
-							</div>
+						</div>
 					</div>
 				</section>
 			)}

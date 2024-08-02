@@ -88,16 +88,7 @@ const Navbar = () => {
 									Your Network
 								</Link>
 
-								<Link
-									href="/add-company"
-									className={`${
-										pathname === '/add-company'
-											? 'text-gray-900 bg-gradient-to-r from-purple-200 to-lime-200'
-											: 'hover:bg-gradient-to-r from-purple-300 to-lime-100'
-									}  hover:bg-gradient-to-r from-teal-200 to-lime-200 hover:text-black rounded-md px-3 py-2`}
-								>
-									Add Company
-								</Link>
+								
 
 								{/* <Link
 									href="/ClientMember"
@@ -118,16 +109,7 @@ const Navbar = () => {
 								>
 									Your Job Applications
 								</Link>
-								<Link
-									href="/add-job"
-									className={`${
-										pathname === '/add-job'
-											? 'bg-gradient-to-r from-teal-200 to-lime-200'
-											: 'hover:bg-gradient-to-r from-teal-300 to-lime-100'
-									} hover:text-black rounded-md px-3 py-2`}
-								>
-									Add Job Application
-								</Link>
+								
 							</div>
 						</div>
 					</div>

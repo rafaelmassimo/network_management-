@@ -8,6 +8,8 @@ import PageName from '../components/PageName';
 import Spinners from '../components/Spinner';
 import { CompanyFormType, CompanyStatus } from '../types/dataType';
 import LinkedinInputField from './LinkedinInputField';
+import Swal from 'sweetalert2';
+
 
 const EditCompanyForm = () => {
 	const { data: session } = useSession();
@@ -65,6 +67,7 @@ const EditCompanyForm = () => {
 			);
 			if (response.status === 200) {
 				console.log('Company updated successfully');
+				Swal.fire('Done!', 'Company Updated successfully.', 'success');
 				route.push('/network-page');
 			}
 		} catch (error) {
@@ -150,7 +153,7 @@ const EditCompanyForm = () => {
 								placeholder="Insert Country"
 								required
 								value={fields.country}
-								onChange={(e) => setFields({ ...fields, country: e.target.value.toLowerCase() })}
+								onChange={(e) => setFields({ ...fields, country: e.target.value })}
 							/>
 
 							<label htmlFor="comments">Comments:</label>
@@ -164,7 +167,7 @@ const EditCompanyForm = () => {
 								onChange={(e) => setFields({ ...fields, comments: e.target.value })}
 							/>
 
-							<label htmlFor="images" className="block text-gray-700 font-bold mb-2">
+							{/* <label htmlFor="images" className="block text-gray-700 font-bold mb-2">
 								Images (Select one Image)
 							</label>
 							<input
@@ -175,7 +178,7 @@ const EditCompanyForm = () => {
 								accept="image/*"
 								multiple
 								onChange={(e) => {}}
-							/>
+							/> */}
 
 							<div className="flex flex-row my-4 gap-5">
 								<button

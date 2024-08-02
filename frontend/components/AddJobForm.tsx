@@ -154,7 +154,7 @@ const AddJobForm = () => {
 						placeholder="Insert Country"
 						required
 						value={fields.country}
-						onChange={(e) => setFields({ ...fields, country: e.target.value.toLowerCase() })}
+						onChange={(e) => setFields({ ...fields, country: e.target.value })}
 					/>
 
 					<label htmlFor="comments">Comments:</label>

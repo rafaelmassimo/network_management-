@@ -131,10 +131,10 @@ const options: NextAuthOptions = {
 
 			return session;
 		},
-		async redirect({ url, baseUrl }) {
-            // Redirect to the network-page after login
-            return `${baseUrl}/network-page`;
-        },
+		// async redirect({ url, baseUrl }) {
+        //     // Redirect to the network-page after login
+        //     return `${baseUrl}/network-page`;
+        // },
 	},
 };
 
