@@ -7,7 +7,7 @@ import LinkedInProvider from 'next-auth/providers/linkedin';
 
 const options: NextAuthOptions = {
 	providers: [
-			GitHubProvider({
+		GitHubProvider({
 			profile(profile) {
 				// console.log('Profile Github:', profile);
 				let userRole = 'Github User';
@@ -131,10 +131,10 @@ const options: NextAuthOptions = {
 
 			return session;
 		},
-		// async redirect({ url, baseUrl }) {
-        //     // Redirect to the network-page after login
-        //     return `${baseUrl}/network-page`;
-        // },
+		async redirect({ url, baseUrl }) {
+			//  Redirect to the network-page after login
+			return `${baseUrl}/network-page`;
+		},
 	},
 };
 
