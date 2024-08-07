@@ -81,7 +81,7 @@ const ApplicationsPage = () => {
 				<AddElementButton text='Add a first job' path='/add-job' />
 				</div>
 			) : (
-				<section className="px-4 py-6 bg-blue-50">
+				<section className="px-4 py-6 bg-blue-50 min-h-screen">
 					<div className="container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Recent Jobs</h2>
 						<PositionCounter totalItems={totalItems} text='Total Positions Applied:' />
@@ -89,7 +89,7 @@ const ApplicationsPage = () => {
 							<div className="">
 								<SearchJobsForm />
 							</div>
-							<div className='ml-7'>
+							<div className='ml-7 w-1/6'>
 								<AddElementButton text="New Job" path="/add-job" />
 							</div>
 						</div>
