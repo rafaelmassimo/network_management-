@@ -11,20 +11,28 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
-type ModalDescriptionProps = { jobTitle: string; JobDescription: string };
+type ModalJobDescriptionProps = { jobTitle: string; JobDescription: string };
 
-const ModalDescription = ({ jobTitle, JobDescription }: ModalDescriptionProps) => {
+const ModalJobDescription = ({ jobTitle, JobDescription }: ModalJobDescriptionProps) => {
 	return (
 		<Dialog>
 			<Button type="button" variant="default" className="bg-lime-600">
 				<DialogTrigger className="p-2">Check Job Description</DialogTrigger>
 			</Button>
-			<DialogContent className='overflow-y-auto max-h-screen'>
+			<DialogContent className="overflow-y-auto max-h-screen">
 				<DialogHeader>
 					<DialogTitle>{jobTitle}</DialogTitle>
-					<DialogDescription className='overflow-y-auto'>
-						<pre className="whitespace-pre-wrap text-left overflow-y-auto">{JobDescription}</pre>
-					</DialogDescription>
+					{JobDescription.length === 0 ? (
+						<DialogDescription className="overflow-y-auto">
+							<pre className="whitespace-pre-wrap text-left italic overflow-y-auto">
+								No Job Description
+							</pre>
+						</DialogDescription>
+					) : (
+						<DialogDescription className="overflow-y-auto">
+							<pre className="whitespace-pre-wrap text-left overflow-y-auto">{JobDescription}</pre>
+						</DialogDescription>
+					)}
 				</DialogHeader>
 
 				<DialogFooter className="sm:justify-start">
@@ -39,4 +47,4 @@ const ModalDescription = ({ jobTitle, JobDescription }: ModalDescriptionProps) =
 	);
 };
 
-export default ModalDescription;
+export default ModalJobDescription;

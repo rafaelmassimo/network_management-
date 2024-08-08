@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import { JobType } from '../types/dataType';
 import StatusJobRadio from './StatusJobRadio';
-import ModalDescription from './ModalDescription';
+import ModalJobDescription from './ModalJobDescription';
 import { limitLengthString } from '@/lib/functions';
 const JobCard: React.FC<JobType> = ({
 	_id,
@@ -108,7 +108,7 @@ const JobCard: React.FC<JobType> = ({
 				)}
 
 				<div className="flex flex-col justify-between items-center lg:flex-row mt-4">
-				<ModalDescription jobTitle={jobInfo.title} JobDescription={jobInfo.description} />
+				<ModalJobDescription jobTitle={jobInfo.title} JobDescription={jobInfo.description} />
 					<Link
 						href={`/applications-page/${_id}`}
 						className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
