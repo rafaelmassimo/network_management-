@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 
 type ModalJobDescriptionProps = { jobTitle: string; JobDescription: string };
 
-const ModalJobDescription = ({ jobTitle, JobDescription }: ModalJobDescriptionProps) => {
+const ModalJobDescription = ({ jobTitle, JobDescription = '' }: ModalJobDescriptionProps) => {
 	return (
 		<Dialog>
 			<Button type="button" variant="default" className="bg-lime-600">
