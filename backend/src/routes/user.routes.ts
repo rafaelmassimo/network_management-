@@ -13,4 +13,6 @@ userRouter.post('/createUser', validateCreateUser, UserController.createUser);
 //Authenticate User
 userRouter.post('/authenticate', UserController.authenticateUser);
 
+//Ping
+userRouter.get('/ping', UserController.ping);
 export default userRouter;
