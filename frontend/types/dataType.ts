@@ -28,6 +28,7 @@ export type JobFormType = {
 export type JobObjectType = {
 	link: string;
 	title: string;
+	description?: string;
 }
 
 export enum CompanyStatus {
@@ -60,7 +61,7 @@ export type JobType = {
     _id: string;
     companyName: string;
     companyLink: string;
-    jobInfo: { link: string; title: string };
+    jobInfo: { link: string; title: string; description: string };
     country: string;
     comments: string;
     status: CompanyStatus | string;

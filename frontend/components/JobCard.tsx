@@ -5,8 +5,19 @@ import React, { useEffect, useState } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import { JobType } from '../types/dataType';
 import StatusJobRadio from './StatusJobRadio';
+import ModalDescription from './ModalDescription';
 import { limitLengthString } from '@/lib/functions';
-const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, comments, country, status, updatedAt, workSite, }) => {
+const JobCard: React.FC<JobType> = ({
+	_id,
+	companyName,
+	companyLink,
+	jobInfo,
+	comments,
+	country,
+	status,
+	updatedAt,
+	workSite,
+}) => {
 	const [newUpdatedDate, setNewUpdatedDate] = useState<string>('');
 
 	const toUpperCase = (str: string) => {
@@ -14,20 +25,25 @@ const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, co
 		return newString;
 	};
 
-	
-		const updateDate = (updatedAt:Date) => {
-			const date = new Date(updatedAt as Date);
+	const updateDate = (updatedAt: Date) => {
+		const date = new Date(updatedAt as Date);
 
-			const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', };
-
-			const formattedDate = date.toLocaleDateString('en-US', options as any);
-			setNewUpdatedDate(formattedDate);
+		const options = {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			hour: 'numeric',
+			minute: 'numeric',
+			second: 'numeric',
 		};
+
+		const formattedDate = date.toLocaleDateString('en-US', options as any);
+		setNewUpdatedDate(formattedDate);
+	};
 
 	useEffect(() => {
 		updateDate(updatedAt);
 	}, []);
-	
 
 	return (
 		<div className="rounded-xl shadow-md relative bg-white min-h-[500px]">
@@ -45,7 +61,7 @@ const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, co
 								</a>
 							</h3>
 						</div>
-						<StatusJobRadio status={status as string} jobId={_id} updateDate={updateDate as any}  />
+						<StatusJobRadio status={status as string} jobId={_id} updateDate={updateDate as any} />
 					</div>
 				</div>
 
@@ -91,7 +107,8 @@ const JobCard: React.FC<JobType> = ({ _id, companyName, companyLink, jobInfo, co
 					</div>
 				)}
 
-				<div className="flex flex-col lg:flex-row justify-end mt-4">
+				<div className="flex flex-col justify-between items-center lg:flex-row mt-4">
+				<ModalDescription jobTitle={jobInfo.title} JobDescription={jobInfo.description} />
 					<Link
 						href={`/applications-page/${_id}`}
 						className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"

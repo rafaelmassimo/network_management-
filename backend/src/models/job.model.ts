@@ -18,7 +18,7 @@ export type JobType = {
 	id: Types.ObjectId;
 	companyName: string;
 	companyLink: string;
-	jobInfo: { link: string; title: string };
+	jobInfo: { link: string; title: string; description?: string };
 	country: string;
 	comments: string;
 	status: CompanyStatus;
@@ -41,6 +41,9 @@ const JobInfoSchema = new Schema(
 		title: {
 			type: String,
 			required: [true, 'The title job is required'],
+		},
+		description: {
+			type: String,
 		},
 	},
 	{ _id: false }, // Prevents Mongoose from creating an _id for sub-documents

@@ -14,7 +14,7 @@ const AddJobForm = () => {
 	const [fields, setFields] = useState<JobFormType>({
 		user_id: '',
 		companyName: '',
-		jobInfo: { link: '', title: '' },
+		jobInfo: { link: '', title: '' , description: ''},
 		comments: '',
 		companyLink: '',
 		status: '',

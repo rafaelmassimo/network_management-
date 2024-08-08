@@ -140,6 +140,7 @@ export const createJob = async (req: Request, res: Response) => {
 			jobInfo: {
 				link: data.jobInfo.link, // Adjusted to match frontend data structure
 				title: data.jobInfo.title, // Adjusted to match frontend data structure
+				description: data.jobInfo.description, // Adjusted to match frontend data structure
 			},
 			owner: data.user_id, // Use the owner ID from the form data
 			comments: data.comments,

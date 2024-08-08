@@ -1,3 +1,4 @@
+import React from 'react';
 import { JobFormType } from '../types/dataType';
 
 type JobsInputFieldsProps = {
@@ -38,6 +39,21 @@ const JobsInputFields = ({ fields, setFields }: JobsInputFieldsProps) => {
 					value={fields.jobInfo.title}
 					onChange={(e) =>
 						setFields({ ...fields, jobInfo: { ...fields.jobInfo, title: e.target.value } })
+					}
+				/>
+
+				<label className="text-center" htmlFor="jobDescription">
+					Job Description:
+				</label>
+				<textarea
+					id="jobDescription"
+					name="jobDescription"
+					className="border rounded w-full py-2 px-3 mb-2 h-32 overflow-y-scroll"
+					placeholder="Insert here the job description"
+					required
+					value={fields.jobInfo.description}
+					onChange={(e) =>
+						setFields({ ...fields, jobInfo: { ...fields.jobInfo, description: e.target.value } })
 					}
 				/>
 			</div>
