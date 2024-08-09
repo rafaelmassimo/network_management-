@@ -121,6 +121,7 @@ const AddJobForm = () => {
 						<option value={CompanyStatus.NoAnswer}>{CompanyStatus.NoAnswer}</option>
 						<option value={CompanyStatus.PositiveFeedback}>{CompanyStatus.PositiveFeedback}</option>
 						<option value={CompanyStatus.Interview}>{CompanyStatus.Interview}</option>
+						<option value={CompanyStatus.Interview}>{CompanyStatus.Rejected}</option>
 					</select>
 
 					<label htmlFor="workSite" className="block my-2">
