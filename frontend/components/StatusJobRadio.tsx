@@ -1,17 +1,23 @@
 'use client';
-import React from 'react';
-import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { CompanyStatus } from '../types/dataType';
-import { Label } from './ui/label';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuLabel,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { getStatusColor, getStatusType } from '@/lib/functions';
+import { Button } from './ui/button';
 
 interface StatusRadioProps {
 	status: string;
 	jobId: string;
 	updateDate: (updatedAt: Date) => void;
-
 }
 
 interface StatusRadioFields {
@@ -29,7 +35,8 @@ const StatusJobRadio = ({ status, jobId, updateDate }: StatusRadioProps) => {
 		setCurrentStatus((prev) => ({ ...prev, status: e }));
 
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/status/${jobId}`, {cache: "no-store",
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/status/${jobId}`, {
+				cache: 'no-store',
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -38,7 +45,7 @@ const StatusJobRadio = ({ status, jobId, updateDate }: StatusRadioProps) => {
 			});
 			if (response.status === 200) {
 				const data = await response.json();
-				updateDate(data.updatedAt);			
+				updateDate(data.updatedAt);
 				console.log('Job Status Updated successfully');
 				Swal.fire('Done!', 'Job Status Updated successfully.', 'success');
 			}
@@ -48,37 +55,28 @@ const StatusJobRadio = ({ status, jobId, updateDate }: StatusRadioProps) => {
 	};
 
 	return (
-		<div className="flex flex-row gap-3">
-			<RadioGroup defaultValue="option-one" onValueChange={(event) => handleStatusChange(event)}>
-				<div className="flex items-center space-x-2 text-red-400">
-					<RadioGroupItem
-						className="text-red-400 border-red-300"
-						value={CompanyStatus.NoAnswer}
-						id="option-one"
-						checked={currentStatus.status === CompanyStatus.NoAnswer}
-					/>
-					<Label htmlFor="option-one">No answers</Label>
-				</div>
-				<div className="flex items-center space-x-2 text-sky-900">
-					<RadioGroupItem
-						className="text-sky-900 border-sky-300"
-						value={CompanyStatus.PositiveFeedback}
-						id="option-two"
-						checked={currentStatus.status === CompanyStatus.PositiveFeedback}
-					/>
-					<Label htmlFor="option-two">Positive Feedback</Label>
-				</div>
-				<div className="flex items-center space-x-2 text-green-700">
-					<RadioGroupItem
-						className="text-green-700 border-green-300"
-						value={CompanyStatus.Interview}
-						id="option-three"
-						checked={currentStatus.status === CompanyStatus.Interview}
-					/>
-					<Label htmlFor="option-three">Interview</Label>
-				</div>
-			</RadioGroup>
-		</div>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button className={`${getStatusColor(currentStatus.status)}`} variant="outline">
+					Status: {getStatusType(`${currentStatus.status}`)}
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent className="w-fit">
+				<DropdownMenuLabel>Select the Job Status</DropdownMenuLabel>
+				<DropdownMenuSeparator />
+				<DropdownMenuRadioGroup
+					value={currentStatus.status}
+					onValueChange={(event) => handleStatusChange(event)}
+				>
+					<DropdownMenuRadioItem value={CompanyStatus.NoAnswer}>No answers</DropdownMenuRadioItem>
+					<DropdownMenuRadioItem value={CompanyStatus.PositiveFeedback}>
+						Positive Feedback
+					</DropdownMenuRadioItem>
+					<DropdownMenuRadioItem value={CompanyStatus.Interview}>Interview</DropdownMenuRadioItem>
+					<DropdownMenuRadioItem value={CompanyStatus.Rejected}>Rejected</DropdownMenuRadioItem>
+				</DropdownMenuRadioGroup>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 };
 

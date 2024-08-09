@@ -35,6 +35,7 @@ export enum CompanyStatus {
 	NoAnswer = 'no answer',
 	PositiveFeedback = 'positive feedback',
 	Interview = 'interview',
+	Rejected = 'rejected',
 }
 
 export interface Company {

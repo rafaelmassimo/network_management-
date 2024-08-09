@@ -52,16 +52,22 @@ const JobCard: React.FC<JobType> = ({
 					<span className=" text-gray-600">Last Update: </span> {newUpdatedDate}
 				</p>
 				<div className="text-left md:text-center lg:text-left mb-6">
-					<div className="flex flex-row text-black">
+					<div className="grid grid-cols-2 gap-1 text-black">
 						<div>
-							<p className="mr-20">Company Name:</p>
+							<p>Company Name:</p>
 							<h3 className="text-xl text-black font-bold p-1">
 								<a href={`${companyLink}`} target="_blank">
 									{limitLengthString(`${companyName}`)}
 								</a>
 							</h3>
 						</div>
-						<StatusJobRadio status={status as string} jobId={_id} updateDate={updateDate as any} />
+						<div>
+							<StatusJobRadio
+								status={status as string}
+								jobId={_id}
+								updateDate={updateDate as any}
+							/>
+						</div>
 					</div>
 				</div>
 
@@ -108,7 +114,7 @@ const JobCard: React.FC<JobType> = ({
 				)}
 
 				<div className="flex flex-col justify-between items-center lg:flex-row mt-4">
-				<ModalJobDescription jobTitle={jobInfo.title} JobDescription={jobInfo.description} />
+					<ModalJobDescription jobTitle={jobInfo.title} JobDescription={jobInfo.description} />
 					<Link
 						href={`/applications-page/${_id}`}
 						className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
