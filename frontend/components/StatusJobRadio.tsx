@@ -11,7 +11,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { getStatusColor, getStatusType } from '@/lib/functions';
 import { Button } from './ui/button';
 
 interface StatusRadioProps {
@@ -51,6 +50,35 @@ const StatusJobRadio = ({ status, jobId, updateDate }: StatusRadioProps) => {
 			}
 		} catch (error) {
 			console.log(error);
+		}
+	};
+
+const getStatusColor = (status:string) => {
+		switch (status) {
+			case 'positive feedback':
+				return 'bg-green-100';
+			case 'no answer':
+				return 'bg-yellow-100';
+			case 'rejected':
+				return 'bg-red-300';
+			case 'interview':
+				return 'bg-fuchsia-200';
+			default:
+				return 'bg-indigo-100';
+		}
+	};
+const getStatusType = (status:string) => {
+		switch (status) {
+			case 'positive feedback':
+				return 'Positive Feedback';
+			case 'no answer':
+				return 'No Answer';
+			case 'rejected':
+				return 'Rejected';
+			case 'interview':
+				return 'Interview';
+			default:
+				return 'Select Status';
 		}
 	};
 

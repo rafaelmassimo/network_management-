@@ -1,4 +1,6 @@
 'use client';
+
+import React from 'react';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -8,9 +10,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { getStatusColor, getStatusType } from '@/lib/functions';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { CompanyStatus } from '../types/dataType';
 import { Button } from './ui/button';
@@ -25,17 +25,40 @@ interface StatusRadioFields {
 	jobId: string;
 }
 
+export const getStatusColor = (status:string) => {
+    switch (status) {
+        case 'positive feedback':
+            return 'bg-green-100';
+        case 'no answer':
+            return 'bg-yellow-100';
+        case 'rejected':
+            return 'bg-red-300';
+        case 'interview':
+            return 'bg-fuchsia-200';
+        default:
+            return 'bg-indigo-100';
+    }
+};
+export const getStatusType = (status:string) => {
+    switch (status) {
+        case 'positive feedback':
+            return 'Positive Feedback';
+        case 'no answer':
+            return 'No Answer';
+        case 'rejected':
+            return 'Rejected';
+        case 'interview':
+            return 'Interview';
+        default:
+            return 'Select Status';
+    }
+};
+
 const StatusCompanyRadio = ({ status, jobId }: StatusCompanyProps) => {
-	const name = usePathname();
-	console.log(name);
 	const [currentStatus, setCurrentStatus] = useState<StatusRadioFields>({
 		status: status,
 		jobId: '',
 	});
-
-	useEffect(() => {
-		console.log('StatusRadio useEffect');
-	}, [currentStatus]);
 
 	const handleStatusChange = async (e: string) => {
 		setCurrentStatus((prev) => ({ ...prev, status: e }));
