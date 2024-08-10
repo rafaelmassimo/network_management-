@@ -186,7 +186,16 @@ const EditJobForm = () => {
 							</div>
 						</div>
 					</form>
+					<div className='flex flex-col items-center'>
+
 					<DeleteJobButton jobId={fields.jobId as string} user_id={fields.user_id as string} />
+					<button
+							className="bg-gray-400 text-white items-center hover:bg-gray-600 font-bold py-2 px-4  shadow-xl rounded-full w-fit focus:outline-none mt-5 transition duration-100 focus:translate-y-1 focus:shadow-none"
+							onClick={() => route.push('/applications-page')}
+						>
+							Cancel
+						</button>
+					</div>
 				</div>
 			)}
 		</>

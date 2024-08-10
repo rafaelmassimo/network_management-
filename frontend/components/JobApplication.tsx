@@ -105,7 +105,9 @@ const JobApplication = () => {
 						<PositionCounter totalItems={totalItems} text="Total Result:" />
 						<SearchJobsForm />
 						<Link href="/applications-page" className="text-blue-500 underline mb-2">
-							Return
+							<span className="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+								Return
+							</span>
 						</Link>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							{jobs.map((job: JobType) => (

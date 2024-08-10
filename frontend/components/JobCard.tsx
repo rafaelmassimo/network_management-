@@ -46,20 +46,20 @@ const JobCard: React.FC<JobType> = ({
 	}, []);
 
 	return (
-		<div className="rounded-xl shadow-md relative bg-white min-h-[500px]">
+		<div className="rounded-xl shadow-md relative bg-white min-h-[500px] min-w-[440px] mt-2">
 			<div className="p-4">
 				<p className="text-sm mb-3">
 					<span className=" text-gray-600">Last Update: </span> {newUpdatedDate}
 				</p>
 				<div className="text-left md:text-center lg:text-left mb-6">
-					<div className="grid grid-cols-2 gap-1 text-black">
+					<div className="grid grid-cols-2 gap-1 items-center text-black">
 						<div>
 							<p>Company Name:</p>
-							<h3 className="text-xl text-black font-bold p-1">
+							<span className="flex text-xl text-black font-bold p-1 h-9 overflow-y-scroll no-scrollbar">
 								<a href={`${companyLink}`} target="_blank">
-									{limitLengthString(`${companyName}`)}
+									{companyName}
 								</a>
-							</h3>
+							</span>
 						</div>
 						<div>
 							<StatusJobRadio
@@ -79,7 +79,7 @@ const JobCard: React.FC<JobType> = ({
 						target="_blank"
 					>
 						<FaLinkedin className="text-blue-500 text-xl mr-3" />
-						{jobInfo.title}
+						{limitLengthString(`${jobInfo.title}`)}
 					</a>
 				</div>
 
@@ -119,7 +119,7 @@ const JobCard: React.FC<JobType> = ({
 						href={`/applications-page/${_id}`}
 						className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
 					>
-						Details
+						Edit
 					</Link>
 				</div>
 			</div>

@@ -175,6 +175,13 @@ const AddJobForm = () => {
 						>
 							Add Job
 						</button>
+
+						<button
+							className="bg-gray-400 text-white hover:bg-gray-600 font-bold py-2 px-4 shadow-xl rounded-full w-full focus:outline-none mt-3 transition duration-100 focus:translate-y-1 focus:shadow-none"
+							onClick={() => route.push('/applications-page')}
+							>
+							Cancel
+							</button>
 					</div>
 				</div>
 			</form>
