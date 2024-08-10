@@ -10,7 +10,6 @@ import { CompanyFormType, CompanyStatus } from '../types/dataType';
 import LinkedinInputField from './LinkedinInputField';
 import Swal from 'sweetalert2';
 
-
 const EditCompanyForm = () => {
 	const { data: session } = useSession();
 	const { id } = useParams();
@@ -157,11 +156,10 @@ const EditCompanyForm = () => {
 							/>
 
 							<label htmlFor="comments">Comments:</label>
-							<input
-								type="text"
+							<textarea
 								id="comments"
 								name="comments"
-								className="border rounded w-full py-2 px-3 mb-2"
+								className="border rounded w-full py-2 px-3 mb-2 h-32 overflow-y-scroll"
 								placeholder="Insert Comments here"
 								value={fields.comments}
 								onChange={(e) => setFields({ ...fields, comments: e.target.value })}
@@ -190,7 +188,15 @@ const EditCompanyForm = () => {
 							</div>
 						</div>
 					</form>
-					<DeleteCompanyButton companyId={fields.companyId as string} user_id={fields.user_id} />
+					<div className='flex flex-col items-center'>
+						<DeleteCompanyButton companyId={fields.companyId as string} user_id={fields.user_id} />
+						<button
+							className="bg-gray-400 text-white items-center hover:bg-gray-600 font-bold py-2 px-4  shadow-xl rounded-full w-fit focus:outline-none mt-5 transition duration-100 focus:translate-y-1 focus:shadow-none"
+							onClick={() => route.push('/network-page')}
+						>
+							Cancel
+						</button>
+					</div>
 				</div>
 			)}
 		</>

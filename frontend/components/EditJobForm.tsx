@@ -167,11 +167,10 @@ const EditJobForm = () => {
 							/>
 
 							<label htmlFor="comments">Comments:</label>
-							<input
-								type="text"
+							<textarea
 								id="comments"
 								name="comments"
-								className="border rounded w-full py-2 px-3 mb-2"
+								className="border rounded w-full py-2 px-3 mb-2 h-32 overflow-y-scroll"
 								placeholder="Insert Comments here"
 								value={fields.comments}
 								onChange={(e) => setFields({ ...fields, comments: e.target.value })}

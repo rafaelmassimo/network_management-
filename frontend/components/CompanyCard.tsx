@@ -15,17 +15,17 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
 	status,
 }) => {
 	return (
-		<div className="rounded-xl shadow-md relative bg-white max-h-[470px] min-h-[400px] min-w-[440px]">
+		<div className="rounded-xl shadow-md relative bg-white max-h-[460px] min-h-[460px] min-w-[440px]">
 			<div className="p-4">
 				<div className="text-left md:text-center lg:text-left mb-6">
 					<div className="grid grid-cols-2 justify-center items-center text-black">
 						<div>
 							<p>Company Name:</p>
-							<h3 className="text-xl text-black font-bold p-1">
+							<span className="flex text-xl text-black font-bold p-1 h-9 overflow-y-scroll no-scrollbar">
 								<a href={`${companyLink}`} target="_blank">
-									{limitLengthString(`${companyName}`)}
+									{companyName}
 								</a>
-							</h3>
+							</span>
 						</div>
 						<div className=''>
 							<StatusCompanyRadio status={status as string} jobId={id} />
@@ -44,7 +44,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
 						href={`/network-page/${id}`}
 						className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
 					>
-						Details
+						Edit
 					</Link>
 				</div>
 			</div>

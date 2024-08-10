@@ -142,11 +142,10 @@ const AddCompanyForm = () => {
 					/>
 
 					<label htmlFor="comments">Comments:</label>
-					<input
-						type="text"
+					<textarea
 						id="comments"
 						name="comments"
-						className="border rounded w-full py-2 px-3 mb-2"
+						className="border rounded w-full py-2 px-3 mb-2 h-32 overflow-y-scroll"
 						placeholder="Insert Comments here"
 						value={fields.comments}
 						onChange={(e) => setFields({ ...fields, comments: e.target.value })}
@@ -172,6 +171,13 @@ const AddCompanyForm = () => {
 						>
 							Add Company
 						</button>
+
+						<button
+							className="bg-gray-400 text-white hover:bg-gray-600 font-bold py-2 px-4 shadow-xl rounded-full w-full focus:outline-none mt-3 transition duration-100 focus:translate-y-1 focus:shadow-none"
+							onClick={() => route.push('/network-page')}
+							>
+							Cancel
+							</button>
 					</div>
 				</div>
 			</form>
