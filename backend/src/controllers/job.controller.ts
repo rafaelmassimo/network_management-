@@ -27,7 +27,7 @@ export const getJobById = async (req: Request, res: Response) => {
 	}
 };
 
-//*Get all jobs By UserId
+//*Get all jobs By UserId and Pagination
 export const getJobsByUserId = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	if (!id) return res.status(400).json({ message: `Invalid or missing owner ID` });
@@ -51,6 +51,23 @@ export const getJobsByUserId = async (req: Request, res: Response) => {
 		};
 
 		res.status(200).json(result);
+	} catch (error) {
+		console.log('Get jobs by user id error:', error);
+		res.status(500).json({ message: 'Error getting Job by id. Please try again.' });
+	}
+};
+
+//*Get all jobs By UserId
+export const getAllJobsByUserId = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	if (!id) return res.status(400).json({ message: `Invalid or missing owner ID` });
+
+	try {
+		await connectDB();
+
+		const jobs = await Job.find({ owner: id });
+
+		res.status(200).json(jobs);
 	} catch (error) {
 		console.log('Get jobs by user id error:', error);
 		res.status(500).json({ message: 'Error getting Job by id. Please try again.' });

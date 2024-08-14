@@ -9,8 +9,11 @@ const jobRouter = express.Router(); // This is the router object that we are goi
 //* Create Job
 jobRouter.post('/newJob', JobController.createJob); // JobController contains all the action that we can execute on the job model
 
-//* Get Jobs By User
+//* Get Jobs By User and pagination
 jobRouter.get('/byUser/:id', JobController.getJobsByUserId);
+
+//*Get One User all jobs
+jobRouter.get('/allByUser/:id', JobController.getAllJobsByUserId);
 
 //* Get Job By ID
 jobRouter.get('/:id', JobController.getJobById);

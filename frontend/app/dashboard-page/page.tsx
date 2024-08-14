@@ -48,7 +48,7 @@ const DashboardPage = () => {
 
 						//* Then get the jobs
 						const jobsResponse = await fetch(
-							`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/byUser/${userId}`,
+							`${process.env.NEXT_PUBLIC_API_DOMAIN}/jobs/allByUser/${userId}`,
 							{
 								cache: 'no-store',
 							},

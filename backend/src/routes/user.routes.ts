@@ -4,7 +4,7 @@ import { validateCreateUser } from '../../middleware/validateCreateUser';
 
 const userRouter = express.Router();
 
-//Get One User
+//Get One User and pagination
 userRouter.post('/getOne', UserController.getOneUser);
 
 //Create User
