@@ -15,7 +15,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
 	status,
 }) => {
 	return (
-		<div className="rounded-xl shadow-md relative bg-white max-h-[470px] min-h-[470px] min-w-[440px] mt-2">
+		<div className="rounded-xl shadow-md relative bg-white max-h-[470px] min-h-[470px] min-w-[440px] mt-2 transform transition-transform duration-300 hover:scale-[1.02]">
 			<div className="p-4">
 				<div className="text-left md:text-center lg:text-left mb-6">
 					<div className="grid grid-cols-2 justify-center items-center text-black">

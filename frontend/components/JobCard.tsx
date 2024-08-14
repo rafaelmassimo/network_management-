@@ -46,7 +46,7 @@ const JobCard: React.FC<JobType> = ({
 	}, []);
 
 	return (
-		<div className="rounded-xl shadow-md relative bg-white min-h-[510px] min-w-[440px] mt-2">
+		<div className="rounded-xl shadow-md relative bg-white min-h-[510px] min-w-[440px] mt-2 transform transition-transform duration-300 hover:scale-[1.02]">
 			<div className="p-4">
 				<p className="text-sm mb-3">
 					<span className=" text-gray-600">Last Update: </span> {newUpdatedDate}
