@@ -88,8 +88,6 @@ const Navbar = () => {
 									Your Network
 								</Link>
 
-								
-
 								{/* <Link
 									href="/ClientMember"
 									className={`${
@@ -109,7 +107,17 @@ const Navbar = () => {
 								>
 									Your Job Applications
 								</Link>
-								
+
+								<Link
+									href="/dashboard-page"
+									className={`${
+										pathname.includes('/dashboard')
+											? 'text-gray-900 bg-gradient-to-r from-purple-200 to-lime-200'
+											: 'hover:bg-gradient-to-r from-purple-300 to-lime-100'
+									}  hover:bg-gradient-to-r from-teal-200 to-lime-200 hover:text-black rounded-md px-3 py-2`}
+								>
+									Dashboard
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -185,13 +193,11 @@ const Navbar = () => {
 									type="button"
 									className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
 									onClick={() => {
-										
-											// Sign out without triggering NextAuth's default redirection
-											signOut({ redirect: false });
+										// Sign out without triggering NextAuth's default redirection
+										signOut({ redirect: false });
 
-											// Manually redirect to the desired login page
-											router.push('/login-page');
-										
+										// Manually redirect to the desired login page
+										router.push('/login-page');
 									}}
 								>
 									<Link href="/api/auth/signout?callbackUrl=/login-page">

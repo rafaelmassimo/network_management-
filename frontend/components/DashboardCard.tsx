@@ -14,12 +14,13 @@ function DashboardCard({ title, content, Icon, iconColor, jobStatus }: Dashboard
 		green: 'text-green-400',
 		blue: 'text-blue-400',
 		red: 'text-red-400',
+		gray: 'text-gray-400',
 	}[iconColor];
 
 
 	return (
 		<div>
-			<div className="rounded-md w-[320px] h-[150px] grid grid-cols-3 m-3 shadow-lg bg-white transform transition-transform duration-300 hover:scale-105">
+			<div className="rounded-md w-[320px] h-[150px] grid grid-cols-3 m-3 shadow-2xl bg-white transform transition-transform duration-300 hover:scale-105">
 				<div className="col-span-2 flex flex-col justify-evenly place-items-start ml-5 ">
 					<div>
 						<h1 className="text-lg font-bold">{title}</h1>

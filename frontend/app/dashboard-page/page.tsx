@@ -3,23 +3,31 @@ import { IoIosRadioButtonOn } from 'react-icons/io';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import DashboardCard from '../../components/DashboardCard';
+import CountriesDashBoard from '../../components/CountriesDashBoard';
 import Spinners from '../../components/Spinner';
 import { JobFormType } from '@/types/dataType';
 import { IoIosTime } from 'react-icons/io';
 import { BiLike } from 'react-icons/bi';
 import { BsPersonArmsUp } from 'react-icons/bs';
+import { GiSpaceShuttle } from 'react-icons/gi';
+
+type CountryType = {
+	country: string;
+	amount: number;
+};
 
 const DashboardPage = () => {
 	const [jobs, setJobs] = useState<{ status: string }[]>([]);
 	const [userId, setUserId] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(true);
 	const { data: session } = useSession();
-	const [jobStatus, setJobNumbers] = useState({
+	const [jobNumbers, setJobNumbers] = useState({
 		noAnswer: 0,
 		positiveFeedback: 0,
 		rejected: 0,
 		interview: 0,
 	});
+	const [countryData, setCountryData] = useState([{ country: '', amount: 0 }]);
 
 	//>> In this UseEffect, we are fetching the user and jobs data from the API and setting the state percentages of the job status to use on the dashboard cards
 	useEffect(() => {
@@ -71,6 +79,23 @@ const DashboardPage = () => {
 								rejected: rejectedPercentage,
 								interview: interviewPercentage,
 							});
+
+							//* Get the countries Data
+							const countryCounts = jobs.reduce((accumulator: CountryType[], job: JobFormType) => {
+								// Check if the country already exists in the accumulator
+								//I'm saying, 'try to find the current job.country inside the accumulator array[job]'
+								const existingCountry = accumulator.find(
+									(countryEntry: CountryType) => countryEntry.country === job.country,
+								);
+
+								if (existingCountry) {
+									existingCountry.amount += 1;
+								} else {
+									accumulator.push({ country: job.country, amount: 1 });
+								}
+								return accumulator;
+							}, [] as { country: string; amount: number }[]);
+							setCountryData(countryCounts);
 						}
 					}
 				}
@@ -91,36 +116,51 @@ const DashboardPage = () => {
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">
 							{session?.user.username} DashBoard
 						</h2>
-						<div className="flex flex-row justify-center items-start gap-4 bg-gradient-to-t from-[#ffffff] via-[#AAE878] to-[#28AB03] w-fit h-screen rounded-lg">
-							<div className='flex mt-6'>
+						<div className="flex flex-col justify-start items-center gap-5 bg-gradient-to-t from-[#ffffff] via-[#AAE878] to-[#28AB03] w-fit h-screen rounded-lg">
+							<DashboardCard
+								title="General"
+								jobStatus="Total Applications "
+								content={`${jobs.length} jobs`}
+								Icon={GiSpaceShuttle}
+								iconColor="gray"
+							/>
+							<div className="flex mt-6">
 								<DashboardCard
 									title="Total"
 									jobStatus="No Answer"
-									content={`${jobStatus.noAnswer}%`}
+									content={`${jobNumbers.noAnswer.toFixed(0)}%`}
 									Icon={IoIosTime}
 									iconColor="yellow"
 								/>
 								<DashboardCard
 									title="Total"
 									jobStatus="Positive Feedback"
-									content={`${jobStatus.positiveFeedback}%`}
+									content={`${jobNumbers.positiveFeedback.toFixed(0)}%`}
 									Icon={BiLike}
 									iconColor="green"
 								/>
 								<DashboardCard
 									title="Total"
 									jobStatus="Interview"
-									content={`${jobStatus.interview}%`}
+									content={`${jobNumbers.interview.toFixed(0)}%`}
 									Icon={BsPersonArmsUp}
 									iconColor="blue"
 								/>
 								<DashboardCard
 									title="Total"
 									jobStatus="Rejected"
-									content={`${jobStatus.rejected}%`}
+									content={`${jobNumbers.rejected.toFixed(0)}%`}
 									Icon={IoIosRadioButtonOn}
 									iconColor="red"
 								/>
+							</div>
+							<div className="flex flex-col bg-white transform transition-transform duration-300 hover:scale-105 rounded-lg mt-10 shadow-2xl">
+								<h3 className="text-xl font-bold text-blue-500 mb-6 text-center">Countries</h3>
+								<div className='flex'>
+									{countryData.map((country: CountryType) => (
+										<CountriesDashBoard country={country.country} amount={country.amount} />
+									))}
+								</div>
 							</div>
 						</div>
 					</div>

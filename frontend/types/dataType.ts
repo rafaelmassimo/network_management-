@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 
+
 export type CompanyFormType = {
 	user_id: string;
 	companyId?: string;
@@ -29,7 +30,7 @@ export type JobObjectType = {
 	link: string;
 	title: string;
 	description?: string;
-}
+};
 
 export enum CompanyStatus {
 	NoAnswer = 'no answer',
@@ -58,14 +59,14 @@ export enum WorkSite {
 }
 
 export type JobType = {
-    owner?: Types.ObjectId; // I added the question mark just to make the job card stop complaining about the owner being undefined
-    _id: string;
-    companyName: string;
-    companyLink: string;
-    jobInfo: { link: string; title: string; description: string };
-    country: string;
-    comments: string;
-    status: CompanyStatus | string;
+	owner?: Types.ObjectId; // I added the question mark just to make the job card stop complaining about the owner being undefined
+	_id: string;
+	companyName: string;
+	companyLink: string;
+	jobInfo: { link: string; title: string; description: string };
+	country: string;
+	comments: string;
+	status: CompanyStatus | string;
 	updatedAt: Date;
 	workSite: WorkSite | string;
 };
@@ -108,3 +109,4 @@ export type UserLoggedIn = {
 	__v: number;
 	role: string;
 };
+
