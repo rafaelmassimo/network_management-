@@ -116,7 +116,7 @@ const DashboardPage = () => {
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">
 							{session?.user.username} DashBoard
 						</h2>
-						<div className="flex flex-col justify-start items-center gap-5 bg-gradient-to-t from-[#ffffff] via-[#AAE878] to-[#28AB03] w-fit h-screen rounded-lg">
+						<div className="flex flex-col justify-start items-center gap-5 bg-gradient-to-t from-[#d7ed37] via-[#AAE878] to-[#28AB03] w-fit h-screen rounded-lg">
 							<DashboardCard
 								title="General"
 								jobStatus="Total Applications "
@@ -154,8 +154,8 @@ const DashboardPage = () => {
 									iconColor="red"
 								/>
 							</div>
-							<div className="flex flex-col bg-white transform transition-transform duration-300 hover:scale-105 rounded-lg mt-10 shadow-2xl">
-								<h3 className="text-xl font-bold text-blue-500 mb-6 text-center">Countries</h3>
+							<div className="flex flex-col  bg-white transform transition-transform duration-300 hover:scale-105 rounded-lg mt-10 shadow-2xl">
+								<h3 className="text-2xl font-bold text-blue-500 mb-6 mt-2 text-center">Countries</h3>
 								<div className='flex'>
 									{countryData.map((country: CountryType) => (
 										<CountriesDashBoard country={country.country} amount={country.amount} />
