@@ -54,7 +54,7 @@ const DashboardPage = () => {
 							},
 						);
 						if (jobsResponse.status === 200) {
-							const { jobs } = await jobsResponse.json();
+							const  jobs  = await jobsResponse.json();
 							setJobs(jobs);
 							setLoading(false);
 
