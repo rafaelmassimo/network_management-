@@ -22,10 +22,22 @@ const DashboardPage = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const { data: session } = useSession();
 	const [jobNumbers, setJobNumbers] = useState({
-		noAnswer: 0,
-		positiveFeedback: 0,
-		rejected: 0,
-		interview: 0,
+		noAnswer: {
+			percentage: 0,
+			amount: 0,
+		},
+		positiveFeedback: {
+			percentage: 0,
+			amount: 0,
+		},
+		rejected: {
+			percentage: 0,
+			amount: 0,
+		},
+		interview: {
+			percentage: 0,
+			amount: 0,
+		},
 	});
 	const [countryData, setCountryData] = useState([{ country: '', amount: 0 }]);
 
@@ -54,7 +66,7 @@ const DashboardPage = () => {
 							},
 						);
 						if (jobsResponse.status === 200) {
-							const  jobs  = await jobsResponse.json();
+							const jobs = await jobsResponse.json();
 							setJobs(jobs);
 							setLoading(false);
 
@@ -68,17 +80,50 @@ const DashboardPage = () => {
 								(job: JobFormType) => job.status === 'interview',
 							).length;
 
+							setJobNumbers(prevJobNumbers => ({
+								...prevJobNumbers,
+								noAnswer: {
+									...prevJobNumbers.noAnswer,
+									amount: noAnswer,
+								},
+								positiveFeedback: {
+									...prevJobNumbers.positiveFeedback,
+									amount: positiveFeedback,
+								},
+								rejected: {
+									...prevJobNumbers.rejected,
+									amount: rejected,
+								},
+								interview: {
+									...prevJobNumbers.interview,
+									amount: interview,
+								},
+							}));
+
 							const noAnswerPercentage = (noAnswer * 100) / jobs.length;
 							const positiveFeedbackPercentage = (positiveFeedback * 100) / jobs.length;
 							const rejectedPercentage = (rejected * 100) / jobs.length;
 							const interviewPercentage = (interview * 100) / jobs.length;
 
-							setJobNumbers({
-								noAnswer: noAnswerPercentage,
-								positiveFeedback: positiveFeedbackPercentage,
-								rejected: rejectedPercentage,
-								interview: interviewPercentage,
-							});
+							setJobNumbers(prevJobNumbers => ({
+								...prevJobNumbers,
+								noAnswer: {
+									...prevJobNumbers.noAnswer,
+									percentage: noAnswerPercentage,
+								},
+								positiveFeedback: {
+									...prevJobNumbers.positiveFeedback,
+									percentage: positiveFeedbackPercentage,
+								},
+								rejected: {
+									...prevJobNumbers.rejected,
+									percentage: rejectedPercentage,
+								},
+								interview: {
+									...prevJobNumbers.interview,
+									percentage: interviewPercentage,
+								},
+							}));
 
 							//* Get the countries Data
 							const countryCounts = jobs.reduce((accumulator: CountryType[], job: JobFormType) => {
@@ -128,35 +173,41 @@ const DashboardPage = () => {
 								<DashboardCard
 									title="Total"
 									jobStatus="No Answer"
-									content={`${jobNumbers.noAnswer.toFixed(0)}%`}
+									content={`${jobNumbers.noAnswer.percentage.toFixed(0)}%`}
+									amount={jobNumbers.noAnswer.amount}
 									Icon={IoIosTime}
 									iconColor="yellow"
 								/>
 								<DashboardCard
 									title="Total"
 									jobStatus="Positive Feedback"
-									content={`${jobNumbers.positiveFeedback.toFixed(0)}%`}
+									content={`${jobNumbers.positiveFeedback.percentage.toFixed(0)}%`}
+									amount={jobNumbers.positiveFeedback.amount}
 									Icon={BiLike}
 									iconColor="green"
 								/>
 								<DashboardCard
 									title="Total"
 									jobStatus="Interview"
-									content={`${jobNumbers.interview.toFixed(0)}%`}
+									content={`${jobNumbers.interview.percentage.toFixed(0)}%`}
+									amount={jobNumbers.interview.amount}
 									Icon={BsPersonArmsUp}
 									iconColor="blue"
 								/>
 								<DashboardCard
 									title="Total"
 									jobStatus="Rejected"
-									content={`${jobNumbers.rejected.toFixed(0)}%`}
+									content={`${jobNumbers.rejected.percentage.toFixed(0)}%`}
+									amount={jobNumbers.rejected.amount}
 									Icon={IoIosRadioButtonOn}
 									iconColor="red"
 								/>
 							</div>
 							<div className="flex flex-col  bg-white transform transition-transform duration-300 hover:scale-105 rounded-lg mt-10 shadow-2xl">
-								<h3 className="text-2xl font-bold text-blue-500 mb-6 mt-2 text-center">Countries</h3>
-								<div className='flex'>
+								<h3 className="text-2xl font-bold text-blue-500 mb-6 mt-2 text-center">
+									Countries
+								</h3>
+								<div className="flex">
 									{countryData.map((country: CountryType) => (
 										<CountriesDashBoard country={country.country} amount={country.amount} />
 									))}
