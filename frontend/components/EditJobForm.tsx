@@ -130,6 +130,7 @@ const EditJobForm = () => {
 									{CompanyStatus.PositiveFeedback}
 								</option>
 								<option value={CompanyStatus.Interview}>{CompanyStatus.Interview}</option>
+								<option value={CompanyStatus.Rejected}>{CompanyStatus.Rejected}</option>
 							</select>
 
 							<label htmlFor="workSite" className="block my-2">
