@@ -8,6 +8,7 @@ import CompanyCard from './CompanyCard';
 import Spinners from './Spinner';
 import AlertMessage from './AlertMessage';
 import { Company } from '../types/dataType';
+import AddElementButton from './AddElementButton';
 import { CompanyStatus } from '../types/dataType';
 import SearchCompanyForm from './SearchCompanyForm';
 import PositionCounter from './PositionCounter';
@@ -84,25 +85,39 @@ const CompanyApplication = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : companies.length === 0 ? (
-				<div className="flex flex-col w-full items-center">
-					<Link href="/network-page" className="text-blue-500 underline mt-2 items-center">
-						<span className="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
-							Return
-						</span>
-					</Link>
-					<AlertMessage sentence="You have no result" />
-				</div>
+				<section className="px-4 py-6 bg-blue-50 h-screen">
+					<div className="container-xl lg:container m-auto">
+						<div className="flex flex-col w-full items-center">
+							<SearchCompanyForm />
+
+							<AlertMessage sentence="You have no result" />
+
+							<Link href="/network-page" className="text-blue-500 underline mt-2 items-center">
+								<span className="bg-indigo-100 text-indigo-800 text-s font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+									Return
+								</span>
+							</Link>
+						</div>
+					</div>
+				</section>
 			) : (
-				<section className="px-4 py-6 bg-blue-50">
+				<section className="px-4 py-6 bg-blue-50 h-screen">
 					<div className="container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Search Companies</h2>
 						<PositionCounter totalItems={totalItems} text="Total Companies:" />
-						<SearchCompanyForm />
-						<Link href="/network-page" className="text-blue-500 underline mb-2 items-center">
-							<span className="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
-								Return
-							</span>
-						</Link>
+						<div className="flex flex-row items-center justify-between grid-cols-2 w-full">
+							<div className="w-10/12">
+								<SearchCompanyForm />
+								<Link href="/network-page" className="text-blue-500 underline mt-2 items-center">
+								<span className="bg-indigo-100 text-indigo-800 text-s font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+									Return
+								</span>
+							</Link>
+							</div>
+							<div>
+								<AddElementButton text="New Company" path="/add-company" />
+							</div>
+						</div>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							{companies.map((company: Company) => (
 								<div key={company._id}>

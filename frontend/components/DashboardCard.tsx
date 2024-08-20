@@ -21,7 +21,7 @@ function DashboardCard({ title, content, Icon, iconColor, jobStatus, amount }: D
 
 	return (
 		<div>
-			<div className="rounded-md w-[320px] h-[150px] grid grid-cols-3 m-3 shadow-2xl bg-white transform transition-transform duration-300 hover:scale-105">
+			<div className="rounded-md w-[320px] h-[150px] grid grid-cols-3 m-3 shadow-2xl bg-white transform transition-transform duration-300 hover:scale-105 border border-gray-500">
 				<div className="col-span-2 flex flex-col justify-evenly place-items-start ml-5 ">
 					<div>
 						<h1 className="text-lg font-bold">{title}</h1>

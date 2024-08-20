@@ -23,7 +23,7 @@ const CountriesDashBoard = ({ country, amount }: CountriesDashBoardProps) => {
 	return (
 		<div className="flex flex-row p-4 rounded-lg m-2 justify-center items-center">
 			{FlagIcon ? (
-				<div className="flex flex-col items-center gap-3">
+				<div className="flex flex-col items-center gap-3 ">
 					<FlagIcon className="shadow-xl rounded-md transform transition-transform duration-300 hover:scale-105" style={{ width: '60px', height: '40px' }} />
 					<div className="bg-cyan-950 px-2 rounded-lg">
 						<span className="text-white ">{country} </span>

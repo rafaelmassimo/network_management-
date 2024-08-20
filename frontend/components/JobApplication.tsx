@@ -11,6 +11,8 @@ import SearchJobsForm from './SearchJobsForm';
 import PositionCounter from './PositionCounter';
 import AlertMessage from './AlertMessage';
 import { CompanyStatus, JobType } from '../types/dataType';
+import AddElementButton from '@/components/AddElementButton';
+
 import Link from 'next/link';
 
 const JobApplication = () => {
@@ -92,20 +94,35 @@ const JobApplication = () => {
 			{loading ? (
 				<Spinners loading={loading} />
 			) : jobs.length === 0 ? (
-				<div className="flex flex-col w-full items-center">
-					<Link href="/applications-page" className="text-blue-500 underline mt-2 items-center">
-						Return
-					</Link>
-					<AlertMessage sentence="You have no result" />
-				</div>
+				<section className="px-4 py-6 bg-blue-50 h-screen">
+					<div className="container-xl lg:container m-auto">
+						<div className="flex flex-col w-full items-center">
+							<SearchJobsForm />
+							<AlertMessage sentence="You have no result" />
+
+							<Link href="/applications-page" className="text-blue-500 underline mt-2 items-center">
+								<span className="bg-indigo-100 text-indigo-800 text-s font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+									Return
+								</span>
+							</Link>
+						</div>
+					</div>
+				</section>
 			) : (
 				<section className="px-4 py-6 bg-blue-50">
 					<div className="container-xl lg:container m-auto">
 						<h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Result Jobs</h2>
 						<PositionCounter totalItems={totalItems} text="Total Result:" />
-						<SearchJobsForm />
+						<div className="flex flex-row items-center grid-cols-2 w-full">
+							<div className="">
+								<SearchJobsForm />
+							</div>
+							<div className='ml-7 w-1/6'>
+								<AddElementButton text="New Job" path="/add-job" />
+							</div>
+						</div>
 						<Link href="/applications-page" className="text-blue-500 underline mb-2">
-							<span className="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+							<span className="bg-indigo-100 text-indigo-800 text-s font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
 								Return
 							</span>
 						</Link>
